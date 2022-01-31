@@ -1,22 +1,31 @@
 import styled from 'styled-components';
 
 export const NavMenuStyles = styled.div`
-  background-color: #17171a;
-  padding: 0.8rem 0;
+  background-color: ${(p) => p.theme.colors.primaryBlack};
+  padding: 0.5rem 0;
   font-size: 2.3rem;
   font-family: ${(p) => p.theme.fonts.main};
+  svg {
+    fill: ${(p) => p.theme.colors.primaryGrey};
+    width: 2rem;
+    height: 2rem;
+  }
 
   a {
     text-decoration: none;
-    color: #bcb4b4;
+    color: ${(p) => p.theme.colors.primaryGrey};
 
     &:hover {
-      box-shadow: 7px 9px 15px -6px #a1ed00;
+      box-shadow: ${(p) => p.theme.boxShadows.navBar};
     }
   }
 
   .active {
     color: white;
+
+    svg {
+      fill: white;
+    }
   }
 `;
 
@@ -33,6 +42,14 @@ export const NavLogo = styled.div`
   a {
     font-family: ${(p) => p.theme.fonts.titles};
     font-weight: bold;
+    background: #0acf6d;
+    ${(p) => p.theme.colors.primaryGrey}
+    background: -webkit-linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%);
+    background: -moz-linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%);
+    background: linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 `;
 
@@ -42,7 +59,7 @@ export const NavUl = styled.ul`
 
   li {
     :not(:last-child) {
-      margin-right: 4rem;
+      margin-right: 3rem;
     }
 
     a {

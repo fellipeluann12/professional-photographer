@@ -6,7 +6,10 @@ import {
   NavLogo,
   NavMenuStyles,
   NavUl,
-} from '../styles/NavMenuStyles';
+} from '../styles/NavBarStyles';
+import Dropdown from './Dropdown';
+import { ReactComponent as Caret } from '../assets/svgs/caret.svg';
+import Burger from './Burger';
 
 export default function NavMenu() {
   return (
@@ -20,21 +23,22 @@ export default function NavMenu() {
           </NavLogo>
           <NavUl>
             <li>
-              <NavLink to="/projects" exact="true" role="button">
-                Projects
+              <NavLink to="/projects" role="button">
+                Projects <Caret />
               </NavLink>
             </li>
             <li>
-              <NavLink to="/about" exact="true" role="button">
+              <NavLink to="/about" role="button">
                 About
               </NavLink>
             </li>
             <li>
-              <NavLink to="/contact" exact="true" role="button">
+              <NavLink to="/contact" role="button">
                 Contact
               </NavLink>
             </li>
           </NavUl>
+          <Burger />
         </NavContainer>
       </Container>
     </NavMenuStyles>

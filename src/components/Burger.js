@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
-import { BurgerStyles, BurgerBracket } from '../styles/BurgerStyles';
+import React from 'react';
+import { BurgerStyles } from '../styles/BurgerStyles';
+import { useSelector, useDispatch } from 'react-redux';
+import { uiActions } from '../store/ui-slice';
 
 export default function Burger() {
-  const [isOpen, setIsOpen] = useState(false);
+  const isBurgerClicked = useSelector(
+    (state) => state.ui.navBar.mobile.isBurgerClicked
+  );
+
+  const dispatch = useDispatch();
+
+  const isVisibleHandler = () => {
+    dispatch(uiActions.NavBarMobileIsVisible());
+    dispatch(uiActions.NavBarBurgerIsClicked());
+  };
 
   return (
-    <BurgerStyles isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
+    <BurgerStyles onClick={isVisibleHandler} isBurgerClicked={isBurgerClicked}>
       <div />
       <div />
       <div />

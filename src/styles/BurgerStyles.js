@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const BurgerStyles = styled.div`
   position: fixed;
-  top: 1.5rem;
+  top: 1.8rem;
   right: 2rem;
   z-index: 20;
   width: 4rem;
@@ -10,8 +10,9 @@ export const BurgerStyles = styled.div`
   display: none;
   justify-content: space-around;
   flex-flow: column nowrap;
+  cursor: pointer;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     display: flex;
   }
 
@@ -25,15 +26,16 @@ export const BurgerStyles = styled.div`
 
     &:nth-child(1) {
       transform: ${(props) =>
-        props.isOpen ? 'rotate(45deg)' : 'translateX(0)'};
+        props.isBurgerClicked ? 'rotate(45deg)' : 'translateX(0)'};
     }
     &:nth-child(2) {
       transform: ${(props) =>
-        props.isOpen ? 'translateX(100%)' : 'translateX(0)'};
-      opacity: ${(props) => (props.isOpen ? 0 : 1)};
+        props.isBurgerClicked ? 'translateX(100%)' : 'translateX(0)'};
+      opacity: ${(props) => (props.isBurgerClicked ? 0 : 1)};
     }
     &:nth-child(3) {
-      transform: ${(props) => (props.isOpen ? 'rotate(-45deg)' : 'rotate(0)')};
+      transform: ${(props) =>
+        props.isBurgerClicked ? 'rotate(-45deg)' : 'rotate(0)'};
     }
   }
 `;

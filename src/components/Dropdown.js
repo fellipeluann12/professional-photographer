@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { projectItems } from '../assets/data/projectItems';
+import { projectItems } from '../assets/data/navBarItems';
 import {
   DropdownLi,
   DropdownNavLink,
@@ -9,26 +9,26 @@ import { useSelector, useDispatch } from 'react-redux';
 import { uiActions } from '../store/ui-slice';
 
 export default function Dropdown() {
-  const dropDownIsVisible = useSelector(
-    (state) => state.ui.navBar.dropDownIsVisible
+  const isDropdownVisible = useSelector(
+    (state) => state.ui.navBar.isDropdownVisible
   );
 
   const dispatch = useDispatch();
 
-  const handleIsDropdownVisible = () => {
+  const isDropdownVisibleHandler = () => {
     dispatch(uiActions.NavBarDropDownIsVisible(false));
   };
 
   useEffect(() => {
     dispatch(uiActions.NavBarDropDownIsVisible(true));
-  }, [dispatch, dropDownIsVisible]);
+  }, [dispatch, isDropdownVisible]);
 
   return (
-    <DropdownStyles DropDownIsVisible={dropDownIsVisible}>
+    <DropdownStyles isDropdownVisible={isDropdownVisible}>
       {projectItems.map((item, index) => {
         return (
           <DropdownLi key={index}>
-            <DropdownNavLink to={item.path} onClick={handleIsDropdownVisible}>
+            <DropdownNavLink to={item.path} onClick={isDropdownVisibleHandler}>
               {item.title}
             </DropdownNavLink>
           </DropdownLi>

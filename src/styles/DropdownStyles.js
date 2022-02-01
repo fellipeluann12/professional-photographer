@@ -9,7 +9,7 @@ export const DropdownStyles = styled.ul`
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   text-align: start;
-  display: ${({ DropDownIsVisible }) => (DropDownIsVisible ? 'block' : 'none')};
+  display: ${(props) => (props.isDropdownVisible ? 'block' : 'none')};
 `;
 
 export const DropdownLi = styled.li`

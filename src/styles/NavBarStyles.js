@@ -18,6 +18,14 @@ export const NavBarContainer = styled.div`
     width: 2rem;
     height: 2rem;
   }
+
+  @media ${(p) => p.theme.breakpoints.lg} {
+    justify-content: center;
+  }
+
+  @media ${(p) => p.theme.breakpoints.sm} {
+    justify-content: flex-start;
+  }
 `;
 
 export const NavBarLogo = styled.div`
@@ -41,21 +49,42 @@ export const NavBarLogoNavLink = styled(NavLink)`
 
 export const NavBarUl = styled.ul`
   display: flex;
+
+  @media ${(p) => p.theme.breakpoints.lg} {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100vh - 8rem);
+    background: ${(p) => p.theme.colors.secondaryGrey};
+    justify-content: center;
+    display: ${(p) => (p.isMobile ? 'flex' : 'none')};
+  }
 `;
 
 export const NavBarLi = styled.li`
   display: flex;
   align-items: center;
   height: 100%;
+
   :not(:last-child) {
     margin-right: 3rem;
+  }
+
+  @media ${(p) => p.theme.breakpoints.lg} {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 10rem;
+    font-size: 3rem;
   }
 `;
 
 export const NavBarNavLink = styled(NavLink)`
+  color: ${(p) => p.theme.colors.primaryGrey};
   padding: 1rem;
   border-radius: 1rem;
-  color: ${(p) => p.theme.colors.primaryGrey};
 
   &:hover {
     box-shadow: ${(p) => p.theme.boxShadows.navBar};
@@ -63,5 +92,15 @@ export const NavBarNavLink = styled(NavLink)`
 
   &.active {
     color: ${({ to }) => (to === '#' ? '' : 'white')};
+  }
+
+  @media ${(p) => p.theme.breakpoints.lg} {
+    text-align: center;
+    width: 100%;
+    padding: 2rem;
+
+    &:hover {
+      box-shadow: ${(p) => p.theme.boxShadows.navBarMobile};
+    }
   }
 `;

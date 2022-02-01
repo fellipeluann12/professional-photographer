@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { Container } from '../styles/ContainerStyles';
 import {
   NavBarContainer,
@@ -8,7 +7,6 @@ import {
   NavBarNavLink,
   NavBarLogoNavLink,
   NavBarLi,
-  NavBarSpan,
 } from '../styles/NavBarStyles';
 import Dropdown from './Dropdown';
 import { ReactComponent as Caret } from '../assets/svgs/caret.svg';
@@ -17,11 +15,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { uiActions } from '../store/ui-slice';
 
 export default function NavMenu() {
-  const dispatch = useDispatch();
-
-  const dropDownIsVisible = useSelector(
-    (state) => state.ui.navBar.dropDownIsVisible
+  const isDropdownVisible = useSelector(
+    (state) => state.ui.navBar.isDropdownVisible
   );
+
+  const navBarMobileIsVisible = useSelector(
+    (state) => state.ui.navBar.mobile.isVisible
+  );
+
+  const dispatch = useDispatch();
 
   const onMouseEnter = () => {
     if (window.innerWidth < 960) {
@@ -48,7 +50,7 @@ export default function NavMenu() {
               KALEY
             </NavBarLogoNavLink>
           </NavBarLogo>
-          <NavBarUl>
+          <NavBarUl isMobile={navBarMobileIsVisible}>
             <NavBarLi>
               <NavBarNavLink to="/" role="button">
                 Home
@@ -58,7 +60,7 @@ export default function NavMenu() {
               <NavBarNavLink to="#" role="button" isproject="true">
                 Projects <Caret />
               </NavBarNavLink>
-              {dropDownIsVisible && <Dropdown />}
+              {isDropdownVisible && <Dropdown />}
             </NavBarLi>
             <NavBarLi>
               <NavBarNavLink to="/about" role="button">

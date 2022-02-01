@@ -2,10 +2,22 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const uiSlice = createSlice({
   name: 'ui',
-  initialState: { navBar: { dropDownIsVisible: false } },
+  initialState: {
+    navBar: {
+      mobile: { isVisible: false, isBurgerClicked: false },
+      isDropdownVisible: false,
+    },
+  },
   reducers: {
     NavBarDropDownIsVisible(state, action) {
-      state.navBar.dropDownIsVisible = action.payload;
+      state.navBar.isDropdownVisible = action.payload;
+    },
+    NavBarMobileIsVisible(state) {
+      state.navBar.mobile.isVisible = !state.navBar.mobile.isVisible;
+    },
+    NavBarBurgerIsClicked(state) {
+      state.navBar.mobile.isBurgerClicked =
+        !state.navBar.mobile.isBurgerClicked;
     },
   },
 });

@@ -1,7 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Montserrat+Subrayada&display=swap');
 
   * {
   margin: 0;
@@ -18,8 +17,9 @@ const GlobalStyles = createGlobalStyle`
     font-family: ${(p) => p.theme.fonts.main};
   }
 
-  ul, li {
+  ul, li, a{
   list-style: none;
+  text-decoration: none;
 }
 `;
 

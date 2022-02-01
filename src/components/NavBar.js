@@ -1,46 +1,79 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
 import { Container } from '../styles/ContainerStyles';
 import {
-  NavContainer,
-  NavLogo,
-  NavMenuStyles,
-  NavUl,
+  NavBarContainer,
+  NavBarLogo,
+  NavBarMenuStyles,
+  NavBarUl,
+  NavBarNavLink,
+  NavBarLogoNavLink,
+  NavBarLi,
+  NavBarSpan,
 } from '../styles/NavBarStyles';
 import Dropdown from './Dropdown';
 import { ReactComponent as Caret } from '../assets/svgs/caret.svg';
 import Burger from './Burger';
+import { useSelector, useDispatch } from 'react-redux';
+import { uiActions } from '../store/ui-slice';
 
 export default function NavMenu() {
+  const dispatch = useDispatch();
+
+  const dropDownIsVisible = useSelector(
+    (state) => state.ui.navBar.dropDownIsVisible
+  );
+
+  const onMouseEnter = () => {
+    if (window.innerWidth < 960) {
+      dispatch(uiActions.NavBarDropDownIsVisible(false));
+    } else {
+      dispatch(uiActions.NavBarDropDownIsVisible(true));
+    }
+  };
+
+  const onMouseLeave = () => {
+    if (window.innerWidth < 960) {
+      dispatch(uiActions.NavBarDropDownIsVisible(false));
+    } else {
+      dispatch(uiActions.NavBarDropDownIsVisible(false));
+    }
+  };
+
   return (
-    <NavMenuStyles>
+    <NavBarMenuStyles>
       <Container>
-        <NavContainer>
-          <NavLogo>
-            <NavLink to="/" exact="true" role="button">
+        <NavBarContainer>
+          <NavBarLogo>
+            <NavBarLogoNavLink to="/" exact="true" role="button">
               KALEY
-            </NavLink>
-          </NavLogo>
-          <NavUl>
-            <li>
-              <NavLink to="/projects" role="button">
+            </NavBarLogoNavLink>
+          </NavBarLogo>
+          <NavBarUl>
+            <NavBarLi>
+              <NavBarNavLink to="/" role="button">
+                Home
+              </NavBarNavLink>
+            </NavBarLi>
+            <NavBarLi onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+              <NavBarNavLink to="#" role="button" isproject="true">
                 Projects <Caret />
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/about" role="button">
+              </NavBarNavLink>
+              {dropDownIsVisible && <Dropdown />}
+            </NavBarLi>
+            <NavBarLi>
+              <NavBarNavLink to="/about" role="button">
                 About
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/contact" role="button">
+              </NavBarNavLink>
+            </NavBarLi>
+            <NavBarLi>
+              <NavBarNavLink to="/contact" role="button">
                 Contact
-              </NavLink>
-            </li>
-          </NavUl>
+              </NavBarNavLink>
+            </NavBarLi>
+          </NavBarUl>
           <Burger />
-        </NavContainer>
+        </NavBarContainer>
       </Container>
-    </NavMenuStyles>
+    </NavBarMenuStyles>
   );
 }

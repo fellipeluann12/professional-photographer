@@ -11,8 +11,8 @@ export default function Burger() {
   const dispatch = useDispatch();
 
   const isVisibleHandler = () => {
-    dispatch(uiActions.NavBarMobileIsVisible());
-    dispatch(uiActions.NavBarBurgerIsClicked());
+    dispatch(uiActions.navBarMobileIsVisible());
+    dispatch(uiActions.navBarBurgerIsClicked());
   };
 
   return (

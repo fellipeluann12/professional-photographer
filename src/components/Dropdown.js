@@ -16,11 +16,11 @@ export default function Dropdown() {
   const dispatch = useDispatch();
 
   const isDropdownVisibleHandler = () => {
-    dispatch(uiActions.NavBarDropDownIsVisible(false));
+    dispatch(uiActions.navBarDropDownIsVisible(false));
   };
 
   useEffect(() => {
-    dispatch(uiActions.NavBarDropDownIsVisible(true));
+    dispatch(uiActions.navBarDropDownIsVisible(true));
   }, [dispatch, isDropdownVisible]);
 
   return (

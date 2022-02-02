@@ -9,13 +9,13 @@ const uiSlice = createSlice({
     },
   },
   reducers: {
-    NavBarDropDownIsVisible(state, action) {
+    navBarDropDownIsVisible(state, action) {
       state.navBar.isDropdownVisible = action.payload;
     },
-    NavBarMobileIsVisible(state) {
+    navBarMobileIsVisible(state) {
       state.navBar.mobile.isVisible = !state.navBar.mobile.isVisible;
     },
-    NavBarBurgerIsClicked(state) {
+    navBarBurgerIsClicked(state) {
       state.navBar.mobile.isBurgerClicked =
         !state.navBar.mobile.isBurgerClicked;
     },

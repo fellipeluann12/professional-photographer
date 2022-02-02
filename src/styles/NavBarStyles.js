@@ -59,7 +59,7 @@ export const NavBarUl = styled.ul`
     height: calc(100vh - 8rem);
     background: ${(p) => p.theme.colors.secondaryGrey};
     justify-content: center;
-    display: ${(p) => (p.isMobile ? 'flex' : 'none')};
+    display: ${(p) => (p.isNavBarMobileVisible ? 'flex' : 'none')};
   }
 `;
 

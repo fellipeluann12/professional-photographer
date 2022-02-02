@@ -13,32 +13,30 @@ import { ReactComponent as Caret } from '../assets/svgs/caret.svg';
 import Burger from './Burger';
 import { useSelector, useDispatch } from 'react-redux';
 import { uiActions } from '../store/ui-slice';
+import { navBarItems } from '../assets/data/navBarItems';
 
 export default function NavMenu() {
   const isDropdownVisible = useSelector(
     (state) => state.ui.navBar.isDropdownVisible
   );
 
-  const navBarMobileIsVisible = useSelector(
+  const isNavBarMobileVisible = useSelector(
     (state) => state.ui.navBar.mobile.isVisible
   );
 
   const dispatch = useDispatch();
 
-  const onMouseEnter = () => {
-    if (window.innerWidth < 960) {
-      dispatch(uiActions.NavBarDropDownIsVisible(false));
-    } else {
-      dispatch(uiActions.NavBarDropDownIsVisible(true));
-    }
+  const toggleMobileHandler = () => {
+    dispatch(uiActions.navBarMobileIsVisible());
+    dispatch(uiActions.navBarBurgerIsClicked());
   };
 
-  const onMouseLeave = () => {
-    if (window.innerWidth < 960) {
-      dispatch(uiActions.NavBarDropDownIsVisible(false));
-    } else {
-      dispatch(uiActions.NavBarDropDownIsVisible(false));
-    }
+  const onMouseEnterHandler = () => {
+    dispatch(uiActions.navBarDropDownIsVisible(true));
+  };
+
+  const onMouseLeaveHandler = () => {
+    dispatch(uiActions.navBarDropDownIsVisible(false));
   };
 
   return (
@@ -46,32 +44,40 @@ export default function NavMenu() {
       <Container>
         <NavBarContainer>
           <NavBarLogo>
-            <NavBarLogoNavLink to="/" exact="true" role="button">
+            <NavBarLogoNavLink
+              to="/"
+              exact="true"
+              role="button"
+              onClick={toggleMobileHandler}
+            >
               KALEY
             </NavBarLogoNavLink>
           </NavBarLogo>
-          <NavBarUl isMobile={navBarMobileIsVisible}>
-            <NavBarLi>
-              <NavBarNavLink to="/" role="button">
-                Home
-              </NavBarNavLink>
-            </NavBarLi>
-            <NavBarLi onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-              <NavBarNavLink to="#" role="button" isproject="true">
-                Projects <Caret />
-              </NavBarNavLink>
-              {isDropdownVisible && <Dropdown />}
-            </NavBarLi>
-            <NavBarLi>
-              <NavBarNavLink to="/about" role="button">
-                About
-              </NavBarNavLink>
-            </NavBarLi>
-            <NavBarLi>
-              <NavBarNavLink to="/contact" role="button">
-                Contact
-              </NavBarNavLink>
-            </NavBarLi>
+          <NavBarUl isNavBarMobileVisible={isNavBarMobileVisible}>
+            {navBarItems.map((item, index) => {
+              if (item.title === 'Projects') {
+                return (
+                  <NavBarLi
+                    key={index}
+                    onMouseEnter={onMouseEnterHandler}
+                    onMouseLeave={onMouseLeaveHandler}
+                  >
+                    <NavBarNavLink to={item.path}>
+                      {item.title} <Caret />
+                    </NavBarNavLink>
+                    {isDropdownVisible && <Dropdown />}
+                  </NavBarLi>
+                );
+              } else {
+                return (
+                  <NavBarLi key={index}>
+                    <NavBarNavLink to={item.path} onClick={toggleMobileHandler}>
+                      {item.title}
+                    </NavBarNavLink>
+                  </NavBarLi>
+                );
+              }
+            })}
           </NavBarUl>
           <Burger />
         </NavBarContainer>

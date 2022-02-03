@@ -12,24 +12,44 @@ import { useSelector, useDispatch } from 'react-redux';
 import { uiActions } from '../store/ui-slice';
 
 export default function Dropdown() {
-  const isDropdownVisible = useSelector(
-    (state) => state.ui.navBar.isDropdownVisible
+  const dropdownIsVisible = useSelector(
+    (state) => state.ui.navBar.dropdownIsVisible
   );
+
+  const navBarMobileIsVisible = useSelector(
+    (state) => state.ui.navBar.mobile.isVisible
+  );
+
+  console.log(dropdownIsVisible);
 
   const dispatch = useDispatch();
 
-  const isDropdownVisibleHandler = () => {
-    dispatch(uiActions.navBarDropDownIsVisible(false));
+  const dropdownIsVisibleHandler = () => {
+    if (navBarMobileIsVisible) {
+      dispatch(uiActions.showNavBarDropdown());
+      dispatch(uiActions.toggleBurger());
+      dispatch(uiActions.showNavBarMobile());
+    }
+
+    dispatch(uiActions.showNavBarDropdown());
+  };
+
+  const closeDropdownMobile = () => {
+    dispatch(uiActions.showNavBarDropdown());
   };
 
   useEffect(() => {
-    dispatch(uiActions.navBarDropDownIsVisible(true));
-  }, [dispatch, isDropdownVisible]);
+    if (dropdownIsVisible) {
+      //dispatch(uiActions.showNavBarDropdown());
+      console.log('drop down visible?', 'rodou');
+    }
+    return () => {};
+  }, [dispatch, dropdownIsVisible]);
 
   return (
-    <DropdownStyles isDropdownVisible={isDropdownVisible}>
+    <DropdownStyles dropdownIsVisible={dropdownIsVisible}>
       <DropdownSpanContainer>
-        <DropdownSpan>x</DropdownSpan>
+        <DropdownSpan onClick={closeDropdownMobile}>x</DropdownSpan>
       </DropdownSpanContainer>
       <DropdownUl>
         {navBarItems[1].dropdown.map((item, index) => {
@@ -37,7 +57,7 @@ export default function Dropdown() {
             <DropdownLi key={index}>
               <DropdownNavLink
                 to={item.path}
-                onClick={isDropdownVisibleHandler}
+                onClick={dropdownIsVisibleHandler}
               >
                 {item.title}
               </DropdownNavLink>

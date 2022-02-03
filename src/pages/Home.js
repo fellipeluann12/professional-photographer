@@ -1,9 +1,9 @@
 import React from 'react';
-import frontHero from '../assets/images/cat_1500x500.jpg';
+import { HomeStyles } from '../styles/HomeStyles.js';
 
 export default function Home() {
   return (
-    <div>
+    <HomeStyles>
       {/* <img src={frontHero} alt="Cat blac and white" /> */}
       <h1>This is home</h1>
       <h1>This is home</h1>
@@ -11,6 +11,6 @@ export default function Home() {
       <h1>This is home</h1>
       <h1>This is home</h1>
       <h1>This is home</h1>
-    </div>
+    </HomeStyles>
   );
 }

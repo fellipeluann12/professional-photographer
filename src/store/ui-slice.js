@@ -4,20 +4,20 @@ const uiSlice = createSlice({
   name: 'ui',
   initialState: {
     navBar: {
-      mobile: { isVisible: false, isBurgerClicked: false },
-      isDropdownVisible: false,
+      mobile: { isVisible: false, burgerIsClicked: false },
+      dropdownIsVisible: false,
     },
   },
   reducers: {
-    navBarDropDownIsVisible(state, action) {
-      state.navBar.isDropdownVisible = action.payload;
+    showNavBarDropdown(state, action) {
+      state.navBar.dropdownIsVisible = !state.navBar.dropdownIsVisible;
     },
-    navBarMobileIsVisible(state) {
+    showNavBarMobile(state) {
       state.navBar.mobile.isVisible = !state.navBar.mobile.isVisible;
     },
-    navBarBurgerIsClicked(state) {
-      state.navBar.mobile.isBurgerClicked =
-        !state.navBar.mobile.isBurgerClicked;
+    toggleBurger(state) {
+      state.navBar.mobile.burgerIsClicked =
+        !state.navBar.mobile.burgerIsClicked;
     },
   },
 });

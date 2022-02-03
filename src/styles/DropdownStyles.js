@@ -10,7 +10,6 @@ export const DropdownStyles = styled.div`
   width: 16.42rem;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-  display: ${(props) => (props.isDropdownVisible ? 'flex' : 'none')};
   z-index: 20;
 
   @media ${(p) => p.theme.breakpoints.lgMaxW} {
@@ -18,7 +17,7 @@ export const DropdownStyles = styled.div`
     left: 0;
     top: 0;
 
-    width: 50vw;
+    width: 80vw;
   }
 `;
 
@@ -27,9 +26,13 @@ export const DropdownUl = styled.ul`
 `;
 
 export const DropdownSpanContainer = styled.div`
-  display: flex;
-  justify-content: right;
-  padding: 1rem;
+  display: none;
+
+  @media ${(p) => p.theme.breakpoints.lgMaxW} {
+    display: flex;
+    justify-content: right;
+    padding: 1rem;
+  }
 `;
 
 export const DropdownSpan = styled.span`

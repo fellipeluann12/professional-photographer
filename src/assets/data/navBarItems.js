@@ -6,6 +6,20 @@ export const navBarItems = [
   {
     title: 'Projects',
     path: '#',
+    dropdown: [
+      {
+        title: 'Personal',
+        path: '/personal',
+      },
+      {
+        title: 'Events',
+        path: '/events',
+      },
+      {
+        title: 'Live Music',
+        path: '/livemusic',
+      },
+    ],
   },
   {
     title: 'About',

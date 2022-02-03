@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
-import { projectItems } from '../assets/data/navBarItems';
+import { navBarItems } from '../assets/data/navBarItems';
 import {
   DropdownLi,
   DropdownNavLink,
   DropdownStyles,
+  DropdownSpan,
+  DropdownSpanContainer,
+  DropdownUl,
 } from '../styles/DropdownStyles';
 import { useSelector, useDispatch } from 'react-redux';
 import { uiActions } from '../store/ui-slice';
@@ -25,15 +28,23 @@ export default function Dropdown() {
 
   return (
     <DropdownStyles isDropdownVisible={isDropdownVisible}>
-      {projectItems.map((item, index) => {
-        return (
-          <DropdownLi key={index}>
-            <DropdownNavLink to={item.path} onClick={isDropdownVisibleHandler}>
-              {item.title}
-            </DropdownNavLink>
-          </DropdownLi>
-        );
-      })}
+      <DropdownSpanContainer>
+        <DropdownSpan>x</DropdownSpan>
+      </DropdownSpanContainer>
+      <DropdownUl>
+        {navBarItems[1].dropdown.map((item, index) => {
+          return (
+            <DropdownLi key={index}>
+              <DropdownNavLink
+                to={item.path}
+                onClick={isDropdownVisibleHandler}
+              >
+                {item.title}
+              </DropdownNavLink>
+            </DropdownLi>
+          );
+        })}
+      </DropdownUl>
     </DropdownStyles>
   );
 }

@@ -15,8 +15,9 @@ export const pattern = {
     navBarMobile: 'inset 0px 0px 0px 3px #a1ed00',
   },
   breakpoints: {
-    sm: 'screen and (max-width: 640px)',
-    md: 'screen and (max-width: 768px)',
-    lg: 'screen and (max-width: 1024px)',
+    smMaxW: 'screen and (max-width: 640px)',
+    mdMaxW: 'screen and (max-width: 768px)',
+    lgMaxW: 'screen and (max-width: 1024px)',
+    smMaxH: 'screen and (max-height: 400px)',
   },
 };

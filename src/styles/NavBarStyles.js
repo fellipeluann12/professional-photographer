@@ -4,6 +4,7 @@ import styled from 'styled-components';
 export const NavBarMenuStyles = styled.div`
   height: 80px;
   background-color: ${(p) => p.theme.colors.primaryBlack};
+  opacity: 1.9;
 `;
 
 export const NavBarContainer = styled.div`
@@ -17,14 +18,6 @@ export const NavBarContainer = styled.div`
     fill: ${(p) => p.theme.colors.primaryGrey};
     width: 2rem;
     height: 2rem;
-  }
-
-  @media ${(p) => p.theme.breakpoints.lg} {
-    justify-content: center;
-  }
-
-  @media ${(p) => p.theme.breakpoints.sm} {
-    justify-content: flex-start;
   }
 `;
 
@@ -50,9 +43,9 @@ export const NavBarLogoNavLink = styled(NavLink)`
 export const NavBarUl = styled.ul`
   display: flex;
 
-  @media ${(p) => p.theme.breakpoints.lg} {
+  @media ${(p) => p.theme.breakpoints.lgMaxW} {
     position: absolute;
-    top: 80px;
+    top: 8rem;
     left: 0;
     flex-direction: column;
     width: 100%;
@@ -60,6 +53,11 @@ export const NavBarUl = styled.ul`
     background: ${(p) => p.theme.colors.secondaryGrey};
     justify-content: center;
     display: ${(p) => (p.isNavBarMobileVisible ? 'flex' : 'none')};
+    overflow-x: hidden;
+  }
+
+  @media ${(p) => p.theme.breakpoints.smMaxH} {
+    height: 100vh;
   }
 `;
 
@@ -72,7 +70,7 @@ export const NavBarLi = styled.li`
     margin-right: 3rem;
   }
 
-  @media ${(p) => p.theme.breakpoints.lg} {
+  @media ${(p) => p.theme.breakpoints.lgMaxW} {
     display: flex;
     align-items: center;
     width: 100%;
@@ -94,7 +92,7 @@ export const NavBarNavLink = styled(NavLink)`
     color: ${({ to }) => (to === '#' ? '' : 'white')};
   }
 
-  @media ${(p) => p.theme.breakpoints.lg} {
+  @media ${(p) => p.theme.breakpoints.lgMaxW} {
     text-align: center;
     width: 100%;
     padding: 2rem;

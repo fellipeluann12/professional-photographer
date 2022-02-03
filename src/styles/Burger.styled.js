@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const BurgerStyles = styled.div`
+export const Wrapper = styled.div`
   position: fixed;
   top: 1.8rem;
   right: 2rem;
@@ -26,16 +26,16 @@ export const BurgerStyles = styled.div`
 
     &:nth-child(1) {
       transform: ${(props) =>
-        props.isBurgerClicked ? 'rotate(45deg)' : 'translateX(0)'};
+        props.burgerIsClicked ? 'rotate(45deg)' : 'translateX(0)'};
     }
     &:nth-child(2) {
       transform: ${(props) =>
-        props.isBurgerClicked ? 'translateX(100%)' : 'translateX(0)'};
-      opacity: ${(props) => (props.isBurgerClicked ? 0 : 1)};
+        props.burgerIsClicked ? 'translateX(100%)' : 'translateX(0)'};
+      opacity: ${(props) => (props.burgerIsClicked ? 0 : 1)};
     }
     &:nth-child(3) {
       transform: ${(props) =>
-        props.isBurgerClicked ? 'rotate(-45deg)' : 'rotate(0)'};
+        props.burgerIsClicked ? 'rotate(-45deg)' : 'rotate(0)'};
     }
   }
 `;

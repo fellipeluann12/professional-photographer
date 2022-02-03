@@ -98,7 +98,7 @@ export const NavBarNavLink = styled(NavLink)`
     padding: 2rem;
 
     &:hover {
-      box-shadow: ${(p) => p.theme.boxShadows.navBarMobile};
+      box-shadow: none;
     }
   }
 `;

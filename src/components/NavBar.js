@@ -16,8 +16,8 @@ import { uiActions } from '../store/ui-slice';
 import { navBarItems } from '../assets/data/navBarItems';
 
 export default function NavMenu() {
-  const isDropdownVisible = useSelector(
-    (state) => state.ui.navBar.isDropdownVisible
+  const dropdownIsVisible = useSelector(
+    (state) => state.ui.navBar.dropdownIsVisible
   );
 
   const isNavBarMobileVisible = useSelector(
@@ -26,17 +26,20 @@ export default function NavMenu() {
 
   const dispatch = useDispatch();
 
-  const toggleMobileHandler = () => {
-    dispatch(uiActions.navBarMobileIsVisible());
-    dispatch(uiActions.navBarBurgerIsClicked());
+  const toggleMobileNavBar = () => {
+    if (!isNavBarMobileVisible) {
+      return;
+    }
+    dispatch(uiActions.showNavBarMobile());
+    dispatch(uiActions.toggleBurger());
   };
 
   const onMouseEnterHandler = () => {
-    dispatch(uiActions.navBarDropDownIsVisible(true));
+    dispatch(uiActions.showNavBarDropdown());
   };
 
   const onMouseLeaveHandler = () => {
-    dispatch(uiActions.navBarDropDownIsVisible(false));
+    dispatch(uiActions.showNavBarDropdown());
   };
 
   return (
@@ -48,7 +51,7 @@ export default function NavMenu() {
               to="/"
               exact="true"
               role="button"
-              onClick={toggleMobileHandler}
+              onClick={toggleMobileNavBar}
             >
               KALEY
             </NavBarLogoNavLink>
@@ -62,16 +65,16 @@ export default function NavMenu() {
                     onMouseEnter={onMouseEnterHandler}
                     onMouseLeave={onMouseLeaveHandler}
                   >
-                    <NavBarNavLink to={item.path}>
+                    <NavBarNavLink to={item.path} onClick={onMouseEnterHandler}>
                       {item.title} <Caret />
                     </NavBarNavLink>
-                    {isDropdownVisible && <Dropdown />}
+                    {dropdownIsVisible && <Dropdown />}
                   </NavBarLi>
                 );
               } else {
                 return (
                   <NavBarLi key={index}>
-                    <NavBarNavLink to={item.path} onClick={toggleMobileHandler}>
+                    <NavBarNavLink to={item.path} onClick={toggleMobileNavBar}>
                       {item.title}
                     </NavBarNavLink>
                   </NavBarLi>

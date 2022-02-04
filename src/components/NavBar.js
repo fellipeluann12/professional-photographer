@@ -9,10 +9,6 @@ import { navBarItems } from '../assets/data/navBarItems';
 import NavBarItems from './NavBarItems';
 
 export default function NavMenu() {
-  const dropdownIsVisible = useSelector(
-    (state) => state.ui.navBar.dropdownIsVisible
-  );
-
   const isNavBarMobileVisible = useSelector(
     (state) => state.ui.navBar.mobile.isVisible
   );

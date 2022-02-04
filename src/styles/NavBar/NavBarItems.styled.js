@@ -4,6 +4,10 @@ import styled from 'styled-components';
 export const Wrapper = styled.nav`
   display: flex;
   height: 100%;
+
+  @media ${(p) => p.theme.breakpoints.lgMaxW} {
+    display: none;
+  }
 `;
 
 export const Ul = styled.ul`

@@ -1,19 +1,12 @@
-import { Container } from '../styles/ContainerStyles';
-import {
-  NavBarContainer,
-  NavBarLogo,
-  NavBarMenuStyles,
-  NavBarUl,
-  NavBarNavLink,
-  NavBarLogoNavLink,
-  NavBarLi,
-} from '../styles/NavBarStyles';
+import { Container } from '../styles/Container.styled';
+import * as S from '../styles/NavBar/NavBar.styled';
 import Dropdown from './Dropdown';
 import { ReactComponent as Caret } from '../assets/svgs/caret.svg';
 import Burger from './Burger';
 import { useSelector, useDispatch } from 'react-redux';
 import { uiActions } from '../store/ui-slice';
 import { navBarItems } from '../assets/data/navBarItems';
+import NavBarItems from './NavBarItems';
 
 export default function NavMenu() {
   const dropdownIsVisible = useSelector(
@@ -43,48 +36,23 @@ export default function NavMenu() {
   };
 
   return (
-    <NavBarMenuStyles>
+    <S.Wrapper>
       <Container>
-        <NavBarContainer>
-          <NavBarLogo>
-            <NavBarLogoNavLink
+        <S.NavBarContainer>
+          <S.Logo>
+            <S.LogoNavLink
               to="/"
               exact="true"
               role="button"
               onClick={toggleMobileNavBar}
             >
               KALEY
-            </NavBarLogoNavLink>
-          </NavBarLogo>
-          <NavBarUl isNavBarMobileVisible={isNavBarMobileVisible}>
-            {navBarItems.map((item, index) => {
-              if (item.title === 'Projects') {
-                return (
-                  <NavBarLi
-                    key={index}
-                    onMouseEnter={onMouseEnterHandler}
-                    onMouseLeave={onMouseLeaveHandler}
-                  >
-                    <NavBarNavLink to={item.path} onClick={onMouseEnterHandler}>
-                      {item.title} <Caret />
-                    </NavBarNavLink>
-                    {dropdownIsVisible && <Dropdown />}
-                  </NavBarLi>
-                );
-              } else {
-                return (
-                  <NavBarLi key={index}>
-                    <NavBarNavLink to={item.path} onClick={toggleMobileNavBar}>
-                      {item.title}
-                    </NavBarNavLink>
-                  </NavBarLi>
-                );
-              }
-            })}
-          </NavBarUl>
+            </S.LogoNavLink>
+          </S.Logo>
+          <NavBarItems />
           <Burger />
-        </NavBarContainer>
+        </S.NavBarContainer>
       </Container>
-    </NavBarMenuStyles>
+    </S.Wrapper>
   );
 }

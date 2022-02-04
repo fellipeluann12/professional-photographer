@@ -16,7 +16,7 @@ export const DropdownStyles = styled.div`
     bottom: 0;
     left: 0;
     top: 0;
-
+    visibility: hidden;
     width: 80vw;
   }
 `;

@@ -7,7 +7,7 @@ import {
   DropdownSpan,
   DropdownSpanContainer,
   DropdownUl,
-} from '../styles/DropdownStyles';
+} from '../styles/NavBar/DropdownStyles';
 import { useSelector, useDispatch } from 'react-redux';
 import { uiActions } from '../store/ui-slice';
 

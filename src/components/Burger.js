@@ -1,5 +1,5 @@
 import React from 'react';
-import * as S from '../styles/Burger.styled';
+import * as S from '../styles/NavBar/Burger.styled';
 import { useSelector, useDispatch } from 'react-redux';
 import { uiActions } from '../store/ui-slice';
 

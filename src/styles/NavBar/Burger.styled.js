@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  position: fixed;
   top: 1.8rem;
   right: 2rem;
   z-index: 20;
@@ -10,10 +9,12 @@ export const Wrapper = styled.div`
   display: none;
   justify-content: space-around;
   flex-flow: column nowrap;
+
   cursor: pointer;
 
   @media (max-width: 1024px) {
     display: flex;
+    justify-items: center;
   }
 
   div {

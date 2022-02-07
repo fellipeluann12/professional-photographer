@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import NavBar from './components/NavBar';
+import Nav from './components/Nav';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Events from './pages/Events';
@@ -12,7 +12,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <NavBar />
+        <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<Projects />} />

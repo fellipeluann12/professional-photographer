@@ -1,11 +1,12 @@
 import { createGlobalStyle } from 'styled-components';
 
-const GlobalStyles = createGlobalStyle`
+export const Global = createGlobalStyle`
 
   * {
   margin: 0;
   padding: 0;
   border-style: border-box;
+
 }
 
   html {
@@ -22,5 +23,3 @@ const GlobalStyles = createGlobalStyle`
   text-decoration: none;
 }
 `;
-
-export default GlobalStyles;

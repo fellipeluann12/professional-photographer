@@ -1,16 +1,17 @@
 import React from 'react';
-import { HomeStyles } from '../styles/HomeStyles.js';
+import styled from 'styled-components';
+
+const Section = styled.section``;
 
 export default function Home() {
   return (
-    <HomeStyles>
-      {/* <img src={frontHero} alt="Cat blac and white" /> */}
+    <Section>
+      <span>teste</span>
       <h1>This is home</h1>
       <h1>This is home</h1>
       <h1>This is home</h1>
       <h1>This is home</h1>
       <h1>This is home</h1>
-      <h1>This is home</h1>
-    </HomeStyles>
+    </Section>
   );
 }

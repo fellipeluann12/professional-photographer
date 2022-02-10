@@ -19,6 +19,14 @@ const Ul = styled.ul`
   @media ${(p) => p.theme.breakpoints.lgMaxW} {
     display: none;
   }
+
+  @media (hover: none) {
+    a:visited,
+    a:active,
+    a:link {
+      box-shadow: none;
+    }
+  }
 `;
 
 const Li = styled.li`

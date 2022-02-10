@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   flex-flow: column nowrap;
   cursor: pointer;
 
-  @media (max-width: 1024px) {
+  @media ${(p) => p.theme.breakpoints.lgMaxW} {
     display: flex;
     justify-items: center;
     align-self: center;
@@ -51,20 +51,6 @@ const DefaultDiv = styled.div`
   transition: all 0.3s ease-in;
 `;
 
-const FirstRow = styled(DefaultDiv)`
-  transform: ${(props) =>
-    props.burgerIsClicked ? 'rotate(45deg)' : 'translateX(0)'};
-`;
-
-const SecondRow = styled(DefaultDiv)`
-  opacity: ${(props) => (props.burgerIsClicked ? 0 : 1)};
-`;
-
-const ThirdRow = styled(DefaultDiv)`
-  transform: ${(props) =>
-    props.burgerIsClicked ? 'rotate(-45deg)' : 'rotate(0)'};
-`;
-
 export default function Burger() {
   const burgerIsClicked = useSelector(
     (state) => state.ui.navBar.mobile.burgerIsClicked
@@ -72,17 +58,16 @@ export default function Burger() {
 
   const dispatch = useDispatch();
 
-  const isVisibleHandler = () => {
-    dispatch(uiActions.showNavBarMobile(true));
+  const toggleNavMobHandler = () => {
+    dispatch(uiActions.showNavBarMobile());
     dispatch(uiActions.toggleBurger());
-    return () => {};
   };
 
   return (
-    <Wrapper onClick={isVisibleHandler} burgerIsClicked={burgerIsClicked}>
-      <FirstRow />
-      <SecondRow />
-      <ThirdRow />
+    <Wrapper onClick={toggleNavMobHandler} burgerIsClicked={burgerIsClicked}>
+      <div />
+      <div />
+      <div />
     </Wrapper>
   );
 }

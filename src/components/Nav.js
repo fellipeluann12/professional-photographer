@@ -12,8 +12,6 @@ import { uiActions } from '../store/ui-slice';
 const Header = styled.header`
   min-height: 8rem;
   background-color: ${(p) => p.theme.colors.primaryBlack};
-  display: flex;
-  flex-direction: column;
 `;
 
 const Container = styled.div`
@@ -21,7 +19,6 @@ const Container = styled.div`
   width: 90%;
   margin: 0 auto;
   display: flex;
-  flex: 1;
   line-height: 1.6;
   justify-content: space-between;
 `;
@@ -67,7 +64,7 @@ export default function Nav() {
     (state) => state.ui.navBar.mobile.isVisible
   );
 
-  const toggleMobileNavBarHandler = () => {
+  const onLogoClickHandler = () => {
     if (isNavBarMobileVisible) {
       dispatch(uiActions.showNavBarMobile());
       dispatch(uiActions.toggleBurger());
@@ -78,11 +75,7 @@ export default function Nav() {
     <Header>
       <Container>
         <LeftSection>
-          <LeftSectionNavLink
-            to="/"
-            exact="true"
-            onClick={toggleMobileNavBarHandler}
-          >
+          <LeftSectionNavLink to="/" exact="true" onClick={onLogoClickHandler}>
             KALEY
           </LeftSectionNavLink>
         </LeftSection>

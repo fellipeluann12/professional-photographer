@@ -3,9 +3,30 @@ import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { uiActions } from '../store/ui-slice';
+import { ReactComponent as Caret } from '../assets/svgs/caret.svg';
 
 const Li = styled.li`
-  display: flex;
+  display: none;
+
+  svg {
+    fill: ${(p) => p.theme.colors.primaryGrey};
+    height: 2rem;
+    width: 2rem;
+  }
+
+  @media ${(p) => p.theme.breakpoints.lgMaxW} {
+    display: flex;
+  }
+
+  @media (hover: none) {
+    a:visited,
+    a:active,
+    a:link {
+      margin-left: 0rem;
+      border-right: none;
+      box-shadow: none;
+    }
+  }
 `;
 
 const NLink = styled(NavLink)`
@@ -29,9 +50,9 @@ const NLinkSub = styled(NavLink)`
 `;
 
 export default function NavMobileLinks({ item }) {
-  const dispatch = useDispatch();
-
   const [subnav, setSubnav] = useState(false);
+
+  const dispatch = useDispatch();
 
   const showSubnav = () => setSubnav(!subnav);
 
@@ -47,7 +68,7 @@ export default function NavMobileLinks({ item }) {
           to={item.path}
           onClick={item.dropDown ? showSubnav : toggleMobileNavBarHandler}
         >
-          {item.title}
+          {item.title} {item.dropDown && <Caret />}
         </NLink>
       </Li>
       {subnav &&

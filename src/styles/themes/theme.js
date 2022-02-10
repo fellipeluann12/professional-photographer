@@ -1,10 +1,10 @@
 import { ThemeProvider } from 'styled-components';
 import { pattern as theme } from './pattern';
-import GlobalStyles from '../GlobalStyles';
+import * as S from '../Global.styled';
 
 const Theme = ({ children }) => (
   <ThemeProvider theme={theme}>
-    <GlobalStyles />
+    <S.Global />
     {children}
   </ThemeProvider>
 );

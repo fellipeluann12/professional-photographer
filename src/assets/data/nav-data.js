@@ -1,4 +1,4 @@
-export const navBarItems = [
+export const navData = [
   {
     title: 'Home',
     path: '/',
@@ -6,7 +6,7 @@ export const navBarItems = [
   {
     title: 'Projects',
     path: '#',
-    dropdown: [
+    dropDown: [
       {
         title: 'Personal',
         path: '/personal',
@@ -28,20 +28,5 @@ export const navBarItems = [
   {
     title: 'Contact',
     path: '/contact',
-  },
-];
-
-export const projectItems = [
-  {
-    title: 'Personal',
-    path: '/personal',
-  },
-  {
-    title: 'Events',
-    path: '/events',
-  },
-  {
-    title: 'Live Music',
-    path: '/livemusic',
   },
 ];

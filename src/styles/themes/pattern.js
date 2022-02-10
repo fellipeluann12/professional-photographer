@@ -12,7 +12,6 @@ export const pattern = {
   },
   boxShadows: {
     navBar: '0px 15px 19px -15px #a1ed00',
-    navBarMobile: 'inset 0px 0px 0px 3px #a1ed00',
   },
   breakpoints: {
     smMaxW: 'screen and (max-width: 640px)',

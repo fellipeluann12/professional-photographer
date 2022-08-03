@@ -5,9 +5,9 @@ import NavLinks from './NavLinks';
 import Burger from './Burger';
 import NavMobileLinks from './NavMobileLinks';
 import { useSelector } from 'react-redux';
-import { navData } from '../assets/data/nav-data';
+import { navData } from '../../assets/data/nav-data';
 import { useDispatch } from 'react-redux';
-import { uiActions } from '../store/ui-slice';
+import { uiActions } from '../../store/ui-slice';
 
 const Header = styled.header`
   min-height: 8rem;
@@ -55,6 +55,7 @@ const LeftSectionNavLink = styled(NavLink)`
 
 const RightSection = styled.nav`
   display: flex;
+  font-family: ${(p) => p.theme.fonts.titles};
 `;
 
 export default function Nav() {

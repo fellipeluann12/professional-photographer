@@ -1,11 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { ReactComponent as Caret } from '../assets/svgs/caret.svg';
+import { ReactComponent as Caret } from '../../assets/svgs/caret.svg';
 import Dropdown from './DropDownLinks';
 import { useSelector, useDispatch } from 'react-redux';
-import { uiActions } from '../store/ui-slice';
-import { navData } from '../assets/data/nav-data';
+import { uiActions } from '../../store/ui-slice';
+import { navData } from '../../assets/data/nav-data';
 
 const Ul = styled.ul`
   display: flex;

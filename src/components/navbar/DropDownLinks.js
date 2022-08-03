@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { uiActions } from '../store/ui-slice';
+import { uiActions } from '../../store/ui-slice';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 

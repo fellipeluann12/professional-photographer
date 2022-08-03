@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { uiActions } from '../store/ui-slice';
+import { uiActions } from '../../store/ui-slice';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`

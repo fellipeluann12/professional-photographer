@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { uiActions } from '../store/ui-slice';
-import { ReactComponent as Caret } from '../assets/svgs/caret.svg';
+import { uiActions } from '../../store/ui-slice';
+import { ReactComponent as Caret } from '../../assets/svgs/caret.svg';
 
 const Li = styled.li`
   display: none;

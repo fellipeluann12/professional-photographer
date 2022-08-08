@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom';
 const Li = styled.li`
   display: flex;
   height: 5rem;
+  transition: all 0.2s linear;
 `;
 
 const Nlink = styled(NavLink)`

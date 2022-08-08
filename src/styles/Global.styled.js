@@ -18,6 +18,10 @@ export const Global = createGlobalStyle`
     font-family: ${(p) => p.theme.fonts.main};
   }
 
+  h1, h2, h3{
+    font-family: ${(p) => p.theme.fonts.titles};
+  }
+
   ul, li, a{
   list-style: none;
   text-decoration: none;

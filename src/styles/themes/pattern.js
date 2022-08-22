@@ -8,21 +8,22 @@ export const pattern = {
   colors: {
     primaryBlack: '#17171a',
     secondaryBlack: '#242429',
+    primaryGreen: '#0acf6d',
+    secondaryGreen: '#c9cf7a',
     primaryGrey: '#bcb4b4',
     secondaryGrey: '#292929',
+    gradientGreen: 'linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%)',
+    boxShadowGreen: '#a1ed00',
+    boxShadowGrey: '#dbdce0',
   },
-  gradients: {
-    borders: `
-    border-image-source: linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%)};
-    border-image-slice: 1;
-    `,
-    words: `background: -webkit-linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%); 
+  gradientGreen: {
+    word: `background: -webkit-linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%); 
     background: -moz-linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%);
     background: linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;`,
-    backgrounds: `
+    background: `
     background: -webkit-linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%); 
     background: -moz-linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%);
     background: linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%);

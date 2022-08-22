@@ -5,16 +5,16 @@ import styled from 'styled-components';
 import { uiActions } from '../../store/ui-slice';
 import { ReactComponent as Caret } from '../../assets/svgs/caret.svg';
 
-const Li = styled.li`
+const SLi = styled.li`
   display: none;
 
   svg {
-    fill: ${(p) => p.theme.colors.primaryGrey};
+    fill: ${({ theme }) => theme.colors.primaryGrey};
     height: 2rem;
     width: 2rem;
   }
 
-  @media ${(p) => p.theme.breakpoints.lgMaxW} {
+  @media ${({ theme }) => theme.breakpoints.lgMaxW} {
     display: flex;
   }
 
@@ -29,8 +29,8 @@ const Li = styled.li`
   }
 `;
 
-const NLink = styled(NavLink)`
-  color: ${(p) => p.theme.colors.primaryGrey};
+const SNLink = styled(NavLink)`
+  color: ${({ theme }) => theme.colors.primaryGrey};
   font-size: 2.3rem;
   width: 100%;
   padding: 0.5rem;
@@ -42,11 +42,11 @@ const NLink = styled(NavLink)`
   }
 `;
 
-const NLinkSub = styled(NavLink)`
+const SNLinkSub = styled(NavLink)`
   font-size: 1.5rem;
   margin-left: 2.3rem;
   padding: 0.3rem;
-  color: ${(p) => p.theme.colors.primaryGrey};
+  color: ${({ theme }) => theme.colors.primaryGrey};
 `;
 
 export default function NavMobileLinks({ item }) {
@@ -63,21 +63,21 @@ export default function NavMobileLinks({ item }) {
 
   return (
     <>
-      <Li>
-        <NLink
+      <SLi>
+        <SNLink
           to={item.path}
           onClick={item.dropDown ? showSubnav : toggleMobileNavBarHandler}
         >
           {item.title} {item.dropDown && <Caret />}
-        </NLink>
-      </Li>
+        </SNLink>
+      </SLi>
       {subnav &&
         item.dropDown.map((item, index) => (
-          <Li key={index}>
-            <NLinkSub to={item.path} onClick={toggleMobileNavBarHandler}>
+          <SLi key={index}>
+            <SNLinkSub to={item.path} onClick={toggleMobileNavBarHandler}>
               - {item.title}
-            </NLinkSub>
-          </Li>
+            </SNLinkSub>
+          </SLi>
         ))}
     </>
   );

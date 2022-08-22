@@ -12,10 +12,12 @@ export const Global = createGlobalStyle`
   html {
     font-size: 62.5%;
     scroll-behavior: smooth;
+    height: 100%;
   }
 
   body {
     font-family: ${(p) => p.theme.fonts.main};
+    height: 100%;
   }
 
   h1, h2, h3{

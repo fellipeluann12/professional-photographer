@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import PText from './PText';
 
-const Wrapper = styled.li`
-  height: auto;
+const SLi = styled.li`
   //flex: 0 0 40rem;
-  border: 1px solid ${(p) => p.theme.colors.primaryGrey};
+  border: 1px solid ${({ theme }) => theme.colors.primaryGrey};
   border-radius: 0.5rem;
-  box-shadow: ${(p) => p.theme.boxShadows.Card};
+  box-shadow: 20px 20px 7px -10px ${({ theme }) => theme.colors.boxShadowGrey};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -17,44 +17,43 @@ const Wrapper = styled.li`
   }
 `;
 
-const Text = styled.div`
+const SText = styled.div`
   padding: 2rem;
   flex: 1;
 `;
 
-const H3 = styled.h3`
+const SH3 = styled.h3`
   font-size: 2rem;
   text-align: center;
 `;
 
-const Span = styled.span`
+const SSpan = styled.span`
   font-size: 1.3rem;
 `;
 
-const ImgContainer = styled.div`
+const SImgContainer = styled.div`
   flex: 2;
 `;
 
-const Image = styled.img`
+const SImage = styled.img`
   width: 100%;
   height: 100%;
 `;
 
 export default function PhotoThumbnail() {
-  const [isHover, setAnimated] = useState(false);
-
   return (
-    <Wrapper>
-      <Text>
-        <H3>Maio de 2022</H3>
-        <Span>
-          Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
-          ipsum
-        </Span>
-      </Text>
-      <ImgContainer>
-        <Image src="https://www.atrevida.com.br/wp-content/uploads/2021/03/34697-naya-rivera-fica-fora-das-homenagens-do-grammy-2021-e-revolta-fas.jpg" />
-      </ImgContainer>
-    </Wrapper>
+    <SLi>
+      <SText>
+        <SH3>Maio de 2022</SH3>
+        <PText>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit
+          amet felis a dolor sodales consectetur. Nulla tristique neque eu lacus
+          blandit, a egestas metus facilisis.
+        </PText>
+      </SText>
+      <SImgContainer>
+        <SImage src="https://www.atrevida.com.br/wp-content/uploads/2021/03/34697-naya-rivera-fica-fora-das-homenagens-do-grammy-2021-e-revolta-fas.jpg" />
+      </SImgContainer>
+    </SLi>
   );
 }

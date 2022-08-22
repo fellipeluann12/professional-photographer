@@ -10,31 +10,32 @@ import { useDispatch } from 'react-redux';
 import { uiActions } from '../../store/ui-slice';
 import Center from '../Center';
 
-const Wrapper = styled.header`
+const SNav = styled.header`
   min-height: 8rem;
-  background-color: ${(p) => p.theme.colors.primaryBlack};
+  background-color: ${({ theme }) => theme.colors.primaryBlack};
   position: sticky;
   top: 0;
+  line-height: 1.6;
+  z-index: 1000;
 `;
 
-const Container = styled.div`
-  line-height: 1.6;
+const SContainer = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-const MobileUl = styled.ul`
+const SMobileUl = styled.ul`
   display: flex;
   flex-direction: column;
   padding-bottom: 1rem;
 `;
 
-const LeftSectionNav = styled.nav`
+const SLeftSectionNav = styled.nav`
   font-size: 5rem;
 `;
 
-const LeftSectionNavLink = styled(NavLink)`
-  font-family: ${(p) => p.theme.fonts.titles};
+const SLeftSectionNavLink = styled(NavLink)`
+  font-family: ${({ theme }) => theme.fonts.titles};
   font-weight: bold;
   display: flex;
   align-items: center;
@@ -46,9 +47,9 @@ const LeftSectionNavLink = styled(NavLink)`
   -webkit-text-fill-color: transparent;
 `;
 
-const RightSectionNav = styled.nav`
+const SRightSectionNav = styled.nav`
   display: flex;
-  font-family: ${(p) => p.theme.fonts.titles};
+  font-family: ${({ theme }) => theme.fonts.titles};
 `;
 
 export default function Nav() {
@@ -66,31 +67,31 @@ export default function Nav() {
   };
 
   return (
-    <Wrapper>
+    <SNav>
       <Center>
-        <Container>
-          <LeftSectionNav>
-            <LeftSectionNavLink
+        <SContainer>
+          <SLeftSectionNav>
+            <SLeftSectionNavLink
               to="/"
               exact="true"
               onClick={onLogoClickHandler}
             >
               KALEY
-            </LeftSectionNavLink>
-          </LeftSectionNav>
-          <RightSectionNav>
+            </SLeftSectionNavLink>
+          </SLeftSectionNav>
+          <SRightSectionNav>
             <NavLinks />
-          </RightSectionNav>
+          </SRightSectionNav>
           <Burger />
-        </Container>
+        </SContainer>
         {isNavBarMobileVisible && (
-          <MobileUl>
+          <SMobileUl>
             {navData.map((item, index) => {
               return <NavMobileLinks item={item} key={index} />;
             })}
-          </MobileUl>
+          </SMobileUl>
         )}
       </Center>
-    </Wrapper>
+    </SNav>
   );
 }

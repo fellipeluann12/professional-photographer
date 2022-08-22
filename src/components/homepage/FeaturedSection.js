@@ -3,33 +3,33 @@ import styled from 'styled-components';
 import Center from '../Center';
 import PhotoThumbnail from '../PhotoThumbnail';
 
-const Wrapper = styled.section`
+const SFeatureSection = styled.section`
   padding: 4rem 0rem 4rem;
 `;
 
-const H3 = styled.h3`
+const SH3 = styled.h3`
   font-size: 2.5rem;
   text-align: center;
 `;
 
-const Ul = styled.ul`
+const SUl = styled.ul`
   display: flex;
-  margin-top: 4rem;
+  padding-top: 4rem;
   justify-content: center;
   gap: 3rem;
 `;
 
 export default function FeaturedGaleries() {
   return (
-    <Wrapper>
+    <SFeatureSection>
       <Center>
-        <H3>Featured Galeries</H3>
-        <Ul>
+        <SH3>Featured Galeries</SH3>
+        <SUl>
           <PhotoThumbnail />
           <PhotoThumbnail />
           <PhotoThumbnail />
-        </Ul>
+        </SUl>
       </Center>
-    </Wrapper>
+    </SFeatureSection>
   );
 }

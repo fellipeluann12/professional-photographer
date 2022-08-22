@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { uiActions } from '../../store/ui-slice';
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
+const SBurger = styled.div`
   top: 1.8rem;
   right: 2rem;
   z-index: 20;
@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   flex-flow: column nowrap;
   cursor: pointer;
 
-  @media ${(p) => p.theme.breakpoints.lgMaxW} {
+  @media ${({ theme }) => theme.breakpoints.lgMaxW} {
     display: flex;
     justify-items: center;
     align-self: center;
@@ -55,10 +55,10 @@ export default function Burger() {
   };
 
   return (
-    <Wrapper onClick={toggleNavMobHandler} burgerIsClicked={burgerIsClicked}>
+    <SBurger onClick={toggleNavMobHandler} burgerIsClicked={burgerIsClicked}>
       <div />
       <div />
       <div />
-    </Wrapper>
+    </SBurger>
   );
 }

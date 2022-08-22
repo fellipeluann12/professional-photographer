@@ -4,15 +4,15 @@ import { uiActions } from '../../store/ui-slice';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-const Li = styled.li`
+const SLi = styled.li`
   display: flex;
   height: 5rem;
   transition: all 0.2s linear;
 `;
 
-const Nlink = styled(NavLink)`
+const SNlink = styled(NavLink)`
   display: flex;
-  color: ${(p) => p.theme.colors.primaryGrey};
+  color: ${({ theme }) => theme.colors.primaryGrey};
   width: 100%;
   height: 100%;
   font-size: 1.7rem;
@@ -26,7 +26,7 @@ const Nlink = styled(NavLink)`
 export default function Dropdown({ item }) {
   const dispatch = useDispatch();
 
-  const dropDownIsVisibleHandler = () => {
+  const dropDownVisibleHandler = () => {
     dispatch(uiActions.showNavBarDropdown());
   };
 
@@ -34,11 +34,11 @@ export default function Dropdown({ item }) {
     <>
       {item.dropDown.map((item, index) => {
         return (
-          <Li key={index}>
-            <Nlink to={item.path} onClick={dropDownIsVisibleHandler}>
+          <SLi key={index}>
+            <SNlink to={item.path} onClick={dropDownVisibleHandler}>
               {item.title}
-            </Nlink>
-          </Li>
+            </SNlink>
+          </SLi>
         );
       })}
     </>

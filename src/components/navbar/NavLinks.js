@@ -2,21 +2,21 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as Caret } from '../../assets/svgs/caret.svg';
-import Dropdown from './DropDownLinks';
 import { useSelector, useDispatch } from 'react-redux';
 import { uiActions } from '../../store/ui-slice';
 import { navData } from '../../assets/data/nav-data';
+import Dropdown from './DropDown';
 
-const Ul = styled.ul`
+const SUl = styled.ul`
   display: flex;
 
   svg {
-    fill: ${(p) => p.theme.colors.primaryGrey};
+    fill: ${({ theme }) => theme.colors.primaryGrey};
     width: 2rem;
     height: 2rem;
   }
 
-  @media ${(p) => p.theme.breakpoints.lgMaxW} {
+  @media ${({ theme }) => theme.breakpoints.lgMaxW} {
     display: none;
   }
 
@@ -29,7 +29,7 @@ const Ul = styled.ul`
   }
 `;
 
-const Li = styled.li`
+const SLi = styled.li`
   display: flex;
   align-items: center;
 
@@ -38,14 +38,14 @@ const Li = styled.li`
   }
 `;
 
-const NLink = styled(NavLink)`
-  color: ${(p) => p.theme.colors.primaryGrey};
+const SNLink = styled(NavLink)`
+  color: ${({ theme }) => theme.colors.primaryGrey};
   border-radius: 1rem;
   font-size: 2.5rem;
   padding: 0.7rem;
 
   &:hover {
-    box-shadow: ${(p) => p.theme.boxShadows.navBar};
+    box-shadow: 0px 15px 19px -15px #a1ed00;
   }
 
   &.active {
@@ -53,7 +53,7 @@ const NLink = styled(NavLink)`
   }
 `;
 
-const DropDownWrapper = styled.div`
+const SDropDown = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -65,7 +65,7 @@ const DropDownWrapper = styled.div`
   z-index: 20;
 `;
 
-const DropDownUl = styled.ul`
+const SDropDownUl = styled.ul`
   padding: 1rem;
 `;
 
@@ -81,35 +81,35 @@ export default function NavLinks(props) {
   };
 
   return (
-    <Ul>
+    <SUl>
       {navData.map((item, index) => {
         if (item.dropDown) {
           return (
-            <Li
+            <SLi
               key={index}
               onMouseEnter={toggleDropDownHandler}
               onMouseLeave={toggleDropDownHandler}
             >
-              <NLink to={item.path}>
+              <SNLink to={item.path}>
                 {item.title} <Caret />
-              </NLink>
+              </SNLink>
               {dropDownIsVisible && (
-                <DropDownWrapper>
-                  <DropDownUl>
+                <SDropDown>
+                  <SDropDownUl>
                     <Dropdown item={item} />
-                  </DropDownUl>
-                </DropDownWrapper>
+                  </SDropDownUl>
+                </SDropDown>
               )}
-            </Li>
+            </SLi>
           );
         } else {
           return (
-            <Li key={index}>
-              <NLink to={item.path}>{item.title}</NLink>
-            </Li>
+            <SLi key={index}>
+              <SNLink to={item.path}>{item.title}</SNLink>
+            </SLi>
           );
         }
       })}
-    </Ul>
+    </SUl>
   );
 }

@@ -3,12 +3,12 @@ import styled from 'styled-components';
 
 const SPText = styled.span`
   max-width: ${(props) => (props.maxWidth ? props.maxWidth : 'auto')};
-  font-size: ${(props) =>
-    props.fontSize ? props.fontSize : 'clamp(1rem, 0.5vw, 2rem)'};
+  font-size: ${(props) => (props.fontSize ? props.fontSize : '1.2rem')};
   color: ${(props) => (props.color ? props.theme.colors[props.color] : '')};
   letter-spacing: ${(props) =>
     props.letterSpacing ? props.letterSpacing : ''};
-  text-align: center;
+  display: inline-block;
+  text-align: ${(props) => (props.textAlign ? props.textAlign : '')};
 `;
 
 export default function PText(props) {
@@ -19,6 +19,7 @@ export default function PText(props) {
       color={props.color}
       fontSize={props.fontSize}
       letterSpacing={props.letterSpacing}
+      textAlign={props.textAlign}
     >
       {props.children}
     </SPText>

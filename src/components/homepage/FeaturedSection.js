@@ -14,9 +14,14 @@ const SH3 = styled.h3`
 
 const SUl = styled.ul`
   display: flex;
+
   padding-top: 4rem;
   justify-content: center;
   gap: 3rem;
+
+  @media ${({ theme }) => theme.breakpoints.lgMaxW} {
+    flex-wrap: wrap;
+  }
 `;
 
 export default function FeaturedGaleries() {

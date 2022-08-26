@@ -34,7 +34,7 @@ export default function WhyHireMeSection() {
           </PText>
           <SH2>WHY HIRE ME</SH2>
         </STitle>
-        <PText maxWidth="50rem" color="primaryGrey" fontSize="2rem">
+        <PText color="primaryGrey" fontSize="2rem" textAlign="justify">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit
           amet felis a dolor sodales consectetur. Nulla tristique neque eu lacus
           blandit, a egestas metus facilisis. Nam malesuada tellus a dolor

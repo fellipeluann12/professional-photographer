@@ -13,6 +13,10 @@ const SH1 = styled.h1`
   font-size: 5rem;
   letter-spacing: 0.09rem;
   ${({ theme }) => theme.gradientGreen.word}
+
+  @media ${({ theme }) => theme.breakpoints.smMaxW} {
+    font-size: 3rem;
+  }
 `;
 
 const STitle = styled.div`

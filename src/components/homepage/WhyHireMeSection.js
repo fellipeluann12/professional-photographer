@@ -6,7 +6,6 @@ import PText from '../PText';
 
 const SWhyHireMeSection = styled.section`
   padding: 4rem 0rem 4rem;
-  background-color: ${({ theme }) => theme.colors.secondaryBlack};
 `;
 
 const STitle = styled.div`

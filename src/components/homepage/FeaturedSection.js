@@ -5,11 +5,13 @@ import PhotoThumbnail from '../PhotoThumbnail';
 
 const SFeatureSection = styled.section`
   padding: 4rem 0rem 4rem;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.secondaryGrey};
 `;
 
 const SH3 = styled.h3`
   font-size: 2.5rem;
   text-align: center;
+  ${({ theme }) => theme.gradientGreen.word}
 `;
 
 const SUl = styled.ul`
@@ -28,7 +30,7 @@ export default function FeaturedGaleries() {
   return (
     <SFeatureSection>
       <Center>
-        <SH3>Featured Galeries</SH3>
+        <SH3>FEATURED GALERIES</SH3>
         <SUl>
           <PhotoThumbnail />
           <PhotoThumbnail />

@@ -7,6 +7,7 @@ const SFooter = styled.footer`
   text-align: center;
   font-size: 1vh;
   color: ${({ theme }) => theme.colors.primaryGrey};
+  border-top: 1px solid ${({ theme }) => theme.colors.secondaryGrey};
 `;
 
 export default function Footer() {

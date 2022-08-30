@@ -6,12 +6,12 @@ export const pattern = {
   },
   // Cores para o layout
   colors: {
-    primaryBlack: '#17171a',
-    secondaryBlack: '#242429',
+    primaryBlack: '#1A1A1A',
+    secondaryBlack: 'rgb(36, 36, 36)',
     primaryGreen: '#0acf6d',
     secondaryGreen: '#c9cf7a',
     primaryGrey: '#bcb4b4',
-    secondaryGrey: '#292929',
+    secondaryGrey: '#403f3f',
     gradientGreen: 'linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%)',
     boxShadowGreen: '#a1ed00',
     boxShadowGrey: '#dbdce0',

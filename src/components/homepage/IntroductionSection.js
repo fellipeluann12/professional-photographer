@@ -5,8 +5,8 @@ import Center from '../Center';
 import PText from '../PText';
 
 const SIntroductionSection = styled.section`
-  background-color: ${({ theme }) => theme.colors.secondaryBlack};
   padding: 7rem 0rem 7rem;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.secondaryGrey};
 `;
 
 const SH1 = styled.h1`

@@ -11,11 +11,10 @@ import { uiActions } from '../../store/ui-slice';
 import Center from '../Center';
 
 const SNav = styled.header`
-  min-height: 8rem;
   background-color: ${({ theme }) => theme.colors.primaryBlack};
   position: sticky;
   top: 0;
-  line-height: 1.6;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.secondaryGrey};
   z-index: 1000;
 `;
 

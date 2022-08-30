@@ -57,7 +57,7 @@ const SDropDown = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
-  top: 8rem;
+  top: 6.1rem;
   background: ${(p) => p.theme.colors.primaryBlack};
   width: 16.42rem;
   border-bottom-left-radius: 5px;

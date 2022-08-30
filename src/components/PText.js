@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const SPText = styled.span`
   max-width: ${(props) => (props.maxWidth ? props.maxWidth : 'auto')};
-  font-size: ${(props) => (props.fontSize ? props.fontSize : '1.2rem')};
+  font-size: ${(props) => (props.fontSize ? props.fontSize : '1.6rem')};
   color: ${(props) => (props.color ? props.theme.colors[props.color] : '')};
   letter-spacing: ${(props) =>
     props.letterSpacing ? props.letterSpacing : ''};

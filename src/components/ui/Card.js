@@ -1,14 +1,14 @@
 import styled, { css } from 'styled-components';
 
 export const CardWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   border-radius: 0.5rem;
-  border-right: 1px solid ${({ theme }) => theme.colors.secondaryGreen};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.secondaryGreen};
   background-color: ${({ theme }) => theme.colors.secondaryBlack};
-  /* box-shadow: -5px -5px 5px ${({ theme }) => theme.colors.secondaryGreen};
-  -moz-box-shadow: 1px 1px 1px ${({ theme }) => theme.colors.secondaryGreen};
-  -webkit-box-shadow: 1px 1px 1px ${({ theme }) => theme.colors.secondaryGreen};
-  -o-box-shadow: 1px 1px 1px ${({ theme }) => theme.colors.secondaryGreen}; */
+  box-shadow: 2px 2px 1px ${({ theme }) => theme.colors.secondaryGreen};
+  -moz-box-shadow: 2px 2px 1px ${({ theme }) => theme.colors.secondaryGreen};
+  -webkit-box-shadow: 2px 2px 1px ${({ theme }) => theme.colors.secondaryGreen};
+  -o-box-shadow: 2px 2px 1px ${({ theme }) => theme.colors.secondaryGreen};
 
   ${(props) =>
     props.featured &&
@@ -23,4 +23,15 @@ export const CardWrapper = styled.div`
         flex: 0 1 70rem;
       }
     `}
+`;
+
+export const CardTextBody = styled.div`
+  padding: 2rem;
+`;
+
+export const CardHeading = styled.h3`
+  font-size: 2.5rem;
+  padding-bottom: 1rem;
+  text-align: center;
+  ${({ theme }) => theme.gradientGreen.word}
 `;

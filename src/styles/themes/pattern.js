@@ -12,6 +12,7 @@ export const pattern = {
     secondaryGreen: '#c9cf7a',
     primaryGrey: '#bcb4b4',
     secondaryGrey: '#403f3f',
+    primaryRed: '#bf1650',
     gradientGreen: 'linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%)',
     boxShadowGreen: '#a1ed00',
     boxShadowGrey: '#dbdce0',

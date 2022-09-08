@@ -44,7 +44,7 @@ export default function IntroductionSection() {
           </PText>
         </STitle>
         <SActions>
-          <Button primary btnText="ABOUT ME" />
+          <Button nLink="about" btnText="ABOUT ME" />
         </SActions>
       </Center>
     </SIntroductionSection>

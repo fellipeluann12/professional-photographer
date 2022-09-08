@@ -23,6 +23,7 @@ const SLeftSection = styled.div``;
 const SH2 = styled.h2`
   font-size: 5rem;
   color: ${({ theme }) => theme.gradientGreen.word};
+  display: inline-block;
 `;
 
 const RightSection = styled.div`

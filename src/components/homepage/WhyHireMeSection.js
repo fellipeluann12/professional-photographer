@@ -45,7 +45,7 @@ export default function WhyHireMeSection() {
           tincidunt auctor.
         </PText>
         <SActions>
-          <Button primary btnText="SEE SOME OF MY PERSONAL WORK" />
+          <Button nLink="personal" btnText="SEE SOME OF MY PERSONAL WORK" />
         </SActions>
       </Center>
     </SWhyHireMeSection>

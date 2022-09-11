@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import Button from '../Button';
@@ -16,13 +16,23 @@ const SContactFormulary = styled.form`
 export default function ContactFormulary() {
   const {
     register,
+    formState,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm({
     mode: 'onChange',
     criteriaMode: 'all',
+    defaultValues: { Name: '', Email: '', Comment: '' },
   });
+
   const onSubmit = (data) => alert(JSON.stringify(data));
+
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset({ Name: '', Email: '', Comment: '' });
+    }
+  }, [formState, reset, formState.isSubmitSuccessful]);
 
   return (
     <SContactFormulary onSubmit={handleSubmit(onSubmit)}>

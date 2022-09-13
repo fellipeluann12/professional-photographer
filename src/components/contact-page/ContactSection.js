@@ -5,10 +5,11 @@ import PText from '../PText';
 import ContactFormulary from './ContactFormulary';
 
 const SContactSection = styled.div`
-  padding: 7rem 0rem;
+  padding: 7rem 0;
 `;
 
 const SGridContainer = styled.div`
+  margin-top: 7rem;
   display: grid;
   gap: 5rem;
   grid-template-columns: auto 40rem;
@@ -32,9 +33,9 @@ export default function ContactSection() {
   return (
     <SContactSection>
       <Center>
+        <SH2>CONTACT</SH2>
         <SGridContainer>
           <SLeftSection>
-            <SH2>CONTACT</SH2>
             <PText color="primaryGrey" fontSize="2rem">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
               sit amet felis a dolor sodales consectetur.

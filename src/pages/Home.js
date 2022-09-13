@@ -1,7 +1,7 @@
 import React from 'react';
-import FeaturedSection from '../components/homepage/FeaturedSection';
-import IntroductionSection from '../components/homepage/IntroductionSection';
-import WhyHireMeSection from '../components/homepage/WhyHireMeSection';
+import FeaturedSection from '../components/home-page/FeaturedSection';
+import IntroductionSection from '../components/home-page/IntroductionSection';
+import WhyHireMeSection from '../components/home-page/WhyHireMeSection';
 
 export default function Home() {
   return (

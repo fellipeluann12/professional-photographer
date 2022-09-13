@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import Center from '../Center';
 import PhotoThumbnail from '../PhotoThumbnail';
 
-const SPersonalSection = styled.div`
-  padding: 7rem 0rem;
+const SEventsSection = styled.div`
+  padding: 7rem 0;
 `;
 
 const SH2 = styled.h2`
@@ -20,15 +20,12 @@ const SGridContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
 `;
 
-export default function PersonalSection() {
+export default function EventsSection() {
   return (
-    <SPersonalSection>
+    <SEventsSection>
       <Center>
-        <SH2>Personal</SH2>
+        <SH2>EVENTS</SH2>
         <SGridContainer>
-          <PhotoThumbnail />
-          <PhotoThumbnail />
-          <PhotoThumbnail />
           <PhotoThumbnail />
           <PhotoThumbnail />
           <PhotoThumbnail />
@@ -40,6 +37,6 @@ export default function PersonalSection() {
           <PhotoThumbnail />
         </SGridContainer>
       </Center>
-    </SPersonalSection>
+    </SEventsSection>
   );
 }

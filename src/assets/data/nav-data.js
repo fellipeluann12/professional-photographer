@@ -15,10 +15,6 @@ export const navData = [
         title: 'Events',
         path: '/events',
       },
-      {
-        title: 'Live Music',
-        path: '/livemusic',
-      },
     ],
   },
   {

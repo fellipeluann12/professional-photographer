@@ -9,6 +9,7 @@ const SAboutSection = styled.div`
 `;
 
 const SGridContainer = styled.div`
+  margin-top: 7rem;
   display: grid;
   gap: 5rem;
   grid-template-columns: auto 260px;
@@ -40,9 +41,9 @@ export default function AboutSection() {
   return (
     <SAboutSection>
       <Center>
+        <SH2>ABOUT ME</SH2>
         <SGridContainer>
           <SLeftSection>
-            <SH2>ABOUT ME</SH2>
             <PText color="primaryGrey" fontSize="2rem">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
               sit amet felis a dolor sodales consectetur. Nulla tristique neque

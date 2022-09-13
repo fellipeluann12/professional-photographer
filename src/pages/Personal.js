@@ -1,13 +1,10 @@
 import React from 'react';
+import PersonalSection from '../components/personal/PersonalSection';
 
 export default function Personal() {
   return (
-    <div>
-      <h1>This is personal</h1>
-      <h1>This is personal</h1>
-      <h1>This is personal</h1>
-      <h1>This is personal</h1>
-      <h1>This is personal</h1>
-    </div>
+    <>
+      <PersonalSection />
+    </>
   );
 }

@@ -33,4 +33,8 @@ export const Global = createGlobalStyle`
   list-style: none;
   text-decoration: none;
 }
+
+.toast-message{
+  font-size: 1.6rem;
+}
 `;

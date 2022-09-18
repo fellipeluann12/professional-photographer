@@ -9,7 +9,7 @@ import Home from './pages/Home';
 import Personal from './pages/Personal';
 import Projects from './pages/Projects';
 
-const AppWrapper = styled.div`
+const SApp = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -22,7 +22,7 @@ const SMain = styled.main`
 
 function App() {
   return (
-    <AppWrapper>
+    <SApp>
       <BrowserRouter>
         <Nav />
         <SMain>
@@ -37,7 +37,7 @@ function App() {
         </SMain>
         <Footer />
       </BrowserRouter>
-    </AppWrapper>
+    </SApp>
   );
 }
 

@@ -13,8 +13,9 @@ import Center from '../Center';
 const SNav = styled.header`
   background-color: ${({ theme }) => theme.colors.primaryBlack};
   position: sticky;
-  top: 0;
   border-bottom: 1px solid ${({ theme }) => theme.colors.secondaryGrey};
+  top: 0;
+  z-index: 1000;
 `;
 
 const SContainer = styled.div`

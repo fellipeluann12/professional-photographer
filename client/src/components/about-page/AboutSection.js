@@ -2,7 +2,7 @@ import React from 'react';
 import Center from '../Center';
 import styled from 'styled-components';
 import PText from '../PText';
-import { CardHeading, CardTextBody, CardWrapper } from '../ui/Card';
+import { Card, CardHeading, CardTextBody } from '../ui/Card';
 
 const SAboutSection = styled.div`
   padding: 7rem 0rem;
@@ -57,7 +57,7 @@ export default function AboutSection() {
             </PText>
           </SLeftSection>
           <RightSection>
-            <CardWrapper>
+            <Card>
               <CardTextBody>
                 <CardHeading>Hi ;]</CardHeading>
               </CardTextBody>
@@ -65,7 +65,7 @@ export default function AboutSection() {
                 src="https://images.pexels.com/photos/1962567/pexels-photo-1962567.jpeg"
                 alt="lol"
               />
-            </CardWrapper>
+            </Card>
           </RightSection>
         </SGridContainer>
       </Center>

@@ -10,7 +10,7 @@ const SWhyHireMeSection = styled.section`
 
 const STitle = styled.div`
   margin: 0 auto;
-  max-width: 44.2rem;
+  max-width: 37rem;
 `;
 
 const SActions = styled.div`
@@ -19,7 +19,7 @@ const SActions = styled.div`
 `;
 
 const SH2 = styled.h2`
-  font-size: 6rem;
+  font-size: 5rem;
   ${({ theme }) => theme.gradientGreen.word};
 `;
 

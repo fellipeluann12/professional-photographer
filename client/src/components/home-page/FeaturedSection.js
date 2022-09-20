@@ -6,36 +6,32 @@ import PhotoThumbnail from '../PhotoThumbnail';
 const SFeatureSection = styled.section`
   padding: 4rem 0rem 4rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.secondaryGrey};
+  text-align: center;
 `;
 
-const SH3 = styled.h3`
-  font-size: 2.5rem;
-  text-align: center;
+const SH2 = styled.h2`
+  font-size: 5rem;
+  display: inline-block;
   ${({ theme }) => theme.gradientGreen.word}
 `;
 
-const SUl = styled.ul`
-  display: flex;
-
-  padding-top: 4rem;
-  justify-content: center;
-  gap: 3rem;
-
-  @media ${({ theme }) => theme.breakpoints.lgMaxW} {
-    flex-wrap: wrap;
-  }
+const SGridContainer = styled.div`
+  margin-top: 7rem;
+  display: grid;
+  gap: 5rem;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
 `;
 
 export default function FeaturedGaleries() {
   return (
     <SFeatureSection>
       <Center>
-        <SH3>FEATURED GALERIES</SH3>
-        <SUl>
-          <PhotoThumbnail />
-          <PhotoThumbnail />
-          <PhotoThumbnail />
-        </SUl>
+        <SH2>FEATURED GALERIES</SH2>
+        <SGridContainer>
+          <PhotoThumbnail item={''} />
+          <PhotoThumbnail item={''} />
+          <PhotoThumbnail item={''} />
+        </SGridContainer>
       </Center>
     </SFeatureSection>
   );

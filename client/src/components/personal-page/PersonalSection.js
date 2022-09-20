@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { fetchAlbumsData } from '../../store/gallery/albums-actions';
 import Center from '../Center';
 import PhotoThumbnail from '../PhotoThumbnail';
 
@@ -21,23 +23,21 @@ const SGridContainer = styled.div`
 `;
 
 export default function PersonalSection() {
+  const dispatch = useDispatch();
+  const albums = useSelector((state) => state.albums.items);
+
+  useEffect(() => {
+    dispatch(fetchAlbumsData());
+  }, [dispatch]);
+
   return (
     <SPersonalSection>
       <Center>
         <SH2>PERSONAL</SH2>
         <SGridContainer>
-          <PhotoThumbnail />
-          <PhotoThumbnail />
-          <PhotoThumbnail />
-          <PhotoThumbnail />
-          <PhotoThumbnail />
-          <PhotoThumbnail />
-          <PhotoThumbnail />
-          <PhotoThumbnail />
-          <PhotoThumbnail />
-          <PhotoThumbnail />
-          <PhotoThumbnail />
-          <PhotoThumbnail />
+          {albums.map((item, index) => {
+            return <PhotoThumbnail item={item} key={index} />;
+          })}
         </SGridContainer>
       </Center>
     </SPersonalSection>

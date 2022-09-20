@@ -1,9 +1,11 @@
 import styled, { css } from 'styled-components';
 
-export const CardWrapper = styled.div`
+export const Card = styled.div`
   display: flex;
   flex-direction: column;
-  border-radius: 0.5rem;
+  border-radius: 0.2rem 0.2rem 0 0rem;
+  align-items: center;
+  padding-top: 0.5rem;
   background-color: ${({ theme }) => theme.colors.secondaryBlack};
   box-shadow: 2px 2px 1px ${({ theme }) => theme.colors.secondaryGreen};
   -moz-box-shadow: 2px 2px 1px ${({ theme }) => theme.colors.secondaryGreen};
@@ -26,12 +28,21 @@ export const CardWrapper = styled.div`
 `;
 
 export const CardTextBody = styled.div`
-  padding: 2rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 `;
 
 export const CardHeading = styled.h3`
   font-size: 2.5rem;
-  padding-bottom: 1rem;
-  text-align: center;
   ${({ theme }) => theme.gradientGreen.word}
+`;
+
+export const CardImage = styled.img`
+  width: 100%;
+  height: 100%;
+  margin-top: auto;
 `;

@@ -10,7 +10,7 @@ const SIntroductionSection = styled.section`
 `;
 
 const SH1 = styled.h1`
-  font-size: 5rem;
+  font-size: 6rem;
   letter-spacing: 0.09rem;
   ${({ theme }) => theme.gradientGreen.word}
 

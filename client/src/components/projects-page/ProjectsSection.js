@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { fetchAlbumsData } from '../../store/gallery/albums-actions';
-import Center from '../Center';
 import Thumbnail from '../Thumbnail';
+import Center from '../Center';
 
-const SPersonalSection = styled.div`
+const SProjectsSection = styled.div`
   padding: 7rem 0rem;
 `;
 
@@ -22,25 +22,27 @@ const SGridContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
 `;
 
-export default function PersonalSection() {
+const ProjectsSection = () => {
   const dispatch = useDispatch();
-  const albums = useSelector((state) => state.albums.items);
+  const projects = useSelector((state) => state.albums.items);
 
   useEffect(() => {
     dispatch(fetchAlbumsData());
   }, [dispatch]);
 
   return (
-    <SPersonalSection>
+    <SProjectsSection>
       <Center>
-        <SH2>PERSONAL</SH2>
+        <SH2>PROJECTS</SH2>
         <SGridContainer>
-          {albums.map((album) => {
-            console.log(album);
-            return <Thumbnail album={album} key={album.id} />;
+          {projects.map((projects) => {
+            console.log('Projects', projects);
+            return <Thumbnail item={projects} key={projects.id} />;
           })}
         </SGridContainer>
       </Center>
-    </SPersonalSection>
+    </SProjectsSection>
   );
-}
+};
+
+export default ProjectsSection;

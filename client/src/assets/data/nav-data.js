@@ -1,11 +1,11 @@
 export const navData = [
   {
     title: 'Home',
-    path: '/',
+    path: '/home',
   },
   {
     title: 'Projects',
-    path: '#',
+    path: '/projects',
     dropDown: [
       {
         title: 'Personal',

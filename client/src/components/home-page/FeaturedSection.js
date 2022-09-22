@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Center from '../Center';
-import PhotoThumbnail from '../PhotoThumbnail';
+import Thumbnail from '../Thumbnail';
 
 const SFeatureSection = styled.section`
   padding: 4rem 0rem 4rem;
@@ -28,9 +28,9 @@ export default function FeaturedGaleries() {
       <Center>
         <SH2>FEATURED GALERIES</SH2>
         <SGridContainer>
-          <PhotoThumbnail item={''} />
-          <PhotoThumbnail item={''} />
-          <PhotoThumbnail item={''} />
+          <Thumbnail item={''} />
+          <Thumbnail item={''} />
+          <Thumbnail item={''} />
         </SGridContainer>
       </Center>
     </SFeatureSection>

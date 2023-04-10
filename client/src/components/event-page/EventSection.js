@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import Center from '../Center';
 
-const SAlbumsProject = styled.div`
-  padding: 7rem 0rem;
+const SEventsSection = styled.div`
+  padding: 7rem 0;
 `;
 
 const SH2 = styled.h2`
@@ -19,15 +19,13 @@ const SGridContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
 `;
 
-const AlbumsSection = () => {
+export default function EventsSection() {
   return (
-    <SAlbumsProject>
+    <SEventsSection>
       <Center>
-        <SH2>ALBUMS</SH2>
+        <SH2>EVENTS</SH2>
         <SGridContainer></SGridContainer>
       </Center>
-    </SAlbumsProject>
+    </SEventsSection>
   );
-};
-
-export default AlbumsSection;
+}

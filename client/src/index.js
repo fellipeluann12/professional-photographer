@@ -11,8 +11,8 @@ import Personal from './routes/Personal';
 import Home from './routes/Home';
 import About from './routes/About';
 import Contact from './routes/Contact';
-import Projects from './routes/Projects';
-import AlbumsPage from './routes/AlbumsPage';
+import Project from './routes/Project';
+import AlbumPage from './routes/AlbumPage';
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
@@ -28,8 +28,8 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'projects',
-        element: <Projects />,
+        path: 'project',
+        element: <Project />,
         children: [],
       },
       {
@@ -37,8 +37,8 @@ const router = createBrowserRouter([
         element: <Personal />,
       },
       {
-        path: '/projects/:albumsName/:albumsId/albums',
-        element: <AlbumsPage />,
+        path: '/project/:albumName/:albumId/album',
+        element: <AlbumPage />,
       },
       {
         path: 'about',

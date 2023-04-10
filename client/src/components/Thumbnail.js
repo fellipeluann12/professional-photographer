@@ -5,7 +5,7 @@ import { Card, CardHeading, CardImage, CardTextBody } from './ui/Card';
 
 export default function Thumbnail({ item }) {
   console.log('params ');
-  const { id, name, description, cover, formattedName } = item;
+  const { id, formattedName } = item;
 
   return (
     <NavLink to={`${formattedName}/${id}/albums`}>

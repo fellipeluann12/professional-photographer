@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const albumsSlice = createSlice({
+const albumSlice = createSlice({
   name: 'albums',
   initialState: {
     items: [
@@ -28,11 +28,11 @@ const albumsSlice = createSlice({
   },
   reducers: {
     setAlbums(state, action) {
-      state.albums = action.payload.albums || [];
+      state.album = action.payload.albums || [];
     },
   },
 });
 
-export const albumsActions = albumsSlice.actions;
+export const albumActions = albumSlice.actions;
 
-export default albumsSlice;
+export default albumSlice;

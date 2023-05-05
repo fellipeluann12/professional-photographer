@@ -1,4 +1,4 @@
-import { albumsActions } from './albums-slice';
+import { albumActions } from './album-slice';
 
 export const fetchAlbumsData = () => {
   return async (dispatch) => {
@@ -16,7 +16,7 @@ export const fetchAlbumsData = () => {
     try {
       const albumsData = await fetchData();
       dispatch(
-        albumsActions.setAlbums({
+        albumActions.setAlbums({
           items: albumsData.items || [],
         })
       );

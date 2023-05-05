@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { fetchAlbumsData } from '../../store/gallery/albums-actions';
+import { fetchProject } from '../../store/project/project-actions';
 import Thumbnail from '../Thumbnail';
 import Center from '../Center';
 
-const SProjectsSection = styled.div`
+const SProjectSection = styled.div`
   padding: 7rem 0rem;
 `;
 
@@ -22,27 +22,27 @@ const SGridContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
 `;
 
-const ProjectsSection = () => {
+const ProjectSection = () => {
   const dispatch = useDispatch();
-  const projects = useSelector((state) => state.albums.items);
+  const project = useSelector((state) => state.project);
 
   useEffect(() => {
-    dispatch(fetchAlbumsData());
+    dispatch(fetchProject());
   }, [dispatch]);
 
   return (
-    <SProjectsSection>
+    <SProjectSection>
       <Center>
         <SH2>PROJECTS</SH2>
         <SGridContainer>
-          {projects.map((projects) => {
-            console.log('Projects', projects);
-            return <Thumbnail item={projects} key={projects.id} />;
+          {project.map((project) => {
+            console.log('Project', project);
+            return <Thumbnail item={project} key={project.id} />;
           })}
         </SGridContainer>
       </Center>
-    </SProjectsSection>
+    </SProjectSection>
   );
 };
 
-export default ProjectsSection;
+export default ProjectSection;

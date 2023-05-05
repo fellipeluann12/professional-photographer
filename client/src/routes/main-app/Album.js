@@ -1,5 +1,5 @@
 import React from 'react';
-import AlbumSection from '../components/album-page/AlbumSection';
+import AlbumSection from '../../components/album-page/AlbumSection';
 
 const AlbumPage = () => {
   return (

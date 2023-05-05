@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Center from '../Center';
+import Thumbnail from '../Thumbnail';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { fetchAlbum } from '../../store/album/album-actions';
 
 const SAlbumProject = styled.div`
   padding: 7rem 0rem;
@@ -20,11 +24,25 @@ const SGridContainer = styled.div`
 `;
 
 const AlbumsSection = () => {
+  const { projectIdRef } = useParams();
+  const dispatch = useDispatch();
+  const album = useSelector((state) => state.album);
+  console.log('param', projectIdRef);
+
+  useEffect(() => {
+    dispatch(fetchAlbum(projectIdRef));
+  }, [dispatch, projectIdRef]);
+
   return (
     <SAlbumProject>
       <Center>
         <SH2>ALBUMS</SH2>
-        <SGridContainer></SGridContainer>
+        <SGridContainer>
+          {album.map((album) => {
+            console.log('Album', album);
+            return <Thumbnail item={album} key={album.id} />;
+          })}
+        </SGridContainer>
       </Center>
     </SAlbumProject>
   );

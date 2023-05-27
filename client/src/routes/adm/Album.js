@@ -6,17 +6,16 @@ import { fetchProject } from '../../store/project/project-actions';
 
 export const Album = () => {
   const dispatch = useDispatch();
-  const { project } = useSelector((state) => state);
+  const project = useSelector((state) => state.project);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [projectIdRef, setProjectIdRef] = useState('');
-  console.log(projectIdRef);
+  const [projectId, setProjectId] = useState('');
   const [coverImg, setCoverImg] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(createAlbum({ title, description, projectIdRef, coverImg }));
+    dispatch(createAlbum({ title, description, projectId, coverImg }));
   };
 
   useEffect(() => {
@@ -38,21 +37,19 @@ export const Album = () => {
         onChange={(e) => setDescription(e.target.value)}
       />
       <label>Project:</label>
-      <select
-        value={projectIdRef}
-        onChange={(e) => setProjectIdRef(e.target.value)}
-      >
+      <select value={projectId} onChange={(e) => setProjectId(e.target.value)}>
+        <option>Selecione um projeto</option>
         {project.map((project) => (
           <option key={project.id} value={project.id}>
             {project.title}
           </option>
         ))}
       </select>
-      <label>
+      <label htmlFor="coverImg">
         Image:
         <input
           type="file"
-          title="images"
+          title="coverImg"
           onChange={(e) => setCoverImg(e.target.files[0])}
         />
       </label>

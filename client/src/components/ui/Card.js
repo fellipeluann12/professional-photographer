@@ -20,10 +20,6 @@ export const Card = styled.div`
       &:hover {
         transform: translate(0%, -3%);
       }
-
-      @media ${({ theme }) => theme.breakpoints.lgMaxW} {
-        flex: 0 1 70rem;
-      }
     `}
 `;
 
@@ -41,8 +37,16 @@ export const CardHeading = styled.h3`
   ${({ theme }) => theme.gradientGreen.word}
 `;
 
+export const CardImageContainer = styled.div`
+  height: 15.625rem;
+  width: 100%;
+  background-image: ${({ image }) => `url(${image})`};
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50%;
+`;
+
 export const CardImage = styled.img`
   width: 100%;
   height: 100%;
-  margin-top: auto;
 `;

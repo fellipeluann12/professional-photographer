@@ -4,9 +4,9 @@ import Center from '../Center';
 import Thumbnail from '../Thumbnail';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchAlbum } from '../../store/album/album-actions';
+import { fetchAlbumsByProjectId } from '../../store/album/album-actions';
 
-const SAlbumProject = styled.div`
+const SAlbumSection = styled.div`
   padding: 7rem 0rem;
 `;
 
@@ -19,33 +19,33 @@ const SH2 = styled.h2`
 const SGridContainer = styled.div`
   margin-top: 7rem;
   display: grid;
-  gap: 5rem;
-  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
+  grid-auto-flow: row;
+  grid-gap: 20px;
 `;
 
-const AlbumsSection = () => {
+const AlbumSection = () => {
   const { projectIdRef } = useParams();
   const dispatch = useDispatch();
-  const album = useSelector((state) => state.album);
+  const album = useSelector((state) => state.album.albums);
   console.log('param', projectIdRef);
 
   useEffect(() => {
-    dispatch(fetchAlbum(projectIdRef));
+    dispatch(fetchAlbumsByProjectId(projectIdRef));
   }, [dispatch, projectIdRef]);
 
   return (
-    <SAlbumProject>
+    <SAlbumSection>
       <Center>
         <SH2>ALBUMS</SH2>
         <SGridContainer>
           {album.map((album) => {
-            console.log('Album', album);
-            return <Thumbnail item={album} key={album.id} />;
+            return <Thumbnail item={album} type="album" key={album.id} />;
           })}
         </SGridContainer>
       </Center>
-    </SAlbumProject>
+    </SAlbumSection>
   );
 };
 
-export default AlbumsSection;
+export default AlbumSection;

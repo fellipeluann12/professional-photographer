@@ -11,7 +11,7 @@ const SButton = styled.button`
   border: 1px solid ${({ theme }) => theme.colors.primaryGreen};
   border-radius: 0.5rem;
   font-size: 1.6rem;
-  padding: 0.7em 2em;
+  padding: 0.7rem 1rem;
   display: inline-block;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.primaryGrey};

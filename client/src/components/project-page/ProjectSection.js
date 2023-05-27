@@ -18,8 +18,9 @@ const SH2 = styled.h2`
 const SGridContainer = styled.div`
   margin-top: 7rem;
   display: grid;
-  gap: 5rem;
-  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
+  grid-auto-flow: row;
+  grid-gap: 20px;
 `;
 
 const ProjectSection = () => {
@@ -36,8 +37,7 @@ const ProjectSection = () => {
         <SH2>PROJECTS</SH2>
         <SGridContainer>
           {project.map((project) => {
-            console.log('Project', project);
-            return <Thumbnail item={project} key={project.id} />;
+            return <Thumbnail item={project} type="project" key={project.id} />;
           })}
         </SGridContainer>
       </Center>

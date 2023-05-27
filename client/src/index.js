@@ -17,6 +17,7 @@ import { Root as RootAdm } from './routes/adm/Root';
 import Projeto from './routes/adm/Projeto';
 import { Album as AlbumADM } from './routes/adm/Album';
 import Fotos from './routes/adm/Fotos';
+import Photo from './routes/main-app/Photo';
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
@@ -45,7 +46,6 @@ const router = createBrowserRouter([
       {
         path: 'projects',
         element: <Project />,
-        children: [],
       },
       {
         path: 'personal',
@@ -54,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: '/projects/:projectIdRef/albums',
         element: <Album />,
+      },
+      {
+        path: '/projects/:projectIdRef/albums/:albumIdRef/photos',
+        element: <Photo />,
       },
       {
         path: 'about',

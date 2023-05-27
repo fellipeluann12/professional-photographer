@@ -15,7 +15,7 @@ const SH1 = styled.h1`
   ${({ theme }) => theme.gradientGreen.word}
 
   @media ${({ theme }) => theme.breakpoints.smMaxW} {
-    font-size: 3rem;
+    font-size: 1rem;
   }
 `;
 
@@ -27,7 +27,7 @@ const STitle = styled.div`
 `;
 
 const SActions = styled.div`
-  padding-top: 6rem;
+  padding-top: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;

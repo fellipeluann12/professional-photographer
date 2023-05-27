@@ -2,10 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const albumSlice = createSlice({
   name: 'album',
-  initialState: [],
+  initialState: { albums: [], photos: [] },
   reducers: {
-    setAlbum(state, action) {
-      return action.payload || [];
+    setAlbums(state, action) {
+      state.albums = action.payload ?? [];
+    },
+    setPhotos(state, action) {
+      state.photos = action.payload ?? [];
     },
   },
 });

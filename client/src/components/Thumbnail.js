@@ -1,24 +1,46 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import PText from './PText';
-import { Card, CardHeading, CardImage, CardTextBody } from './ui/Card';
+import {
+  Card,
+  CardHeading,
+  CardImage,
+  CardImageContainer,
+  CardTextBody,
+} from './ui/Card';
 
-export default function Thumbnail({ item }) {
-  console.log('item ', item);
-  const { id, title } = item;
+const Thumbnail = ({ item, type }) => {
+  let toUrl = '';
+
+  switch (type) {
+    case 'project':
+      toUrl = `${item.id}/albums`;
+      break;
+    case 'album':
+      toUrl = `${item.id}/photos`;
+      break;
+    default:
+      toUrl = '/';
+      break;
+  }
+
+  if (type === 'photo') {
+    return <CardImage src={item.url} />;
+  }
 
   return (
-    <NavLink to={`/projects/${item.id}/albums`}>
+    <NavLink to={toUrl}>
       <Card featured>
-        <PText color="primaryGrey">{item.date}</PText>
         <CardTextBody>
           <CardHeading>{item.title}</CardHeading>
           <PText color="primaryGrey" textAlign="justify">
             {item.description}
           </PText>
         </CardTextBody>
-        <CardImage src={item.image} />
+        <CardImageContainer image={item.coverImg}></CardImageContainer>
       </Card>
     </NavLink>
   );
-}
+};
+
+export default Thumbnail;

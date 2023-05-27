@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { fetchAlbumsData } from '../../store/gallery/albums-actions';
 import Center from '../Center';
 import Thumbnail from '../Thumbnail';
 
@@ -27,7 +26,7 @@ export default function PersonalSection() {
   const albums = useSelector((state) => state.albums.items);
 
   useEffect(() => {
-    dispatch(fetchAlbumsData());
+    //dispatch(fetchAlbumsData());
   }, [dispatch]);
 
   return (

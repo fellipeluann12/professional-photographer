@@ -5,14 +5,14 @@ import { createProject } from '../../store/project/project-actions';
 export default function Projeto() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [image, setImage] = useState(null);
+  const [coverImg, setCoverImg] = useState(null);
 
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(createProject({ title, description, image }));
+    dispatch(createProject({ title, description, coverImg }));
   };
 
   return (
@@ -38,11 +38,11 @@ export default function Projeto() {
         />
       </div>
       <div>
-        <label htmlFor="image">Imagem:</label>
+        <label htmlFor="coverImg">Imagem:</label>
         <input
           type="file"
-          title="image"
-          onChange={(e) => setImage(e.target.files[0])}
+          title="coverImg"
+          onChange={(e) => setCoverImg(e.target.files[0])}
         />
       </div>
       <button type="submit">Criar projeto</button>

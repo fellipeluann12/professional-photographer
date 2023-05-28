@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Center from '../Center';
-import Thumbnail from '../Thumbnail';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAlbumPhotos } from '../../store/album/album-actions';
+import 'react-image-gallery/styles/css/image-gallery.css';
+import ImageGallery from 'react-image-gallery';
 
 const SPhotoSection = styled.div`
   padding: 7rem 0rem;
@@ -28,8 +29,7 @@ const PhotoSection = () => {
   const { projectIdRef, albumIdRef } = useParams();
   console.log('projectId first, albumId second', projectIdRef, albumIdRef);
   const dispatch = useDispatch();
-  const photo = useSelector((state) => state.album.photos);
-  console.log('?', photo);
+  const photos = useSelector((state) => state.album.photos);
 
   useEffect(() => {
     dispatch(fetchAlbumPhotos(projectIdRef, albumIdRef));
@@ -40,11 +40,7 @@ const PhotoSection = () => {
       <Center>
         <SH2>PHOTOS</SH2>
         <SGridContainer>
-          {photo.map((photo) => {
-            return (
-              <Thumbnail item={photo} key={photo.id} type="photo"></Thumbnail>
-            );
-          })}
+          <ImageGallery items={photos} />
         </SGridContainer>
       </Center>
     </SPhotoSection>

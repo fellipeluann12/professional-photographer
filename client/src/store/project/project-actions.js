@@ -7,7 +7,6 @@ import {
   getDocs,
   orderBy,
   query,
-  serverTimestamp,
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 

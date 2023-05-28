@@ -10,7 +10,6 @@ import {
   getDocs,
   orderBy,
   query,
-  serverTimestamp,
   updateDoc,
 } from 'firebase/firestore';
 
@@ -88,7 +87,12 @@ export const addAlbumPhotos =
           await uploadBytes(storageRef, photo);
           const downloadUrl = await getDownloadURL(storageRef);
 
-          return { id: uuidv4(), name: photo.name, src: downloadUrl };
+          return {
+            id: uuidv4(),
+            name: photo.name,
+            original: downloadUrl,
+            thumbnail: downloadUrl,
+          };
         })
       );
 

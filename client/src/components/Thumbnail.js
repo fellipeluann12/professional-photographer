@@ -7,7 +7,9 @@ import {
   CardImage,
   CardImageContainer,
   CardTextBody,
+  CardYellowStar,
 } from './ui/Card';
+import { ReactComponent as YellowStar } from '../assets/svgs/yellowstar.svg';
 
 const Thumbnail = ({ item, type }) => {
   let toUrl = '';
@@ -31,6 +33,7 @@ const Thumbnail = ({ item, type }) => {
   return (
     <NavLink to={toUrl}>
       <Card featured>
+        <CardYellowStar>{item.featured && <YellowStar />}</CardYellowStar>
         <CardTextBody>
           <CardHeading>{item.title}</CardHeading>
           <PText color="primaryGrey" textAlign="justify">

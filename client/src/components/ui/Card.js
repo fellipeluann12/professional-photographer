@@ -24,6 +24,14 @@ export const Card = styled.div`
     `}
 `;
 
+export const CardYellowStar = styled.svg`
+  position: absolute;
+  top: 0.312rem;
+  right: 0.4rem;
+  height: 1.5rem;
+  width: 2rem;
+`;
+
 export const CardTextBody = styled.div`
   padding: 1rem;
   display: flex;

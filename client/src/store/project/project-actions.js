@@ -7,19 +7,40 @@ import {
   getDocs,
   orderBy,
   query,
+  where,
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 export const fetchProject = () => async (dispatch) => {
   try {
     const projectCollection = collection(db, 'project');
-    const querySnapshot = await getDocs(
-      query(projectCollection, orderBy('createdAt'))
+
+    const featuredQuerySnapshot = await getDocs(
+      query(
+        projectCollection,
+        where('featured', '==', true),
+        orderBy('createdAt')
+      )
     );
-    const data = querySnapshot.docs.map((doc) => ({
+    const featuredData = featuredQuerySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
+
+    const otherQuerySnapshot = await getDocs(
+      query(
+        projectCollection,
+        where('featured', '==', false),
+        orderBy('createdAt')
+      )
+    );
+    const otherData = otherQuerySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    const data = [...featuredData, ...otherData];
+
     dispatch(projectActions.setProject(data));
     console.log('fetchProject data:', data);
   } catch (error) {
@@ -28,7 +49,7 @@ export const fetchProject = () => async (dispatch) => {
 };
 
 export const createProject = (projectData) => async () => {
-  const { title, description, coverImg } = projectData;
+  const { title, description, coverImg, isFeatured } = projectData;
 
   try {
     const imageId = uuidv4();
@@ -44,6 +65,7 @@ export const createProject = (projectData) => async () => {
       title,
       description,
       coverImg: imageUrl,
+      featured: isFeatured,
       createdAt: new Date().toString(),
     });
 

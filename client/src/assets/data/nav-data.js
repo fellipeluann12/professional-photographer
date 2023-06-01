@@ -6,16 +6,6 @@ export const navData = [
   {
     title: 'Projects',
     path: '/projects',
-    dropDown: [
-      {
-        title: 'Personal',
-        path: '/personal',
-      },
-      {
-        title: 'Events',
-        path: '/events',
-      },
-    ],
   },
   {
     title: 'About',

@@ -41,7 +41,7 @@ export default function FeaturedGaleries() {
           {project
             .filter((project) => project.featured)
             .map((project) => (
-              <Thumbnail item={project} type="project" key={project.id} />
+              <Thumbnail item={project} type="featured" key={project.id} />
             ))}
         </SGridContainer>
       </Center>

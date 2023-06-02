@@ -70,7 +70,7 @@ export default function Nav() {
       <Center>
         <SContainer>
           <SLeftSectionNav>
-            <SLeftSectionNavLink to="/home" onClick={onLogoClickHandler}>
+            <SLeftSectionNavLink to="/" onClick={onLogoClickHandler}>
               KALEY
             </SLeftSectionNavLink>
           </SLeftSectionNav>

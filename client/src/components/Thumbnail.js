@@ -21,6 +21,9 @@ const Thumbnail = ({ item, type }) => {
     case 'album':
       toUrl = `${item.id}/photos`;
       break;
+    case 'featured':
+      toUrl = `projects/${item.id}/albums`;
+      break;
     default:
       toUrl = '/';
       break;

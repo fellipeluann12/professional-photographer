@@ -18,11 +18,13 @@ import Projeto from './routes/adm/Projeto';
 import { Album as AlbumADM } from './routes/adm/Album';
 import Fotos from './routes/adm/Fotos';
 import Photo from './routes/main-app/Photo';
+import Login from './routes/adm/Login';
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 
 const router = createBrowserRouter([
+  { path: '/login', element: <Login />, errorElement: <Error /> },
   {
     path: '/upload-test-page',
     element: <RootAdm />,

@@ -10,7 +10,6 @@ const SApp = styled.div`
 
 const SMain = styled.main`
   flex: 1 1;
-  background-color: white;
 `;
 
 export const Root = () => {

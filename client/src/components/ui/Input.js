@@ -37,14 +37,14 @@ const STextArea = styled.textarea`
   transition: all 0.3s;
 `;
 
-const Input = (props) => {
-  if (props.input.textArea) {
+const Input = ({ input }) => {
+  if (input.textArea) {
     return (
-      <div>
-        <STextArea {...props.input}></STextArea>
+      <>
+        <STextArea {...input}></STextArea>
         <ErrorMessage
-          errors={props.input.errors}
-          name={props.input.name}
+          errors={input.errors}
+          name={input.name}
           render={({ messages }) => {
             return messages
               ? Object.entries(messages).map(([type, message]) => (
@@ -55,16 +55,16 @@ const Input = (props) => {
               : null;
           }}
         />
-      </div>
+      </>
     );
   }
 
   return (
-    <div>
-      <SInput {...props.input} />
+    <>
+      <SInput {...input} />
       <ErrorMessage
-        errors={props.input.errors}
-        name={props.input.name}
+        errors={input.errors}
+        name={input.name}
         render={({ messages }) => {
           return messages
             ? Object.entries(messages).map(([type, message]) => (
@@ -75,7 +75,7 @@ const Input = (props) => {
             : null;
         }}
       />
-    </div>
+    </>
   );
 };
 

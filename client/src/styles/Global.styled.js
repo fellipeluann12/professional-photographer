@@ -19,8 +19,6 @@ export const Global = createGlobalStyle`
 
   body {
     font-family: ${(p) => p.theme.fonts.main};
-    height: 100%;
-    width: 100%;
   }
 
   h1, h2, h3{

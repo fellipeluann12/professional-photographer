@@ -5,8 +5,8 @@ import { useForm } from 'react-hook-form';
 import Button from '../Button';
 import { auth } from '../../store/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { AuthContext } from '../../AuthContext';
-import { redirect } from 'react-router-dom';
+import { UserAuth } from '../../AuthContext';
+import { Navigate, redirect } from 'react-router-dom';
 
 const SLoginSection = styled.div`
   background-color: ${({ theme }) => theme.colors.primaryBlack};
@@ -32,6 +32,8 @@ const SH2 = styled.h2`
 `;
 
 const LoginSection = () => {
+  const { signIn } = UserAuth();
+
   const {
     register,
     formState: { errors },
@@ -45,22 +47,12 @@ const LoginSection = () => {
 
   const handleLogin = async ({ email, password }) => {
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log('auth?', userCredential);
-    } catch (error) {
-      alert(error);
+      await signIn(email, password);
+      Navigate('/protected');
+    } catch (e) {
+      console.log(e.message);
     }
   };
-
-  const { currentUser } = useContext(AuthContext);
-
-  if (currentUser) {
-    return redirect('/upload-test-page');
-  }
 
   return (
     <SLoginSection>

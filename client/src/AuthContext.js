@@ -1,41 +1,46 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+} from 'firebase/auth';
 import { auth } from './store/firebase';
-import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 
-export const AuthContext = React.createContext();
+const UserContext = createContext();
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+export const AuthContextProvider = ({ children }) => {
+  const [user, setUser] = useState({});
 
-export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [pending, setPending] = useState(true);
+  const createUser = (email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
 
-  const login = (email, password) => {
+  const signIn = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   const logout = () => {
-    return auth.signOut();
+    return signOut(auth);
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-      setPending(false);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log(currentUser);
+      setUser(currentUser);
     });
-    return unsubscribe;
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
-  if (pending) {
-    return <>Loading...</>;
-  }
+  return (
+    <UserContext.Provider value={{ createUser, user, logout, signIn }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
 
-  const value = {
-    currentUser,
-    login,
-    logout,
-  };
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+export const UserAuth = () => {
+  return useContext(UserContext);
 };

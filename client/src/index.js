@@ -5,7 +5,11 @@ import store from './store';
 import { Provider } from 'react-redux';
 import Theme from './styles/themes/theme';
 import 'react-toastify/dist/ReactToastify.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  BrowserRouter,
+  createBrowserRouter,
+  RouterProvider,
+} from 'react-router-dom';
 import { Error } from './routes/main-app/Error';
 import Personal from './routes/main-app/Personal';
 import Home from './routes/main-app/Home';
@@ -77,7 +81,9 @@ root.render(
   <React.StrictMode>
     <Theme>
       <Provider store={store}>
-        <RouterProvider router={router} />
+        <BrowserRouter>
+          <Root />
+        </BrowserRouter>
       </Provider>
     </Theme>
   </React.StrictMode>

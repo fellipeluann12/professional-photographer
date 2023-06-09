@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import styled from 'styled-components';
+import { AuthContextProvider } from '../../AuthContext';
 
 const SApp = styled.div`
   display: flex;
@@ -16,7 +17,10 @@ export const Root = () => {
   return (
     <SApp>
       <SMain>
-        <Outlet />
+        <AuthContextProvider>
+          <Outlet />
+        </AuthContextProvider>
+
         <NavLink to="projeto">Projetos</NavLink>
         <NavLink to="album">Albums</NavLink>
         <NavLink to="fotos">Fotos do Album</NavLink>

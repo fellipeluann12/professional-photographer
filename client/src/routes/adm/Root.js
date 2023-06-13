@@ -1,7 +1,9 @@
 import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import { AuthContextProvider } from '../../AuthContext';
+import Dashboard from '../../components/adm/dashboard-page/Dashboard';
+import ProtectedRoute from '../../components/adm/dashboard-page/ProtectedRoute';
 
 const SApp = styled.div`
   display: flex;
@@ -17,10 +19,17 @@ export const Root = () => {
   return (
     <SApp>
       <SMain>
-        <AuthContextProvider>
-          <Outlet />
-        </AuthContextProvider>
-
+        <Routes>
+          <Route
+            path="/lol"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+        <Outlet />
         <NavLink to="projeto">Projetos</NavLink>
         <NavLink to="album">Albums</NavLink>
         <NavLink to="fotos">Fotos do Album</NavLink>

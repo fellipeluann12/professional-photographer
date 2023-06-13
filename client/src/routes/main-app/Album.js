@@ -1,7 +1,8 @@
 import React from 'react';
 import AlbumSection from '../../components/album-page/AlbumSection';
 
-const AlbumPage = () => {
+const Album = () => {
+  console.log('teste');
   return (
     <div>
       <AlbumSection />
@@ -9,4 +10,4 @@ const AlbumPage = () => {
   );
 };
 
-export default AlbumPage;
+export default Album;

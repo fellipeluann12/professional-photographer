@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import NavLinks from './NavLinks';
 import Burger from './Burger';
@@ -53,6 +53,8 @@ const SRightSectionNav = styled.nav`
 
 export default function Nav() {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  const excludedPaths = ['/error', '/login', '/dashboard'];
 
   const isNavBarMobileVisible = useSelector(
     (state) => state.ui.navBar.mobile.isVisible
@@ -64,6 +66,13 @@ export default function Nav() {
       dispatch(uiActions.toggleBurger());
     }
   };
+
+  if (
+    excludedPaths.includes(pathname) ||
+    excludedPaths.some((path) => pathname.startsWith(path))
+  ) {
+    return null;
+  }
 
   return (
     <SNav>

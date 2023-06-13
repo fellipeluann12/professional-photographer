@@ -45,7 +45,7 @@ const SNLink = styled(NavLink)`
   }
 
   &.active {
-    color: ${({ to }) => (to === '#' ? '' : 'white')};
+    color: ${({ to }) => (to === '#' ? 'white' : 'white')};
   }
 `;
 
@@ -55,7 +55,9 @@ export default function NavLinks(props) {
       {navData.map((item, index) => {
         return (
           <SLi key={index}>
-            <SNLink to={item.path}>{item.title}</SNLink>
+            <SNLink to={item.path} end>
+              {item.title}
+            </SNLink>
           </SLi>
         );
       })}

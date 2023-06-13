@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 
 const SFooter = styled.footer`
   background-color: ${({ theme }) => theme.colors.primaryBlack};
@@ -11,5 +12,16 @@ const SFooter = styled.footer`
 `;
 
 export default function Footer() {
+  const { pathname } = useLocation();
+
+  const excludedPaths = ['/error', '/login', '/dashboard'];
+
+  if (
+    excludedPaths.includes(pathname) ||
+    excludedPaths.some((path) => pathname.startsWith(path))
+  ) {
+    return null;
+  }
+
   return <SFooter>Copyright © 2022 - TODOS OS DIREITOS RESERVADOS</SFooter>;
 }

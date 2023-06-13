@@ -6,7 +6,7 @@ import Button from '../Button';
 import { auth } from '../../store/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { UserAuth } from '../../AuthContext';
-import { Navigate, redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const SLoginSection = styled.div`
   background-color: ${({ theme }) => theme.colors.primaryBlack};
@@ -33,6 +33,7 @@ const SH2 = styled.h2`
 
 const LoginSection = () => {
   const { signIn } = UserAuth();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -48,7 +49,7 @@ const LoginSection = () => {
   const handleLogin = async ({ email, password }) => {
     try {
       await signIn(email, password);
-      Navigate('/protected');
+      navigate('/dashboard');
     } catch (e) {
       console.log(e.message);
     }

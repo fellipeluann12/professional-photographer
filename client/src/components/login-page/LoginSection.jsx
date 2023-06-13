@@ -1,10 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Input from '../ui/Input';
 import { useForm } from 'react-hook-form';
 import Button from '../Button';
-import { auth } from '../../store/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import { UserAuth } from '../../AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -39,7 +37,6 @@ const LoginSection = () => {
     register,
     formState: { errors },
     handleSubmit,
-    reset,
   } = useForm({
     mode: 'onChange',
     criteriaMode: 'all',

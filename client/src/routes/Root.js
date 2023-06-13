@@ -26,7 +26,7 @@ const SApp = styled.div`
 
 const SMain = styled.main`
   flex: 1 1;
-  /* background-color: ${({ theme }) => theme.colors.primaryBlack}; */
+  background-color: ${({ theme }) => theme.colors.primaryBlack};
 `;
 
 function App() {
@@ -49,9 +49,9 @@ function App() {
           <Routes>
             <Route path="*" element={<Navigate to="/error" />} />
             <Route path="error" element={<Error />} />
-            <Route path="/login" element={<Login key="error" />} />
+            <Route path="login" element={<Login />} />
             <Route
-              path="/dashboard/*"
+              path="/dashboard/"
               element={
                 <ProtectedRoute>
                   <Root />

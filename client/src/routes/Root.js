@@ -3,13 +3,12 @@ import { ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
 import { AuthContextProvider } from '../AuthContext';
 import Footer from '../components/Footer';
-import Dashboard from '../components/adm/dashboard-page/Dashboard';
 import ProtectedRoute from '../components/adm/dashboard-page/ProtectedRoute';
 import Nav from '../components/navbar/Nav';
-import { Album as AlbumADM } from './adm/Album';
-import Fotos from './adm/Fotos';
+import { Album as AlbumAdm } from './adm/Album';
+import { Photos } from './adm/Photos';
 import Login from './adm/Login';
-import Projeto from './adm/Projeto';
+import { Project as ProjectAdm } from './adm/Project';
 import About from './main-app/About';
 import Album from './main-app/Album';
 import Contact from './main-app/Contact';
@@ -60,9 +59,9 @@ function App() {
                 </ProtectedRoute>
               }
             >
-              <Route path="projects" element={<Projeto />} />
-              <Route path="albums" element={<AlbumADM />} />
-              <Route path="photos" element={<Fotos />} />
+              <Route path="projects" element={<ProjectAdm />} />
+              <Route path="albums" element={<AlbumAdm />} />
+              <Route path="photos" element={<Photos />} />
             </Route>
             <Route element={<Outlet />}>
               <Route index element={<Home />} />

@@ -6,7 +6,7 @@ import {
   fetchAlbumsByProjectId,
 } from '../../store/album/album-actions';
 
-export default function Fotos() {
+export const Photos = () => {
   const project = useSelector((state) => state.project);
   const album = useSelector((state) => state.album.albums);
   const [projectId, setProjectId] = useState('');
@@ -77,4 +77,4 @@ export default function Fotos() {
       <button type="submit">Go</button>
     </form>
   );
-}
+};

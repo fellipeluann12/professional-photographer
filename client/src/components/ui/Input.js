@@ -28,6 +28,12 @@ const SInput = styled.input`
   ${SBaseInput}
 `;
 
+const SCheckboxInput = styled.input`
+  ${SBaseInput}
+  width: 3rem;
+  height: 3rem;
+`;
+
 const STextArea = styled.textarea`
   ${SBaseInput}
   resize: vertical;
@@ -37,44 +43,60 @@ const STextArea = styled.textarea`
   transition: all 0.3s;
 `;
 
+const SCheckboxContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+`;
+
 const Input = ({ input }) => {
+  const errorMessage = (
+    <ErrorMessage
+      errors={input.errors}
+      name={input.name}
+      render={({ messages }) => {
+        return messages
+          ? Object.entries(messages).map(([type, message]) => (
+              <PText error key={type}>
+                {message}
+              </PText>
+            ))
+          : null;
+      }}
+    />
+  );
+
   if (input.textArea) {
     return (
       <>
         <STextArea {...input}></STextArea>
-        <ErrorMessage
-          errors={input.errors}
-          name={input.name}
-          render={({ messages }) => {
-            return messages
-              ? Object.entries(messages).map(([type, message]) => (
-                  <PText error key={type}>
-                    {message}
-                  </PText>
-                ))
-              : null;
-          }}
-        />
+        {errorMessage}
       </>
     );
+  }
+
+  if (input.type === 'checkbox') {
+    return (
+      <SCheckboxContainer>
+        <SCheckboxInput type="checkbox" {...input} />{' '}
+        <PText color="primaryGrey" fontSize="2rem">
+          is Featured?
+        </PText>
+      </SCheckboxContainer>
+    );
+  }
+
+  if (input.type === 'file') {
+    <>
+      <SInput {...input} />
+      {errorMessage}
+    </>;
   }
 
   return (
     <>
       <SInput {...input} />
-      <ErrorMessage
-        errors={input.errors}
-        name={input.name}
-        render={({ messages }) => {
-          return messages
-            ? Object.entries(messages).map(([type, message]) => (
-                <PText error key={type}>
-                  {message}
-                </PText>
-              ))
-            : null;
-        }}
-      />
+      {errorMessage}
     </>
   );
 };

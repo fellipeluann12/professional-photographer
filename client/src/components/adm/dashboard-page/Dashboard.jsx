@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Nav from '../../navbar/Nav';
 import { navDataAdm } from '../../../assets/data/nav-data';
 import styled from 'styled-components';
@@ -25,6 +25,12 @@ const STextContainer = styled.div`
   text-align: center;
 `;
 
+const SContentContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Dashboard = () => {
   const { user } = UserAuth();
   const location = useLocation();
@@ -44,7 +50,9 @@ const Dashboard = () => {
               <SH2>PLEASE SELECT AN OPTION</SH2>
             </STextContainer>
           )}
-          <Outlet />
+          <SContentContainer>
+            <Outlet />
+          </SContentContainer>
         </Center>
       </SDashboard>
     </>

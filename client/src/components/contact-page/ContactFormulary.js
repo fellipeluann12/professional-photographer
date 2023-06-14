@@ -7,6 +7,7 @@ import Input from '../ui/Input';
 import Loader from '../ui/Loader';
 
 const SContactFormulary = styled.form`
+  width: 40rem;
   padding: 1rem;
   display: flex;
   flex-direction: column;

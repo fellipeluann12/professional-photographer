@@ -49,7 +49,7 @@ const SNLink = styled(NavLink)`
   }
 `;
 
-export default function NavLinks(props) {
+export default function NavLinks({ navData }) {
   return (
     <SUl>
       {navData.map((item, index) => {

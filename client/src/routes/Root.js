@@ -1,22 +1,24 @@
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
-import Footer from '../components/Footer';
-import Nav from '../components/navbar/Nav';
-import Home from './main-app/Home';
-import Project from './main-app/Project';
-import About from './main-app/About';
-import Contact from './main-app/Contact';
-import Login from './adm/Login';
 import { AuthContextProvider } from '../AuthContext';
-import { Error } from './main-app/Error';
-import Album from './main-app/Album';
-import { Album as AlbumADM } from './adm/Album';
-import Projeto from './adm/Projeto';
-import Fotos from './adm/Fotos';
-import { Root } from './adm/Root';
-import Photo from './main-app/Photo';
+import Footer from '../components/Footer';
+import Dashboard from '../components/adm/dashboard-page/Dashboard';
 import ProtectedRoute from '../components/adm/dashboard-page/ProtectedRoute';
+import Nav from '../components/navbar/Nav';
+import { Album as AlbumADM } from './adm/Album';
+import Fotos from './adm/Fotos';
+import Login from './adm/Login';
+import Projeto from './adm/Projeto';
+import About from './main-app/About';
+import Album from './main-app/Album';
+import Contact from './main-app/Contact';
+import { Error } from './main-app/Error';
+import Home from './main-app/Home';
+import Photo from './main-app/Photo';
+import Project from './main-app/Project';
+import { Root } from './adm/Root';
+import { navDataMain } from '../assets/data/nav-data';
 
 const SApp = styled.div`
   display: flex;
@@ -32,7 +34,7 @@ const SMain = styled.main`
 function App() {
   return (
     <SApp>
-      <Nav />
+      <Nav title="FELLIPE" navData={navDataMain} isMain />
       <SMain>
         <AuthContextProvider>
           <ToastContainer
@@ -58,9 +60,9 @@ function App() {
                 </ProtectedRoute>
               }
             >
-              <Route path="album" element={<AlbumADM />} />
-              <Route path="projeto" element={<Projeto />} />
-              <Route path="fotos" element={<Fotos />} />
+              <Route path="projects" element={<Projeto />} />
+              <Route path="albums" element={<AlbumADM />} />
+              <Route path="photos" element={<Fotos />} />
             </Route>
             <Route element={<Outlet />}>
               <Route index element={<Home />} />

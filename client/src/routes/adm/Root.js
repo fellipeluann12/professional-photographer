@@ -1,13 +1,11 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
+import Dashboard from '../../components/adm/dashboard-page/Dashboard';
 
 export const Root = () => {
   return (
     <>
-      <Outlet />
-      <NavLink to="projeto">Projetos</NavLink>
-      <NavLink to="album">Albums</NavLink>
-      <NavLink to="fotos">Fotos do Album</NavLink>
+      <Dashboard />
     </>
   );
 };

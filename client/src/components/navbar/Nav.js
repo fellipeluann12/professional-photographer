@@ -5,7 +5,6 @@ import NavLinks from './NavLinks';
 import Burger from './Burger';
 import NavMobileLinks from './NavMobileLinks';
 import { useSelector } from 'react-redux';
-import { navData } from '../../assets/data/nav-data';
 import { useDispatch } from 'react-redux';
 import { uiActions } from '../../store/ui-slice';
 import Center from '../Center';
@@ -51,10 +50,10 @@ const SRightSectionNav = styled.nav`
   font-family: ${({ theme }) => theme.fonts.titles};
 `;
 
-export default function Nav() {
+export default function Nav({ title, navData, isMain }) {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const excludedPaths = ['/error', '/login', '/dashboard'];
+  const excludedPaths = ['/error', '/login'];
 
   const isNavBarMobileVisible = useSelector(
     (state) => state.ui.navBar.mobile.isVisible
@@ -68,8 +67,8 @@ export default function Nav() {
   };
 
   if (
-    excludedPaths.includes(pathname) ||
-    excludedPaths.some((path) => pathname.startsWith(path))
+    excludedPaths.some((path) => pathname.startsWith(path)) ||
+    (isMain && pathname.startsWith('/dashboard'))
   ) {
     return null;
   }
@@ -79,12 +78,15 @@ export default function Nav() {
       <Center>
         <SContainer>
           <SLeftSectionNav>
-            <SLeftSectionNavLink to="/" onClick={onLogoClickHandler}>
-              KALEY
+            <SLeftSectionNavLink
+              to={isMain ? '/' : '/dashboard'}
+              onClick={onLogoClickHandler}
+            >
+              {title}
             </SLeftSectionNavLink>
           </SLeftSectionNav>
           <SRightSectionNav>
-            <NavLinks />
+            <NavLinks navData={navData} />
           </SRightSectionNav>
           <Burger />
         </SContainer>

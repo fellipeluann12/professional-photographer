@@ -1,4 +1,4 @@
-export const navData = [
+export const navDataMain = [
   {
     title: 'Home',
     path: '/',
@@ -15,4 +15,10 @@ export const navData = [
     title: 'Contact',
     path: '/contact',
   },
+];
+
+export const navDataAdm = [
+  { title: 'Projects', path: 'projects' },
+  { title: 'Albums', path: 'albums' },
+  { title: 'Photos', path: 'photos' },
 ];

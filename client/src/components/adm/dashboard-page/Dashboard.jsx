@@ -25,12 +25,6 @@ const STextContainer = styled.div`
   text-align: center;
 `;
 
-const SContentContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const Dashboard = () => {
   const { user } = UserAuth();
   const location = useLocation();
@@ -50,9 +44,7 @@ const Dashboard = () => {
               <SH2>PLEASE SELECT AN OPTION</SH2>
             </STextContainer>
           )}
-          <SContentContainer>
-            <Outlet />
-          </SContentContainer>
+          <Outlet />
         </Center>
       </SDashboard>
     </>

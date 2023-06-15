@@ -10,14 +10,8 @@ const SProjectFormularyContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 0 7rem;
+  padding: 0 0 5rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.secondaryGrey};
-`;
-
-const SH2 = styled.h2`
-  font-size: 5rem;
-  color: ${({ theme }) => theme.gradientGreen.word};
-  display: inline-block;
 `;
 
 const SProjectFormulary = styled.form`
@@ -59,7 +53,6 @@ export const ProjectFormulary = () => {
 
   return (
     <SProjectFormularyContainer>
-      <SH2>CREATE PROJECT</SH2>
       <SProjectFormulary onSubmit={handleSubmit(onSubmit)}>
         <Input
           input={{

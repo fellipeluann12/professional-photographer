@@ -1,23 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { fetchProject } from '../../../store/project/project-actions';
+import Thumbnail from '../../Thumbnail';
 
-const SProjectManagementContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 7rem 0;
-`;
+const SProjectManagementContainer = styled.div``;
 
-const SH2 = styled.h2`
-  font-size: 5rem;
-  color: ${({ theme }) => theme.gradientGreen.word};
-  display: inline-block;
+const SGridContainer = styled.div`
+  margin-top: 7rem;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 1.25rem;
+  grid-row-gap: 1.25rem;
 `;
 
 export const ProjectManagement = () => {
+  const dispatch = useDispatch();
+  const project = useSelector((state) => state.project);
+
+  useEffect(() => {
+    dispatch(fetchProject());
+  }, [dispatch]);
+
   return (
     <SProjectManagementContainer>
-      <SH2>MANAGEMENT</SH2>
+      <SGridContainer>
+        {project.map((project) => {
+          return <Thumbnail item={project} type="project" key={project.id} />;
+        })}
+      </SGridContainer>
     </SProjectManagementContainer>
   );
 };

@@ -20,7 +20,7 @@ const SGridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
   grid-auto-flow: row;
-  grid-gap: 20px;
+  grid-gap: 1.25rem;
 `;
 
 const ProjectSection = () => {

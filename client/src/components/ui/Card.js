@@ -6,12 +6,22 @@ export const Card = styled.div`
   flex-direction: column;
   border-radius: 0.2rem 0.2rem 0 0rem;
   align-items: center;
-  padding-top: 0.5rem;
   background-color: ${({ theme }) => theme.colors.secondaryBlack};
   box-shadow: 2px 2px 1px ${({ theme }) => theme.colors.secondaryGreen};
   -moz-box-shadow: 2px 2px 1px ${({ theme }) => theme.colors.secondaryGreen};
   -webkit-box-shadow: 2px 2px 1px ${({ theme }) => theme.colors.secondaryGreen};
   -o-box-shadow: 2px 2px 1px ${({ theme }) => theme.colors.secondaryGreen};
+  overflow: hidden;
+  max-width: 40rem;
+
+  ${(props) =>
+    props.isAdm === true &&
+    css`
+      border-radius: 1rem;
+      flex-basis: 30.5rem; /* tamanho inicial do item flex */
+      flex-grow: 1; /* permite o crescimento do item flex */
+      flex-shrink: 1;
+    `}
 
   ${(props) =>
     props.featured &&
@@ -26,10 +36,22 @@ export const Card = styled.div`
 
 export const CardYellowStar = styled.svg`
   position: absolute;
-  top: 0.312rem;
+  top: 0.812rem;
   right: 0.4rem;
   height: 1.5rem;
   width: 2rem;
+`;
+
+export const CardEditTool = styled.div`
+  height: 4.5rem;
+  width: 4rem;
+  cursor: pointer;
+`;
+
+export const CardDeleteTool = styled.div`
+  height: 4.5rem;
+  width: 4rem;
+  cursor: pointer;
 `;
 
 export const CardTextBody = styled.div`
@@ -43,7 +65,16 @@ export const CardTextBody = styled.div`
 
 export const CardHeading = styled.h3`
   font-size: 2.5rem;
-  ${({ theme }) => theme.gradientGreen.word}
+  color: #0acf6d;
+  text-shadow: 3px 3px 2px black;
+  max-width: 35.1875rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -moz-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  -moz-only-whitespace: nowrap;
+  overflow: hidden;
 `;
 
 export const CardImageContainer = styled.div`

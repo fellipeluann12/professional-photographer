@@ -1,35 +1,51 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { fetchProject } from '../../../store/project/project-actions';
 import Thumbnail from '../../Thumbnail';
+import Loader from '../../ui/Loader';
 
 const SProjectManagementContainer = styled.div``;
 
-const SGridContainer = styled.div`
+const SFlexContainer = styled.div`
   margin-top: 7rem;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  grid-column-gap: 1.25rem;
-  grid-row-gap: 1.25rem;
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const ProjectManagement = () => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
   const project = useSelector((state) => state.project);
 
   useEffect(() => {
-    dispatch(fetchProject());
+    setLoading(true);
+
+    dispatch(fetchProject())
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+      });
   }, [dispatch]);
 
   return (
     <SProjectManagementContainer>
-      <SGridContainer>
-        {project.map((project) => {
-          return <Thumbnail item={project} type="project" key={project.id} />;
-        })}
-      </SGridContainer>
+      <SFlexContainer>
+        {loading ? (
+          <p>
+            <Loader width="10rem" height="10rem" />
+          </p>
+        ) : (
+          project.map((project) => (
+            <Thumbnail item={project} type="adm" key={project.id} />
+          ))
+        )}
+      </SFlexContainer>
     </SProjectManagementContainer>
   );
 };

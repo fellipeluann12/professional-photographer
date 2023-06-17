@@ -18,12 +18,15 @@ export const pattern = {
     boxShadowGrey: '#dbdce0',
   },
   gradientGreen: {
-    word: `background: -webkit-linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%); 
+    word: `background: -webkit-linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%);
     background: -moz-linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%);
     background: linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%);
-    background-clip: text;
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;`,
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;`,
     background: `
     background: -webkit-linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%); 
     background: -moz-linear-gradient(to right, #0acf6d 0%, #c9cf7a 100%);

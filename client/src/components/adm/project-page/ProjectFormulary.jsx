@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Input from '../../ui/Input';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { createProject } from '../../../store/project/project-actions';
 import Button from '../../Button';
+import Loader from '../../ui/Loader';
+import { notifyError, notifySuccess } from '../../../assets/functionsHelper';
 
 const SProjectFormularyContainer = styled.div`
   display: flex;
@@ -20,11 +22,15 @@ const SProjectFormulary = styled.form`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  opacity: ${(props) => (props.isLoading ? '0.3' : '')};
-  pointer-events: ${(props) => (props.isLoading ? 'none' : '')};
+  opacity: ${(props) => (props.isLoading ? '0.3' : '1')};
+  pointer-events: ${(props) => (props.isLoading ? 'none' : 'auto')};
 `;
 
 export const ProjectFormulary = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch();
+
   const {
     register,
     formState: { errors },
@@ -41,19 +47,30 @@ export const ProjectFormulary = () => {
     },
   });
 
-  const dispatch = useDispatch();
-
   const onSubmit = ({ title, description, coverImg, isFeatured }) => {
+    setIsLoading(true);
     const coverImgFile = coverImg[0];
 
     dispatch(
       createProject({ title, description, coverImg: coverImgFile, isFeatured })
-    );
+    )
+      .then(() => {
+        setIsLoading(false);
+        reset({ title: '', description: '', coverImg: '', isFeatured: false });
+        notifySuccess('Project created.');
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        notifyError(error);
+      });
   };
 
   return (
     <SProjectFormularyContainer>
-      <SProjectFormulary onSubmit={handleSubmit(onSubmit)}>
+      <SProjectFormulary
+        onSubmit={handleSubmit(onSubmit)}
+        isLoading={isLoading}
+      >
         <Input
           input={{
             placeholder: 'TITLE',
@@ -120,6 +137,7 @@ export const ProjectFormulary = () => {
         />
         <Button btnText="CREATE" type="submit" primary width="100%" />
       </SProjectFormulary>
+      {isLoading && <Loader />}
     </SProjectFormularyContainer>
   );
 };

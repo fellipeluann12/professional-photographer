@@ -9,8 +9,6 @@ import PText from '../../PText';
 
 const SDashboard = styled.div`
   padding: 7rem 0;
-  word-wrap: break-word;
-  word-break: break-all;
 `;
 
 const SH2 = styled.h2`

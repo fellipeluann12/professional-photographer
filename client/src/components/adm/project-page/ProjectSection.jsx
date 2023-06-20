@@ -1,24 +1,19 @@
 import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { ProjectFormulary } from './ProjectFormulary';
 import { ProjectManagement } from './ProjectManagement';
 import PText from '../../PText';
 
-const SProjectSection = styled.section`
-  padding: 7rem 0;
-`;
-
-const SContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+const SProjectSection = styled.section``;
 
 const STabContainer = styled.div`
   display: flex;
+  justify-content: center;
   padding-bottom: 5rem;
   gap: 1rem;
 `;
+
+const SContentContainer = styled.div``;
 
 const STabButton = styled.button`
   border: none;
@@ -46,25 +41,25 @@ export const ProjectSection = () => {
 
   return (
     <SProjectSection>
+      <STabContainer>
+        <STabButton
+          onClick={() => handleTabClick(1)}
+          className={activeTab === 1 ? 'active' : ''}
+        >
+          <PText color="primaryGrey" fontSize="3rem">
+            Create
+          </PText>
+        </STabButton>
+        <STabButton
+          onClick={() => handleTabClick(2)}
+          className={activeTab === 2 ? 'active' : ''}
+        >
+          <PText color="primaryGrey" fontSize="3rem">
+            Manage
+          </PText>
+        </STabButton>
+      </STabContainer>
       <SContentContainer>
-        <STabContainer>
-          <STabButton
-            onClick={() => handleTabClick(1)}
-            className={activeTab === 1 ? 'active' : ''}
-          >
-            <PText color="primaryGrey" fontSize="3rem">
-              Create
-            </PText>
-          </STabButton>
-          <STabButton
-            onClick={() => handleTabClick(2)}
-            className={activeTab === 2 ? 'active' : ''}
-          >
-            <PText color="primaryGrey" fontSize="3rem">
-              Manage
-            </PText>
-          </STabButton>
-        </STabContainer>
         {activeTab === 1 && <ProjectFormulary />}
         {activeTab === 2 && <ProjectManagement />}
       </SContentContainer>

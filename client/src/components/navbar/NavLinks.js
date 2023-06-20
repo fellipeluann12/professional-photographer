@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { navData } from '../../assets/data/nav-data';
 
 const SUl = styled.ul`
   display: flex;

@@ -20,9 +20,12 @@ const SH2 = styled.h2`
 const SGridContainer = styled.div`
   margin-top: 7rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(1fr, 1fr));
-  grid-auto-flow: row;
-  grid-gap: 4rem;
+  grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
+  gap: 1.5rem;
+
+  @media ${({ theme }) => theme.breakpoints.mdMaxW} {
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  }
 `;
 
 const PhotoSection = () => {

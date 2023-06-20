@@ -43,6 +43,10 @@ const SLeftSectionNavLink = styled(NavLink)`
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+
+  @media ${({ theme }) => theme.breakpoints.mdMaxW} {
+    font-size: 3rem;
+  }
 `;
 
 const SRightSectionNav = styled.nav`

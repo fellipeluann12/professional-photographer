@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 
 export const notifyError = (error) =>
-  toast.error('Error!' + error, {
+  toast.error('Error! ' + error, {
     className: 'toast-message',
     position: 'top-right',
     autoClose: 5000,
@@ -13,8 +13,8 @@ export const notifyError = (error) =>
     theme: 'colored',
   });
 
-export const notifySucess = () =>
-  toast.success('Message sent! ', {
+export const notifySuccess = (message) =>
+  toast.success('Success! ' + message, {
     className: 'toast-message',
     position: 'top-right',
     autoClose: 5000,

@@ -7,6 +7,10 @@ const projectSlice = createSlice({
     setProject(state, action) {
       return action.payload || [];
     },
+    deleteProject(state, action) {
+      const projectId = action.payload;
+      return state.filter((project) => project.id !== projectId);
+    },
   },
 });
 

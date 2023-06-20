@@ -10,6 +10,7 @@ const SPText = styled.p`
     props.letterSpacing ? props.letterSpacing : ''};
   display: inline-block;
   text-align: ${(props) => (props.textAlign ? props.textAlign : '')};
+  max-width: 100%;
 
   ${(props) =>
     props.error === true &&

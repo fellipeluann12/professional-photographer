@@ -11,16 +11,11 @@ export const Card = styled.div`
   -moz-box-shadow: 2px 2px 1px ${({ theme }) => theme.colors.secondaryGreen};
   -webkit-box-shadow: 2px 2px 1px ${({ theme }) => theme.colors.secondaryGreen};
   -o-box-shadow: 2px 2px 1px ${({ theme }) => theme.colors.secondaryGreen};
-  overflow: hidden;
-  max-width: 40rem;
 
   ${(props) =>
     props.isAdm === true &&
     css`
       border-radius: 1rem;
-      flex-basis: 30.5rem; /* tamanho inicial do item flex */
-      flex-grow: 1; /* permite o crescimento do item flex */
-      flex-shrink: 1;
     `}
 
   ${(props) =>
@@ -61,20 +56,25 @@ export const CardTextBody = styled.div`
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  max-width: 100%;
+
+  & h3,
+  p {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -moz-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -moz-only-whitespace: nowrap;
+    overflow: hidden;
+  }
 `;
 
 export const CardHeading = styled.h3`
   font-size: 2.5rem;
   color: #0acf6d;
   text-shadow: 3px 3px 2px black;
-  max-width: 35.1875rem;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  -moz-text-overflow: ellipsis;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  -moz-only-whitespace: nowrap;
-  overflow: hidden;
+  max-width: 100%;
 `;
 
 export const CardImageContainer = styled.div`

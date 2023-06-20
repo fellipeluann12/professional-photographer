@@ -1,51 +1,105 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { fetchProject } from '../../../store/project/project-actions';
+import {
+  deleteProject,
+  fetchProject,
+} from '../../../store/project/project-actions';
 import Thumbnail from '../../Thumbnail';
 import Loader from '../../ui/Loader';
+import PText from '../../PText';
+import { notifyError, notifySuccess } from '../../../assets/functionsHelper';
 
-const SProjectManagementContainer = styled.div``;
+const SProjectManagementContainer = styled.div`
+  border-bottom: 1px solid ${({ theme }) => theme.colors.secondaryGrey};
+  padding: 0 0 5rem;
+`;
 
-const SFlexContainer = styled.div`
+const SGridContainer = styled.div`
   margin-top: 7rem;
-  display: flex;
-  gap: 2.5rem;
-  flex-wrap: wrap;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
+  gap: 1.5rem;
+
+  @media ${({ theme }) => theme.breakpoints.mdMaxW} {
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  }
+`;
+
+const SGridContainerCenter = styled.div`
   justify-content: center;
+  align-items: center;
+  text-align: center;
 `;
 
 export const ProjectManagement = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
   const project = useSelector((state) => state.project);
 
-  useEffect(() => {
-    setLoading(true);
+  const handleDelete = (projectId) => {
+    setIsLoadingDelete((prevState) => ({
+      ...prevState,
+      [projectId]: true,
+    }));
 
-    dispatch(fetchProject())
+    dispatch(deleteProject(projectId))
       .then(() => {
-        setLoading(false);
+        setIsLoadingDelete((prevState) => ({
+          ...prevState,
+          [projectId]: false,
+        }));
+        notifySuccess('Project deleted.');
       })
       .catch((error) => {
-        setLoading(false);
+        setIsLoadingDelete(false);
+        notifyError(error);
       });
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    try {
+      dispatch(fetchProject())
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+        });
+    } catch (error) {
+      setIsLoading(false);
+    }
   }, [dispatch]);
 
   return (
     <SProjectManagementContainer>
-      <SFlexContainer>
-        {loading ? (
-          <p>
+      <SGridContainer>
+        {isLoading ? (
+          <SGridContainerCenter>
             <Loader width="10rem" height="10rem" />
-          </p>
+          </SGridContainerCenter>
+        ) : project.length === 0 ? (
+          <SGridContainerCenter>
+            <PText fontSize="3rem" color="primaryGrey">
+              Empty
+            </PText>
+          </SGridContainerCenter>
         ) : (
           project.map((project) => (
-            <Thumbnail item={project} type="adm" key={project.id} />
+            <Thumbnail
+              item={project}
+              isLoadingDelete={isLoadingDelete}
+              type="adm"
+              key={project.id}
+              onDelete={handleDelete}
+              id={project.id}
+            />
           ))
         )}
-      </SFlexContainer>
+      </SGridContainer>
     </SProjectManagementContainer>
   );
 };

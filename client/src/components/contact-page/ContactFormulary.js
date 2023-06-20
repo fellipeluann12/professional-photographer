@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { notifyError, notifySucess } from '../../assets/functionsHelper';
+import { notifyError, notifySuccess } from '../../assets/functionsHelper';
 import Button from '../Button';
 import Input from '../ui/Input';
 import Loader from '../ui/Loader';
@@ -44,7 +44,7 @@ export default function ContactFormulary() {
       });
       if (response.ok) {
         reset({ name: '', email: '', message: '' });
-        notifySucess();
+        notifySuccess();
       }
     } catch (error) {
       console.log(error);

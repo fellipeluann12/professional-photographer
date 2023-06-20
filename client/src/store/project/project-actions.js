@@ -4,6 +4,8 @@ import { db, storage } from '../firebase.js';
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   getDocs,
   orderBy,
   query,
@@ -72,5 +74,16 @@ export const createProject = (projectData) => async () => {
     console.log('Projeto criado com ID: ', newProject.id);
   } catch (error) {
     console.log('Erro ao criar projeto: ', error);
+  }
+};
+
+export const deleteProject = (projectId) => async (dispatch) => {
+  try {
+    const projectDocRef = doc(db, 'project', projectId);
+    await deleteDoc(projectDocRef);
+    dispatch(projectActions.deleteProject(projectId));
+    console.log('Projeto excluído com sucesso!');
+  } catch (error) {
+    console.log('Erro ao excluir projeto: ', error);
   }
 };

@@ -1,32 +1,40 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const SButton = styled.button`
-  background-color: transparent;
+  background-color: ${(props) =>
+    props.config === 'primary'
+      ? props.theme.colors.primaryGreen
+      : props.config === 'close'
+      ? props.theme.colors.primaryRed
+      : 'transparent'};
   border: none;
   cursor: pointer;
   font-family: ${({ theme }) => theme.fonts.titles};
-  background: ${({ theme }) => theme.colors.primaryBlack};
-  border: 1px solid ${({ theme }) => theme.colors.primaryGreen};
+  border: 1px solid
+    ${(props) =>
+      props.config === 'primary'
+        ? props.theme.colors.primaryGreen
+        : props.config === 'close'
+        ? props.theme.colors.primaryRed
+        : props.theme.colors.secondaryGreen};
   border-radius: 0.5rem;
   font-size: 1.6rem;
   padding: 0.7rem 1rem;
   display: inline-block;
   font-weight: 600;
-  color: ${({ theme }) => theme.colors.primaryGrey};
-  width: ${(props) => (props.width ? props.width : 'auto')};
+  color: ${(props) =>
+    props.config === 'primary'
+      ? props.theme.colors.primaryBlack
+      : props.config === 'close'
+      ? props.theme.colors.primaryBlack
+      : props.theme.colors.primaryGrey};
+  width: ${(props) => props.width || 'auto'};
 
   &:hover {
     opacity: 0.9;
   }
-
-  ${(props) =>
-    props.primary === true &&
-    css`
-      background: ${({ theme }) => theme.colors.primaryGreen};
-      color: ${({ theme }) => theme.colors.secondaryBlack};
-    `}
 `;
 
 export default function Button(props) {
@@ -37,8 +45,16 @@ export default function Button(props) {
       </NavLink>
     );
   }
+
   return (
-    <SButton primary={props.primary} width={props.width} type={props.type}>
+    <SButton
+      primary={props.primary}
+      close={props.close}
+      width={props.width}
+      type={props.type}
+      config={props.config}
+      onClick={props.onClick}
+    >
       {props.btnText}
     </SButton>
   );

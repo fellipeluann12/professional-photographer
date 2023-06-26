@@ -14,7 +14,7 @@ const SNav = styled.header`
   position: sticky;
   border-bottom: 1px solid ${({ theme }) => theme.colors.secondaryGrey};
   top: 0;
-  z-index: 1000;
+  z-index: 1;
 `;
 
 const SContainer = styled.div`

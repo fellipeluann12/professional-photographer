@@ -9,6 +9,7 @@ import {
   getDocs,
   orderBy,
   query,
+  updateDoc,
   where,
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -51,29 +52,53 @@ export const fetchProject = () => async (dispatch) => {
 };
 
 export const createProject = (projectData) => async () => {
-  const { title, description, coverImg, isFeatured } = projectData;
+  const { id, title, description, coverImg, isFeatured } = projectData;
+  console.log('img true?', coverImg);
 
   try {
-    const imageId = uuidv4();
-    const imageName = `${coverImg.name}_${imageId}`;
+    let imageUrl;
 
-    const storageRef = ref(storage, `/images/project/${imageName}`);
-    await uploadBytes(storageRef, coverImg);
+    if (coverImg) {
+      const imageId = uuidv4();
+      const imageName = `${coverImg.name}_${imageId}`;
 
-    const imageUrl = await getDownloadURL(storageRef);
+      const storageRef = ref(storage, `/images/project/${imageName}`);
+      await uploadBytes(storageRef, coverImg);
+
+      imageUrl = await getDownloadURL(storageRef);
+    }
 
     const projectCollection = collection(db, 'project');
-    const newProject = await addDoc(projectCollection, {
-      title,
-      description,
-      coverImg: imageUrl,
-      featured: isFeatured,
-      createdAt: new Date().toString(),
-    });
 
-    console.log('Projeto criado com ID: ', newProject.id);
+    if (id) {
+      const projectDocRef = doc(projectCollection, id);
+      const updateData = {
+        title,
+        description,
+        featured: isFeatured,
+        updatedAt: new Date().toString(),
+      };
+
+      if (imageUrl !== undefined) {
+        updateData.coverImg = imageUrl;
+      }
+
+      await updateDoc(projectDocRef, updateData);
+
+      console.log('Projeto atualizado com sucesso!');
+    } else {
+      const newProject = await addDoc(projectCollection, {
+        title,
+        description,
+        coverImg: imageUrl,
+        featured: isFeatured,
+        createdAt: new Date().toString(),
+      });
+
+      console.log('Projeto criado com ID: ', newProject.id);
+    }
   } catch (error) {
-    console.log('Erro ao criar projeto: ', error);
+    console.log('Erro ao criar/atualizar projeto: ', error);
   }
 };
 

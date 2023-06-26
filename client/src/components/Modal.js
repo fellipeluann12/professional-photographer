@@ -1,33 +1,54 @@
 import React, { useState } from 'react';
-import Input from '../../ui/Input';
+import Button from './Button';
 import styled from 'styled-components';
+import Input from './ui/Input';
 import { useForm } from 'react-hook-form';
+import PText from './PText';
 import { useDispatch } from 'react-redux';
-import { createProject } from '../../../store/project/project-actions';
-import Button from '../../Button';
-import Loader from '../../ui/Loader';
-import { notifyError, notifySuccess } from '../../../assets/functionsHelper';
+import { createProject } from '../store/project/project-actions';
+import Loader from './ui/Loader';
+import { notifyError, notifySuccess } from '../assets/functionsHelper';
+import { fetchProject } from '../store/project/project-actions';
 
-const SProjectFormularyContainer = styled.div`
+const SEditFormularyContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 0 5rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.secondaryGrey};
 `;
 
-const SProjectFormulary = styled.form`
-  padding: 1rem;
+const SEditFormulary = styled.form`
+  padding: 1rem 1rem 2rem;
   width: 50rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  background-color: ${({ theme }) => theme.colors.primaryBlack};
   opacity: ${(props) => (props.isLoading ? '0.3' : '1')};
   pointer-events: ${(props) => (props.isLoading ? 'none' : 'auto')};
 `;
 
-export const ProjectFormulary = () => {
+const SActionsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+
+  > button {
+    padding: 2rem;
+  }
+`;
+
+const SH2 = styled.h2`
+  font-size: 5rem;
+  color: ${({ theme }) => theme.gradientGreen.word};
+  display: inline-block;
+`;
+
+export const Modal = ({ closeModal, item }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const { id } = item;
+
+  const { title, description, featured } = item;
 
   const dispatch = useDispatch();
 
@@ -40,24 +61,32 @@ export const ProjectFormulary = () => {
     mode: 'onChange',
     criteriaMode: 'all',
     defaultValues: {
-      title: '',
-      description: '',
+      title: title,
+      description: description,
       coverImg: '',
-      isFeatured: false,
+      isFeatured: featured,
     },
   });
 
-  const onSubmit = ({ title, description, coverImg, isFeatured }) => {
+  const onSubmit = (data) => {
     setIsLoading(true);
+    const { title, description, coverImg, featured } = data;
     const coverImgFile = coverImg[0];
 
     dispatch(
-      createProject({ title, description, coverImg: coverImgFile, isFeatured })
+      createProject({
+        id: id,
+        title,
+        description,
+        coverImg: coverImgFile,
+        featured,
+      })
     )
       .then(() => {
+        notifySuccess('Project updated.');
         setIsLoading(false);
-        reset({ title: '', description: '', coverImg: '', isFeatured: false });
-        notifySuccess('Project created.');
+        fetchProject();
+        closeModal();
       })
       .catch((error) => {
         setIsLoading(false);
@@ -66,11 +95,12 @@ export const ProjectFormulary = () => {
   };
 
   return (
-    <SProjectFormularyContainer>
-      <SProjectFormulary
-        onSubmit={handleSubmit(onSubmit)}
-        isLoading={isLoading}
-      >
+    <SEditFormularyContainer>
+      <SEditFormulary isLoading={isLoading} onSubmit={handleSubmit(onSubmit)}>
+        <SH2>EDIT PROJECT</SH2>
+        <PText fontSize="2rem" color="primaryGrey">
+          ID: {item.id}
+        </PText>
         <Input
           input={{
             type: 'text',
@@ -103,8 +133,8 @@ export const ProjectFormulary = () => {
                 message: 'Letters only',
               },
               minLength: {
-                value: 5,
-                message: 'Must exceed 5 characters',
+                value: 1,
+                message: 'Must exceed 1 characters',
               },
             }),
           }}
@@ -114,9 +144,7 @@ export const ProjectFormulary = () => {
             type: 'file',
             errors: errors,
             maxLength: 1,
-            ...register('coverImg', {
-              required: 'Cover image is required.',
-            }),
+            ...register('coverImg'),
           }}
         />
         <Input
@@ -137,9 +165,17 @@ export const ProjectFormulary = () => {
             }),
           }}
         />
-        <Button btnText="CREATE" type="submit" config="primary" width="100%" />
-      </SProjectFormulary>
-      {isLoading && <Loader />}
-    </SProjectFormularyContainer>
+        <SActionsContainer>
+          <Button type="submit" btnText="SAVE" config="primary" />
+          <Button
+            type="button"
+            btnText="X"
+            config="close"
+            onClick={closeModal}
+          />
+        </SActionsContainer>
+        {isLoading && <Loader />}
+      </SEditFormulary>
+    </SEditFormularyContainer>
   );
 };

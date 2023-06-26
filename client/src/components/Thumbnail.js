@@ -24,7 +24,6 @@ const SAdmModal = styled.div`
   opacity: 0.9;
   height: 100%;
   width: 100%;
-  z-index: 2;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,11 +31,15 @@ const SAdmModal = styled.div`
   gap: 3rem;
 `;
 
-const Thumbnail = ({ item, type, onDelete, id, isLoadingDelete }) => {
+const Thumbnail = ({ item, type, onDelete, id, isLoadingDelete, onEdit }) => {
   const [hovered, setHovered] = useState(false);
 
   const handleDelete = () => {
     onDelete(id);
+  };
+
+  const handleEdit = () => {
+    onEdit(item);
   };
 
   const handleHover = () => {
@@ -75,7 +78,7 @@ const Thumbnail = ({ item, type, onDelete, id, isLoadingDelete }) => {
           hovered && (
             <SAdmModal>
               <CardEditTool>
-                <Edit />
+                <Edit onClick={handleEdit} />
               </CardEditTool>
               <CardDeleteTool onClick={handleDelete}>
                 <Delete />

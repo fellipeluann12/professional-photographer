@@ -52,7 +52,7 @@ export const fetchProject = () => async (dispatch) => {
 };
 
 export const createProject = (projectData) => async () => {
-  const { id, title, description, coverImg, isFeatured } = projectData;
+  const { id, title, description, coverImg, featured } = projectData;
   console.log('img true?', coverImg);
 
   try {
@@ -75,7 +75,7 @@ export const createProject = (projectData) => async () => {
       const updateData = {
         title,
         description,
-        featured: isFeatured,
+        featured: featured,
         updatedAt: new Date().toString(),
       };
 
@@ -91,7 +91,7 @@ export const createProject = (projectData) => async () => {
         title,
         description,
         coverImg: imageUrl,
-        featured: isFeatured,
+        featured: featured,
         createdAt: new Date().toString(),
       });
 

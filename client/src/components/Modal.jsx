@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
 import Button from './Button';
 import styled from 'styled-components';
 import Input from './ui/Input';
 import { useForm } from 'react-hook-form';
 import PText from './PText';
-import { useDispatch } from 'react-redux';
-import { createProject } from '../store/project/project-actions';
+
 import Loader from './ui/Loader';
-import { notifyError, notifySuccess } from '../assets/functionsHelper';
-import { fetchProject } from '../store/project/project-actions';
 
 const SEditFormularyContainer = styled.div`
   display: flex;
@@ -44,19 +40,20 @@ const SH2 = styled.h2`
   display: inline-block;
 `;
 
-export const Modal = ({ closeModal, item }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { id } = item;
-
-  const { title, description, featured } = item;
-
-  const dispatch = useDispatch();
+export const Modal = ({
+  closeModal,
+  item,
+  type,
+  heading,
+  handleSave,
+  isLoading,
+}) => {
+  const { id, title, description, featured } = item;
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-    reset,
   } = useForm({
     mode: 'onChange',
     criteriaMode: 'all',
@@ -64,42 +61,20 @@ export const Modal = ({ closeModal, item }) => {
       title: title,
       description: description,
       coverImg: '',
-      isFeatured: featured,
+      featured: featured,
     },
   });
 
   const onSubmit = (data) => {
-    setIsLoading(true);
-    const { title, description, coverImg, featured } = data;
-    const coverImgFile = coverImg[0];
-
-    dispatch(
-      createProject({
-        id: id,
-        title,
-        description,
-        coverImg: coverImgFile,
-        featured,
-      })
-    )
-      .then(() => {
-        notifySuccess('Project updated.');
-        setIsLoading(false);
-        fetchProject();
-        closeModal();
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        notifyError(error);
-      });
+    handleSave(id, data);
   };
 
   return (
     <SEditFormularyContainer>
       <SEditFormulary isLoading={isLoading} onSubmit={handleSubmit(onSubmit)}>
-        <SH2>EDIT PROJECT</SH2>
+        <SH2>EDIT {heading}</SH2>
         <PText fontSize="2rem" color="primaryGrey">
-          ID: {item.id}
+          ID: {id}
         </PText>
         <Input
           input={{
@@ -147,24 +122,27 @@ export const Modal = ({ closeModal, item }) => {
             ...register('coverImg'),
           }}
         />
-        <Input
-          input={{
-            type: 'checkbox',
-            errors: errors,
-            maxLength: 30,
-            ...register('isFeatured', {
-              required: false,
-              pattern: {
-                value: /^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/,
-                message: 'Letters only',
-              },
-              minLength: {
-                value: 1,
-                message: 'Must exceed 1 characters',
-              },
-            }),
-          }}
-        />
+        {type === 'project' && (
+          <Input
+            input={{
+              type: 'checkbox',
+              errors: errors,
+              maxLength: 30,
+              ...register('featured', {
+                required: false,
+                pattern: {
+                  value:
+                    /^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/,
+                  message: 'Letters only',
+                },
+                minLength: {
+                  value: 1,
+                  message: 'Must exceed 1 characters',
+                },
+              }),
+            }}
+          />
+        )}
         <SActionsContainer>
           <Button type="submit" btnText="SAVE" config="primary" />
           <Button

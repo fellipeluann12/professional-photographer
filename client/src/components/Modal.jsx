@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Input from './ui/Input';
 import { useForm } from 'react-hook-form';
 import PText from './PText';
-
 import Loader from './ui/Loader';
 
 const SEditFormularyContainer = styled.div`
@@ -20,8 +19,8 @@ const SEditFormulary = styled.form`
   flex-direction: column;
   gap: 2rem;
   background-color: ${({ theme }) => theme.colors.primaryBlack};
-  opacity: ${(props) => (props.isLoading ? '0.3' : '1')};
-  pointer-events: ${(props) => (props.isLoading ? 'none' : 'auto')};
+  opacity: ${(props) => (props.ísLoadingModal ? '0.3' : '1')};
+  pointer-events: ${(props) => (props.ísLoadingModal ? 'none' : 'auto')};
 `;
 
 const SActionsContainer = styled.div`
@@ -46,7 +45,7 @@ export const Modal = ({
   type,
   heading,
   handleSave,
-  isLoading,
+  ísLoadingModal,
 }) => {
   const { id, title, description, featured } = item;
 
@@ -65,13 +64,16 @@ export const Modal = ({
     },
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     handleSave(id, data);
   };
 
   return (
     <SEditFormularyContainer>
-      <SEditFormulary isLoading={isLoading} onSubmit={handleSubmit(onSubmit)}>
+      <SEditFormulary
+        ísLoadingModal={ísLoadingModal}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <SH2>EDIT {heading}</SH2>
         <PText fontSize="2rem" color="primaryGrey">
           ID: {id}
@@ -152,7 +154,7 @@ export const Modal = ({
             onClick={closeModal}
           />
         </SActionsContainer>
-        {isLoading && <Loader />}
+        {ísLoadingModal && <Loader />}
       </SEditFormulary>
     </SEditFormularyContainer>
   );

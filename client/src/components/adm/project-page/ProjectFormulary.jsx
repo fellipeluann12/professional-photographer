@@ -43,20 +43,21 @@ export const ProjectFormulary = () => {
       title: '',
       description: '',
       coverImg: '',
-      isFeatured: false,
+      featured: false,
     },
   });
 
-  const onSubmit = ({ title, description, coverImg, isFeatured }) => {
+  const onSubmit = ({ title, description, coverImg, featured }) => {
     setIsLoading(true);
     const coverImgFile = coverImg[0];
+    console.log('formulary sub', coverImgFile);
 
     dispatch(
-      createProject({ title, description, coverImg: coverImgFile, isFeatured })
+      createProject({ title, description, coverImg: coverImgFile, featured })
     )
       .then(() => {
         setIsLoading(false);
-        reset({ title: '', description: '', coverImg: '', isFeatured: false });
+        reset({ title: '', description: '', coverImg: '', featured: false });
         notifySuccess('Project created.');
       })
       .catch((error) => {
@@ -124,7 +125,7 @@ export const ProjectFormulary = () => {
             type: 'checkbox',
             errors: errors,
             maxLength: 30,
-            ...register('isFeatured', {
+            ...register('featured', {
               required: false,
               pattern: {
                 value: /^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/,

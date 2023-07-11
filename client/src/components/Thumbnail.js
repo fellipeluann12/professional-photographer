@@ -31,7 +31,7 @@ const SAdmModal = styled.div`
   gap: 3rem;
 `;
 
-const Thumbnail = ({ item, type, onDelete, id, isLoadingDelete, onEdit }) => {
+const Thumbnail = ({ item, type, onDelete, id, isLoadingSolo, onEdit }) => {
   const [hovered, setHovered] = useState(false);
 
   const handleDelete = () => {
@@ -70,7 +70,7 @@ const Thumbnail = ({ item, type, onDelete, id, isLoadingDelete, onEdit }) => {
   if (type === 'adm') {
     return (
       <Card isAdm onMouseEnter={handleHover} onMouseLeave={handleMouseLeave}>
-        {isLoadingDelete[id] ? (
+        {isLoadingSolo[id] ? (
           <SAdmModal>
             <Loader />
           </SAdmModal>

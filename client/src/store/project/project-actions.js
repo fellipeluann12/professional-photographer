@@ -6,6 +6,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   orderBy,
   query,
@@ -46,6 +47,7 @@ export const fetchProject = () => async (dispatch) => {
 
     dispatch(projectActions.setProject(data));
     console.log('fetchProject data:', data);
+    return data;
   } catch (error) {
     console.error('Error fetching projects:', error);
   }
@@ -86,6 +88,12 @@ export const createProject = (projectData) => async () => {
       await updateDoc(projectDocRef, updateData);
 
       console.log('Projeto atualizado com sucesso!');
+
+      // Fetch the updated project document to retrieve the complete project object
+      const updatedProjectDoc = await getDoc(projectDocRef);
+      const updatedProjectData = { id, ...updatedProjectDoc.data() };
+
+      return updatedProjectData;
     } else {
       const newProject = await addDoc(projectCollection, {
         title,
@@ -96,9 +104,16 @@ export const createProject = (projectData) => async () => {
       });
 
       console.log('Projeto criado com ID: ', newProject.id);
+
+      // Fetch the created project document to retrieve the complete project object
+      const newProjectDoc = await getDoc(doc(projectCollection, newProject.id));
+      const newProjectData = { id: newProject.id, ...newProjectDoc.data() };
+
+      return newProjectData;
     }
   } catch (error) {
     console.log('Erro ao criar/atualizar projeto: ', error);
+    throw error;
   }
 };
 

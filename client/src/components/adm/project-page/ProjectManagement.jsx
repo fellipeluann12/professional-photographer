@@ -13,6 +13,7 @@ import { notifyError, notifySuccess } from '../../../assets/functionsHelper';
 import ReactModal from 'react-modal';
 import { Modal } from '../../Modal';
 import ReactPaginate from 'react-paginate';
+import { projectActions } from '../../../store/project/project-slice';
 
 const SProjectManagementContainer = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.secondaryGrey};
@@ -58,7 +59,7 @@ const SPaginationContainer = styled.div`
       cursor: pointer;
       color: ${({ theme }) => theme.colors.primaryGreen};
       background: transparent;
-      border-radius: 0.25rem;
+      border-radius: 0.63rem;
       border: 1px solid ${({ theme }) => theme.colors.primaryGreen};
 
       > a {
@@ -89,7 +90,8 @@ const customStyles = {
 
 export const ProjectManagement = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+  const [ísLoadingModal, setIsLoadingModal] = useState(false);
+  const [isLoadingSolo, setIsLoadingSolo] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
@@ -112,54 +114,66 @@ export const ProjectManagement = () => {
   };
 
   const closeModal = () => {
-    dispatch(fetchProject());
     setIsModalOpen(!isModalOpen);
     setSelectedProject(null);
   };
 
   const handleDelete = (projectId) => {
-    setIsLoadingDelete((prevState) => ({
+    setIsLoadingSolo((prevState) => ({
       ...prevState,
       [projectId]: true,
     }));
 
     dispatch(deleteProject(projectId))
       .then(() => {
-        setIsLoadingDelete((prevState) => ({
+        setIsLoadingSolo((prevState) => ({
           ...prevState,
           [projectId]: false,
         }));
         notifySuccess('Project deleted.');
       })
       .catch((error) => {
-        setIsLoadingDelete(false);
+        setIsLoadingSolo(false);
         notifyError(error);
       });
   };
 
   const handleSave = (id, data) => {
-    setIsLoading(true);
+    setIsLoadingModal(true);
     const { title, description, coverImg, featured } = data;
     const coverImgFile = coverImg[0];
-    console.log('handleSAVE ID', id);
+
+    const updatedData = {
+      title,
+      description,
+      coverImg: coverImgFile,
+      featured,
+    };
+
+    console.log('updatedData img ?: ', updatedData.coverImg);
 
     dispatch(
       createProject({
         id: id,
-        title: title,
-        description: description,
-        coverImg: coverImgFile,
-        featured: featured,
+        ...updatedData,
       })
     )
-      .then(() => {
+      .then((response) => {
+        const projectResponse = response;
+        const { coverImg } = projectResponse;
+        console.log('response: ', projectResponse.coverImg);
+        dispatch(
+          projectActions.updateProject({
+            id,
+            data: { id, ...updatedData, coverImg },
+          })
+        );
         notifySuccess('Project updated.');
-        setIsLoading(false);
-        fetchProject();
+        setIsLoadingModal(false);
         closeModal();
       })
       .catch((error) => {
-        setIsLoading(false);
+        setIsLoadingModal(false);
         notifyError(error);
       });
   };
@@ -185,7 +199,7 @@ export const ProjectManagement = () => {
       <SGridContainer>
         {isLoading ? (
           <SGridContainerCenter>
-            <Loader width="10rem" height="10rem" />
+            <Loader width="7rem" height="7rem" />
           </SGridContainerCenter>
         ) : project.length === 0 ? (
           <SGridContainerCenter>
@@ -197,7 +211,7 @@ export const ProjectManagement = () => {
           projectsToShow.map((project) => (
             <Thumbnail
               item={project}
-              isLoadingDelete={isLoadingDelete}
+              isLoadingSolo={isLoadingSolo}
               type="adm"
               key={project.id}
               onDelete={handleDelete}
@@ -219,7 +233,7 @@ export const ProjectManagement = () => {
               type="project"
               closeModal={closeModal}
               handleSave={handleSave}
-              isLoading={isLoading}
+              ísLoadingModal={ísLoadingModal}
             />
           </ReactModal>
         )}
@@ -237,6 +251,7 @@ export const ProjectManagement = () => {
             onPageChange={handlePageChange}
             containerClassName={SPaginationContainer}
             activeClassName="active"
+            forcePage={currentPage}
           />
         </SPaginationContainer>
       )}

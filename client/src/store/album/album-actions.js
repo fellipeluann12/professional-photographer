@@ -35,7 +35,7 @@ export const createAlbum = (albumData) => async () => {
 
     console.log('Album criado com ID: ', newAlbum.id);
   } catch (error) {
-    console.log('Erro ao criar projeto: ', error);
+    console.log('Erro ao criar album: ', error);
   }
 };
 

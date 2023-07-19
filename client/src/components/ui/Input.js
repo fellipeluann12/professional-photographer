@@ -28,10 +28,63 @@ const SInput = styled.input`
   ${SBaseInput}
 `;
 
+const SCheckboxContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+`;
+
 const SCheckboxInput = styled.input`
   ${SBaseInput}
   width: 3rem;
   height: 3rem;
+`;
+
+const SelectContainer = styled.div`
+  position: relative;
+  width: 100%;
+
+  .select_arrow {
+    position: absolute;
+    top: 20px;
+    right: 15px;
+    pointer-events: none;
+    border-style: solid;
+    border-width: 8px 5px 0px 5px;
+    border-color: ${(props) => props.theme.colors.primaryGreen} transparent
+      transparent transparent;
+  }
+
+  select:hover ~ .select_arrow,
+  select:focus ~ .select_arrow {
+    border-top-color: ${(props) => props.theme.colors.primaryGreen};
+  }
+
+  select:disabled ~ .select_arrow {
+    border-top-color: #cccccc;
+  }
+`;
+
+const SSelect = styled.select`
+  ${SBaseInput}
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &:hover,
+  &:focus {
+    color: ${(props) => props.theme.colors.primaryGrey};
+    background: ${(props) => props.theme.colors.secondaryBlack};
+  }
+
+  &::-ms-expand {
+    display: none;
+  }
 `;
 
 const STextArea = styled.textarea`
@@ -43,17 +96,12 @@ const STextArea = styled.textarea`
   transition: all 0.3s;
 `;
 
-const SCheckboxContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-`;
-
 const Input = ({ input }) => {
+  const { options, errors, register, value, onChange, name } = input;
   const errorMessage = (
     <ErrorMessage
-      errors={input.errors}
-      name={input.name}
+      errors={input.errors || errors}
+      name={input.name || name}
       render={({ messages }) => {
         return messages
           ? Object.entries(messages).map(([type, message]) => (
@@ -65,6 +113,32 @@ const Input = ({ input }) => {
       }}
     />
   );
+
+  if (input.comboBox) {
+    return (
+      <>
+        <SelectContainer>
+          <SSelect
+            errors={errors}
+            value={value}
+            {...register(name, { required: 'This input is required' })}
+            onChange={onChange}
+          >
+            <option disabled={true} value="">
+              SELECT AN OPTION
+            </option>
+            {options.map((project) => (
+              <option key={project.id} value={project.id}>
+                {project.title}
+              </option>
+            ))}
+          </SSelect>
+          <div className="select_arrow"></div>
+          {errorMessage}
+        </SelectContainer>
+      </>
+    );
+  }
 
   if (input.textArea) {
     return (
@@ -78,7 +152,7 @@ const Input = ({ input }) => {
   if (input.type === 'checkbox') {
     return (
       <SCheckboxContainer>
-        <SCheckboxInput type="checkbox" {...input} />{' '}
+        <SCheckboxInput type="checkbox" {...input} />
         <PText color="primaryGrey" fontSize="2rem">
           is Featured?
         </PText>

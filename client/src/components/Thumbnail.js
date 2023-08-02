@@ -95,6 +95,7 @@ const Thumbnail = ({ item, type, onDelete, id, isLoadingSolo, onEdit }) => {
           </PText>
         </CardTextBody>
         <CardImageContainer image={item.coverImg}></CardImageContainer>
+        {console.log('coverImg chega aqui? thumbnail:', item.coverImg)}
       </Card>
     );
   }

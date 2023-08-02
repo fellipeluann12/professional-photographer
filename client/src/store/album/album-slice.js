@@ -10,6 +10,14 @@ const albumSlice = createSlice({
     setPhotos(state, action) {
       state.photos = action.payload ?? [];
     },
+    deleteAlbum(state, action) {
+      const albumId = action.payload;
+      console.log(state);
+      return {
+        ...state,
+        albums: state.albums.filter((album) => album.id !== albumId),
+      };
+    },
   },
 });
 

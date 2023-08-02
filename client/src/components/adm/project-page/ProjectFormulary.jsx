@@ -13,11 +13,11 @@ const SProjectFormularyContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 0 5rem;
+  gap: 2rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.secondaryGrey};
 `;
 
 const SProjectFormulary = styled.form`
-  padding: 1rem;
   width: 50rem;
   display: flex;
   flex-direction: column;

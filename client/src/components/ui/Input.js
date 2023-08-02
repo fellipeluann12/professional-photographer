@@ -42,7 +42,7 @@ const SCheckboxInput = styled.input`
 
 const SelectContainer = styled.div`
   position: relative;
-  width: 100%;
+  width: auto;
 
   .select_arrow {
     position: absolute;
@@ -51,17 +51,11 @@ const SelectContainer = styled.div`
     pointer-events: none;
     border-style: solid;
     border-width: 8px 5px 0px 5px;
-    border-color: ${(props) => props.theme.colors.primaryGreen} transparent
-      transparent transparent;
-  }
-
-  select:hover ~ .select_arrow,
-  select:focus ~ .select_arrow {
-    border-top-color: ${(props) => props.theme.colors.primaryGreen};
-  }
-
-  select:disabled ~ .select_arrow {
-    border-top-color: #cccccc;
+    border-color: ${(props) =>
+        props.errors[props.name]
+          ? props.theme.colors.primaryRed
+          : props.theme.colors.primaryGreen}
+      transparent transparent transparent;
   }
 `;
 
@@ -117,24 +111,29 @@ const Input = ({ input }) => {
   if (input.comboBox) {
     return (
       <>
-        <SelectContainer>
+        <SelectContainer
+          name={name}
+          {...(errors ? { errors: errors } : { errors: '' })}
+        >
           <SSelect
-            errors={errors}
+            {...(errors ? { errors: errors } : { errors: '' })}
             value={value}
-            {...register(name, { required: 'This input is required' })}
+            {...(register
+              ? register(name, { required: 'This input is required.' })
+              : {})}
             onChange={onChange}
           >
             <option disabled={true} value="">
               SELECT AN OPTION
             </option>
-            {options.map((project) => (
-              <option key={project.id} value={project.id}>
-                {project.title}
+            {options.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.title}
               </option>
             ))}
           </SSelect>
           <div className="select_arrow"></div>
-          {errorMessage}
+          {register ? errorMessage : ''}
         </SelectContainer>
       </>
     );

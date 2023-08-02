@@ -7,17 +7,18 @@ import Button from '../../Button';
 import { useForm } from 'react-hook-form';
 import Input from '../../ui/Input';
 import Loader from '../../ui/Loader';
+import { notifyError, notifySuccess } from '../../../assets/functionsHelper';
 
 const SAlbumFormularyContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 2rem;
   padding: 0 0 5rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.secondaryGrey};
 `;
 
 const SAlbumFormulary = styled.form`
-  padding: 1rem;
   width: 50rem;
   display: flex;
   flex-direction: column;
@@ -31,16 +32,15 @@ export const AlbumFormulary = () => {
   const dispatch = useDispatch();
   const project = useSelector((state) => state.project);
   const [projectId, setProjectId] = useState('');
-
-  useEffect(() => {
-    dispatch(fetchProject());
-  }, [dispatch]);
+  console.log(projectId);
 
   const {
     register,
     formState: { errors },
     handleSubmit,
+    getFieldState,
     reset,
+    setValue,
   } = useForm({
     mode: 'onChange',
     criteriaMode: 'all',
@@ -53,19 +53,41 @@ export const AlbumFormulary = () => {
     },
   });
 
+  useEffect(() => {
+    dispatch(fetchProject());
+  }, [dispatch]);
+
   const onSubmit = ({ title, description, projectId, coverImg }) => {
     setIsLoading(true);
+    const coverImgFile = coverImg[0];
     console.log(title, description, projectId, coverImg);
-    dispatch(createAlbum({ title, description, projectId, coverImg })).then(
-      () => {
+
+    dispatch(
+      createAlbum({ title, description, projectId, coverImg: coverImgFile })
+    )
+      .then(() => {
         setIsLoading(false);
-        reset({ title: '', description: '', projectId: '', coverImg: '' });
-      }
-    );
+        reset({
+          title: '',
+          description: '',
+          projectId: '',
+          coverImg: '',
+          featured: 'false',
+        });
+        setProjectId('');
+        notifySuccess('Album created.');
+      })
+      .catch((error) => {
+        setProjectId('');
+        setIsLoading(false);
+        notifyError(error);
+      });
   };
 
   const handleProjectChange = (e) => {
-    setProjectId(e.target.value);
+    const selectedProjectValue = e.target.value;
+    setProjectId(selectedProjectValue);
+    setValue('projectId', selectedProjectValue, { shouldValidate: true });
   };
 
   return (

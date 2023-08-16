@@ -45,9 +45,17 @@ export const Modal = ({
   type,
   heading,
   handleSave,
-  ísLoadingModal,
+  isLoadingModal,
 }) => {
-  const { id, title, description, featured } = item;
+  console.log('isLoadingModal value:', isLoadingModal);
+  const { id, title, description, projectId, featured } = item;
+
+  const defaultValues = {
+    title,
+    description,
+    coverImg: '',
+    ...(type === 'project' ? { featured } : {}),
+  };
 
   const {
     register,
@@ -56,22 +64,23 @@ export const Modal = ({
   } = useForm({
     mode: 'onChange',
     criteriaMode: 'all',
-    defaultValues: {
-      title: title,
-      description: description,
-      coverImg: '',
-      featured: featured,
-    },
+    defaultValues,
   });
 
+  const updatedProjectId = type === 'album' ? item.projectId : projectId;
+
   const onSubmit = async (data) => {
-    handleSave(id, data);
+    if (type === 'album') {
+      handleSave(id, updatedProjectId, data);
+    } else {
+      handleSave(id, data);
+    }
   };
 
   return (
     <SEditFormularyContainer>
       <SEditFormulary
-        ísLoadingModal={ísLoadingModal}
+        ísLoadingModal={isLoadingModal}
         onSubmit={handleSubmit(onSubmit)}
       >
         <SH2>EDIT {heading}</SH2>
@@ -154,7 +163,7 @@ export const Modal = ({
             onClick={closeModal}
           />
         </SActionsContainer>
-        {ísLoadingModal && <Loader />}
+        {isLoadingModal && <Loader />}
       </SEditFormulary>
     </SEditFormularyContainer>
   );

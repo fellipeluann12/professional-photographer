@@ -12,10 +12,27 @@ const albumSlice = createSlice({
     },
     deleteAlbum(state, action) {
       const albumId = action.payload;
-      console.log(state);
       return {
         ...state,
         albums: state.albums.filter((album) => album.id !== albumId),
+      };
+    },
+    updateAlbum(state, action) {
+      const updatedAlbum = action.payload.data;
+      console.log('updatealbum Slice:?', updatedAlbum);
+      return {
+        ...state,
+        albums: state.albums.map((album) => {
+          if (album.id === updatedAlbum.id) {
+            return {
+              ...album,
+              ...updatedAlbum,
+              coverImg: updatedAlbum.coverImg,
+            };
+          } else {
+            return album;
+          }
+        }),
       };
     },
   },

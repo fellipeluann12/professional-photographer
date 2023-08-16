@@ -105,7 +105,6 @@ export const createProject = (projectData) => async () => {
 
       console.log('Projeto criado com ID: ', newProject.id);
 
-      // Fetch the created project document to retrieve the complete project object
       const newProjectDoc = await getDoc(doc(projectCollection, newProject.id));
       const newProjectData = { id: newProject.id, ...newProjectDoc.data() };
 

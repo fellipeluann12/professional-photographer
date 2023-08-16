@@ -90,7 +90,7 @@ const customStyles = {
 
 export const ProjectManagement = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [ísLoadingModal, setIsLoadingModal] = useState(false);
+  const [isLoadingModal, setIsLoadingModal] = useState(false);
   const [isLoadingSolo, setIsLoadingSolo] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
@@ -99,10 +99,26 @@ export const ProjectManagement = () => {
   const dispatch = useDispatch();
   const project = useSelector((state) => state.project);
 
-  const perPage = 9;
+  const perPage = 10;
   const startIndex = currentPage * perPage;
   const endIndex = startIndex + perPage;
   const projectsToShow = project.slice(startIndex, endIndex);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    try {
+      dispatch(fetchProject())
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+        });
+    } catch (error) {
+      setIsLoading(false);
+    }
+  }, [dispatch]);
 
   const handlePageChange = (selectedPage) => {
     setCurrentPage(selectedPage.selected);
@@ -150,8 +166,6 @@ export const ProjectManagement = () => {
       featured,
     };
 
-    console.log('updatedData img ?: ', updatedData.coverImg);
-
     dispatch(
       createProject({
         id: id,
@@ -177,22 +191,6 @@ export const ProjectManagement = () => {
         notifyError(error);
       });
   };
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    try {
-      dispatch(fetchProject())
-        .then(() => {
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          setIsLoading(false);
-        });
-    } catch (error) {
-      setIsLoading(false);
-    }
-  }, [dispatch]);
 
   return (
     <SProjectManagementContainer>
@@ -233,7 +231,7 @@ export const ProjectManagement = () => {
               type="project"
               closeModal={closeModal}
               handleSave={handleSave}
-              ísLoadingModal={ísLoadingModal}
+              isLoadingModal={isLoadingModal}
             />
           </ReactModal>
         )}

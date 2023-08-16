@@ -33,26 +33,56 @@ export const fetchAlbumsByProjectId = (projectIdRef) => async (dispatch) => {
 };
 
 export const createAlbum = (albumData) => async () => {
-  const { projectId, coverImg } = albumData;
-
+  const { id, title, description, projectId, coverImg } = albumData;
+  console.log('albumdata: ', albumData);
   try {
-    const coverImgId = uuidv4();
-    const coverImgName = `${coverImg.name}_${coverImgId}`;
+    let imageUrl;
 
-    const storageRef = ref(storage, `/images/album/${coverImgName}`);
-    await uploadBytes(storageRef, coverImg);
+    if (coverImg) {
+      const coverImgId = uuidv4();
+      const coverImgName = `${coverImg.name}_${coverImgId}`;
 
-    const coverImgUrl = await getDownloadURL(storageRef);
+      const storageRef = ref(storage, `/images/album/${coverImgName}`);
+      await uploadBytes(storageRef, coverImg);
 
-    const albumCollection = collection(db, 'project', projectId, 'album');
-    const newAlbum = await addDoc(albumCollection, {
-      ...albumData,
-      coverImg: coverImgUrl,
-      photos: [],
-      createdAt: new Date().toString(),
-    });
+      imageUrl = await getDownloadURL(storageRef);
+    }
 
-    console.log('Album criado com ID: ', newAlbum.id);
+    if (id) {
+      const albumDocRef = doc(db, 'project', projectId, 'album', id);
+      const updateData = {
+        title,
+        description,
+        updatedAt: new Date().toString(),
+      };
+
+      if (imageUrl !== undefined) {
+        updateData.coverImg = imageUrl;
+      }
+      await updateDoc(albumDocRef, updateData);
+
+      console.log('Album att com sucesso');
+
+      const updatedAlbumDoc = await getDoc(albumDocRef);
+      const updatedAlbumData = { id, ...updatedAlbumDoc.data() };
+
+      return updatedAlbumData;
+    } else {
+      const albumCollection = collection(db, 'project', projectId, 'album');
+      const newAlbum = await addDoc(albumCollection, {
+        ...albumData,
+        coverImg: imageUrl,
+        photos: [],
+        createdAt: new Date().toString(),
+      });
+
+      console.log('Album criado com ID: ', newAlbum.id);
+
+      const newAlbumDoc = await getDoc(doc(albumCollection, newAlbum.id));
+      const newAlbumData = { id: newAlbum.id, ...newAlbumDoc.data() };
+
+      return newAlbumData;
+    }
   } catch (error) {
     console.log('Erro ao criar album: ', error);
   }
@@ -81,7 +111,6 @@ export const fetchAlbumPhotos = (projectId, albumId) => async (dispatch) => {
     const albumRef = doc(db, 'project', projectId, 'album', albumId);
     const albumDoc = await getDoc(albumRef);
     const albumData = albumDoc.data();
-    console.log('sss', albumData.photos);
 
     dispatch(albumActions.setPhotos(albumData.photos));
     console.log('Album photos fetched successfully');

@@ -14,12 +14,14 @@ const SAlbumFormularyContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  padding: 0 0 5rem;
+  padding: 0 0 2rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.secondaryGrey};
 `;
 
 const SAlbumFormulary = styled.form`
-  width: 50rem;
+  max-width: 50rem;
+  width: 100%;
+  max-width: 50rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -38,7 +40,6 @@ export const AlbumFormulary = () => {
     register,
     formState: { errors },
     handleSubmit,
-    getFieldState,
     reset,
     setValue,
   } = useForm({
@@ -148,7 +149,6 @@ export const AlbumFormulary = () => {
             errors: errors,
             maxLength: 1,
             ...register('coverImg', {
-              required: 'Cover image is required.',
               required: 'Cover image is required.',
             }),
           }}

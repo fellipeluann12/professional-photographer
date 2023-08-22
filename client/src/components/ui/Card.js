@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components';
 
 export const Card = styled.div`
+  flex: 1 1 35rem;
+  min-width: 0;
   display: flex;
   position: relative;
   flex-direction: column;
@@ -11,6 +13,11 @@ export const Card = styled.div`
   -moz-box-shadow: 2px 2px 1px ${({ theme }) => theme.colors.secondaryGreen};
   -webkit-box-shadow: 2px 2px 1px ${({ theme }) => theme.colors.secondaryGreen};
   -o-box-shadow: 2px 2px 1px ${({ theme }) => theme.colors.secondaryGreen};
+
+  &:last-child {
+    grid-column-start: 1;
+    grid-column-end: -1;
+  }
 
   ${(props) =>
     props.isAdm === true &&
@@ -58,23 +65,19 @@ export const CardTextBody = styled.div`
   gap: 1rem;
   max-width: 100%;
 
-  & h3,
+  > h3,
   p {
     white-space: nowrap;
-    text-overflow: ellipsis;
-    -moz-text-overflow: ellipsis;
-    -ms-text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
-    -moz-only-whitespace: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;
 
 export const CardHeading = styled.h3`
+  max-width: 100%;
   font-size: 2.5rem;
   color: #0acf6d;
   text-shadow: 3px 3px 2px black;
-  max-width: 100%;
 `;
 
 export const CardImageContainer = styled.div`

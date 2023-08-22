@@ -11,6 +11,7 @@ const SPText = styled.p`
   display: inline-block;
   text-align: ${(props) => (props.textAlign ? props.textAlign : '')};
   max-width: 100%;
+  word-wrap: break-word;
 
   ${(props) =>
     props.error === true &&

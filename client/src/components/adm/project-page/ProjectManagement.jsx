@@ -17,21 +17,20 @@ import { projectActions } from '../../../store/project/project-slice';
 
 const SProjectManagementContainer = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.secondaryGrey};
-  padding: 0 0 5rem;
+  padding: 0 0 2rem;
 `;
 
-const SGridContainer = styled.div`
+const SFlexContainer = styled.div`
   margin-top: 7rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
-  gap: 1.5rem;
-
-  @media ${({ theme }) => theme.breakpoints.mdMaxW} {
-    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-  }
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  justify-content: space-between;
 `;
 
-const SGridContainerCenter = styled.div`
+const SFlexContainerCenter = styled.div`
+  width: 100%;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -50,7 +49,7 @@ const SPaginationContainer = styled.div`
     list-style-type: none;
     padding: 0;
     margin: 0;
-    padding: 5rem;
+    padding: 0 1rem;
 
     > li {
       display: inline-block;
@@ -99,7 +98,7 @@ export const ProjectManagement = () => {
   const dispatch = useDispatch();
   const project = useSelector((state) => state.project);
 
-  const perPage = 10;
+  const perPage = 9;
   const startIndex = currentPage * perPage;
   const endIndex = startIndex + perPage;
   const projectsToShow = project.slice(startIndex, endIndex);
@@ -134,19 +133,22 @@ export const ProjectManagement = () => {
     setSelectedProject(null);
   };
 
-  const handleDelete = (projectId) => {
+  const handleDelete = (projectId, coverImg) => {
     setIsLoadingSolo((prevState) => ({
       ...prevState,
       [projectId]: true,
     }));
 
-    dispatch(deleteProject(projectId))
+    dispatch(deleteProject(projectId, coverImg))
       .then(() => {
         setIsLoadingSolo((prevState) => ({
           ...prevState,
           [projectId]: false,
         }));
         notifySuccess('Project deleted.');
+        if (projectsToShow.length === 1) {
+          setCurrentPage((prevPage) => prevPage - 1);
+        }
       })
       .catch((error) => {
         setIsLoadingSolo(false);
@@ -194,17 +196,17 @@ export const ProjectManagement = () => {
 
   return (
     <SProjectManagementContainer>
-      <SGridContainer>
+      <SFlexContainer>
         {isLoading ? (
-          <SGridContainerCenter>
+          <SFlexContainerCenter>
             <Loader width="7rem" height="7rem" />
-          </SGridContainerCenter>
+          </SFlexContainerCenter>
         ) : project.length === 0 ? (
-          <SGridContainerCenter>
+          <SFlexContainerCenter>
             <PText fontSize="3rem" color="primaryGrey">
               Empty
             </PText>
-          </SGridContainerCenter>
+          </SFlexContainerCenter>
         ) : (
           projectsToShow.map((project) => (
             <Thumbnail
@@ -235,8 +237,8 @@ export const ProjectManagement = () => {
             />
           </ReactModal>
         )}
-      </SGridContainer>
-      {!isLoading && (
+      </SFlexContainer>
+      {!isLoading && project.length > 9 && (
         <SPaginationContainer>
           <ReactPaginate
             previousLabel="<"

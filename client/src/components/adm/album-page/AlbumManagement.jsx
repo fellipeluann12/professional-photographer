@@ -21,11 +21,10 @@ import ReactPaginate from 'react-paginate';
 
 const SAlbumManagementContainer = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.secondaryGrey};
-  padding: 0 0 5rem;
+  padding: 0 0 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  outline: 1px solid #f00 !important;
 `;
 
 const SComboBoxContainer = styled.div`
@@ -36,19 +35,17 @@ const SComboBoxContainer = styled.div`
   gap: 1rem;
 `;
 
-const SGridContainer = styled.div`
+const SFlexContainer = styled.div`
   margin-top: 7rem;
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
-  gap: 1.5rem;
-
-  @media ${({ theme }) => theme.breakpoints.mdMaxW} {
-    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-  }
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  justify-content: space-between;
 `;
 
-const SGridContainerCenter = styled.div`
+const SFlexContainerCenter = styled.div`
+  width: 100%;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -67,7 +64,7 @@ const SPaginationContainer = styled.div`
     list-style-type: none;
     padding: 0;
     margin: 0;
-    padding: 5rem;
+    padding: 0 1rem;
 
     > li {
       display: inline-block;
@@ -118,7 +115,7 @@ export const AlbumManagement = () => {
   const project = useSelector((state) => state.project);
   const album = useSelector((state) => state.album.albums);
 
-  const perPage = 10;
+  const perPage = 9;
   const startIndex = currentPage * perPage;
   const endIndex = startIndex + perPage;
   const albumsToShow = album.slice(startIndex, endIndex);
@@ -130,6 +127,8 @@ export const AlbumManagement = () => {
   useEffect(() => {
     dispatch(fetchProject());
   }, [dispatch]);
+
+  console.log('albunstoShow lenght:', albumsToShow.length);
 
   const handleProjectChange = (e) => {
     const selectedProjectId = e.target.value;
@@ -149,7 +148,8 @@ export const AlbumManagement = () => {
     }
   };
 
-  const handleDelete = (albumId) => {
+  const handleDelete = (albumId, coverImg) => {
+    console.log('coverIMG Dentro do managemen:', coverImg);
     setAlbumId(albumId);
     setIsLoadingSolo((prevState) => ({
       ...prevState,
@@ -157,13 +157,16 @@ export const AlbumManagement = () => {
     }));
     console.log(projectId, albumId);
 
-    dispatch(deleteAlbum(projectId, albumId))
+    dispatch(deleteAlbum(projectId, albumId, coverImg))
       .then(() => {
         setIsLoadingSolo((prevState) => ({
           ...prevState,
           [albumId]: false,
         }));
         notifySuccess('Album deleted.');
+        if (albumsToShow.length === 1) {
+          setCurrentPage((prevPage) => prevPage - 1);
+        }
       })
       .catch((error) => {
         setIsLoadingSolo(false);
@@ -237,23 +240,23 @@ export const AlbumManagement = () => {
           }}
         />
       </SComboBoxContainer>
-      <SGridContainer>
+      <SFlexContainer>
         {isLoading ? (
-          <SGridContainerCenter>
+          <SFlexContainerCenter>
             <Loader width="7rem" height="7rem" />
-          </SGridContainerCenter>
-        ) : album.length === 0 || undefined ? (
-          <SGridContainerCenter>
+          </SFlexContainerCenter>
+        ) : album.length === 0 && projectId ? (
+          <SFlexContainerCenter>
             <PText fontSize="1.5rem" color="primaryGrey">
               There's no albums inside this project
             </PText>
-          </SGridContainerCenter>
+          </SFlexContainerCenter>
         ) : projectId === '' ? (
-          <SGridContainerCenter>
+          <SFlexContainerCenter>
             <PText fontSize="1.5rem" color="primaryGrey">
               Please select one project
             </PText>
-          </SGridContainerCenter>
+          </SFlexContainerCenter>
         ) : (
           albumsToShow.map((album) => (
             <Thumbnail
@@ -284,8 +287,8 @@ export const AlbumManagement = () => {
             />
           </ReactModal>
         )}
-      </SGridContainer>
-      {!isLoading && projectId && album.length > 0 && (
+      </SFlexContainer>
+      {!isLoading && projectId && album.length > 9 && (
         <SPaginationContainer>
           <ReactPaginate
             previousLabel="<"

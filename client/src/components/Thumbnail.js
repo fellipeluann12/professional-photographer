@@ -31,11 +31,19 @@ const SAdmModal = styled.div`
   gap: 3rem;
 `;
 
-const Thumbnail = ({ item, type, onDelete, id, isLoadingSolo, onEdit }) => {
+const Thumbnail = ({
+  item,
+  type,
+  onDelete,
+  id,
+  isLoadingSolo,
+  onEdit,
+  coverImg,
+}) => {
   const [hovered, setHovered] = useState(false);
 
   const handleDelete = () => {
-    onDelete(id);
+    onDelete(id, item.coverImg);
   };
 
   const handleEdit = () => {
@@ -94,7 +102,7 @@ const Thumbnail = ({ item, type, onDelete, id, isLoadingSolo, onEdit }) => {
             {item.description}
           </PText>
         </CardTextBody>
-        <CardImageContainer image={item.coverImg}></CardImageContainer>
+        <CardImageContainer image={item.coverImg.url}></CardImageContainer>
       </Card>
     );
   }
@@ -113,7 +121,7 @@ const Thumbnail = ({ item, type, onDelete, id, isLoadingSolo, onEdit }) => {
             {item.description}
           </PText>
         </CardTextBody>
-        <CardImageContainer image={item.coverImg}></CardImageContainer>
+        <CardImageContainer image={item.coverImg.url}></CardImageContainer>
       </Card>
     </NavLink>
   );

@@ -32,6 +32,10 @@ export default function FeaturedGaleries() {
   useEffect(() => {
     dispatch(fetchProject());
   }, [dispatch]);
+  console.log(
+    'filter:',
+    project.filter((project) => project.featured)
+  );
 
   return (
     <SFeatureSection>

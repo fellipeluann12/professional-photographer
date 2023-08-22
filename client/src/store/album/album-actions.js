@@ -1,7 +1,12 @@
 import { albumActions } from './album-slice';
 import { v4 as uuidv4 } from 'uuid';
 import { db, storage } from '../firebase.js';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from 'firebase/storage';
 import {
   addDoc,
   collection,
@@ -34,9 +39,9 @@ export const fetchAlbumsByProjectId = (projectIdRef) => async (dispatch) => {
 
 export const createAlbum = (albumData) => async () => {
   const { id, title, description, projectId, coverImg } = albumData;
-  console.log('albumdata: ', albumData);
+
   try {
-    let imageUrl;
+    let imageInfo = null;
 
     if (coverImg) {
       const coverImgId = uuidv4();
@@ -45,38 +50,44 @@ export const createAlbum = (albumData) => async () => {
       const storageRef = ref(storage, `/images/album/${coverImgName}`);
       await uploadBytes(storageRef, coverImg);
 
-      imageUrl = await getDownloadURL(storageRef);
+      const imageUrl = await getDownloadURL(storageRef);
+
+      imageInfo = {
+        url: imageUrl,
+        name: coverImgName,
+      };
     }
 
+    const albumCollection = collection(db, 'project', projectId, 'album');
+
     if (id) {
-      const albumDocRef = doc(db, 'project', projectId, 'album', id);
+      const albumDocRef = doc(albumCollection, id);
       const updateData = {
         title,
         description,
         updatedAt: new Date().toString(),
       };
 
-      if (imageUrl !== undefined) {
-        updateData.coverImg = imageUrl;
+      if (imageInfo) {
+        updateData.coverImg = imageInfo;
       }
       await updateDoc(albumDocRef, updateData);
 
-      console.log('Album att com sucesso');
+      console.log('Album updated successfully');
 
       const updatedAlbumDoc = await getDoc(albumDocRef);
       const updatedAlbumData = { id, ...updatedAlbumDoc.data() };
 
       return updatedAlbumData;
     } else {
-      const albumCollection = collection(db, 'project', projectId, 'album');
       const newAlbum = await addDoc(albumCollection, {
         ...albumData,
-        coverImg: imageUrl,
+        coverImg: imageInfo,
         photos: [],
         createdAt: new Date().toString(),
       });
 
-      console.log('Album criado com ID: ', newAlbum.id);
+      console.log('Album created with ID: ', newAlbum.id);
 
       const newAlbumDoc = await getDoc(doc(albumCollection, newAlbum.id));
       const newAlbumData = { id: newAlbum.id, ...newAlbumDoc.data() };
@@ -84,27 +95,37 @@ export const createAlbum = (albumData) => async () => {
       return newAlbumData;
     }
   } catch (error) {
-    console.log('Erro ao criar album: ', error);
+    console.log('Error creating album: ', error);
   }
 };
 
-export const deleteAlbum = (projectId, albumId) => async (dispatch) => {
-  try {
-    // Construct the Firestore references for the project and album
-    const projectDocRef = doc(db, 'project', projectId);
-    const albumDocRef = doc(projectDocRef, 'album', albumId);
+export const deleteImageFunction = async (coverImg) => {
+  console.log('nameImgDeleteImage:', coverImg.name);
+  const storageImgRef = ref(storage, `/images/album/${coverImg.name}`);
 
-    // Delete the album document
-    await deleteDoc(albumDocRef);
-
-    // Dispatch an action to update the state and remove the album from the Redux store
-    dispatch(albumActions.deleteAlbum(albumId));
-
-    console.log('Album deleted successfully!');
-  } catch (error) {
-    console.log('Error deleting album: ', error);
-  }
+  deleteObject(storageImgRef)
+    .then(() => {
+      console.log('deletou');
+    })
+    .catch((error) => {
+      console.log('deu erro', error);
+    });
 };
+
+export const deleteAlbum =
+  (projectId, albumId, coverImg) => async (dispatch) => {
+    try {
+      const projectDocRef = doc(db, 'project', projectId);
+      const albumDocRef = doc(projectDocRef, 'album', albumId);
+
+      await deleteDoc(albumDocRef);
+      await deleteImageFunction(coverImg);
+
+      dispatch(albumActions.deleteAlbum(albumId));
+    } catch (error) {
+      console.log('Error deleting album: ', error);
+    }
+  };
 
 export const fetchAlbumPhotos = (projectId, albumId) => async (dispatch) => {
   try {

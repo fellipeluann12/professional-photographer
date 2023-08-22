@@ -18,7 +18,8 @@ const SProjectFormularyContainer = styled.div`
 `;
 
 const SProjectFormulary = styled.form`
-  width: 50rem;
+  max-width: 50rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;

@@ -13,7 +13,12 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from 'firebase/storage';
 
 export const fetchProject = () => async (dispatch) => {
   try {
@@ -58,16 +63,21 @@ export const createProject = (projectData) => async () => {
   console.log('img true?', coverImg);
 
   try {
-    let imageUrl;
+    let imageInfo = null;
 
     if (coverImg) {
-      const imageId = uuidv4();
-      const imageName = `${coverImg.name}_${imageId}`;
+      const coverImgId = uuidv4();
+      const coverImgName = `${coverImg.name}_${coverImgId}`;
 
-      const storageRef = ref(storage, `/images/project/${imageName}`);
+      const storageRef = ref(storage, `/images/project/${coverImgName}`);
       await uploadBytes(storageRef, coverImg);
 
-      imageUrl = await getDownloadURL(storageRef);
+      const imageUrl = await getDownloadURL(storageRef);
+
+      imageInfo = {
+        url: imageUrl,
+        name: coverImgName,
+      };
     }
 
     const projectCollection = collection(db, 'project');
@@ -81,8 +91,8 @@ export const createProject = (projectData) => async () => {
         updatedAt: new Date().toString(),
       };
 
-      if (imageUrl !== undefined) {
-        updateData.coverImg = imageUrl;
+      if (imageInfo) {
+        updateData.coverImg = imageInfo;
       }
 
       await updateDoc(projectDocRef, updateData);
@@ -98,7 +108,7 @@ export const createProject = (projectData) => async () => {
       const newProject = await addDoc(projectCollection, {
         title,
         description,
-        coverImg: imageUrl,
+        coverImg: imageInfo,
         featured: featured,
         createdAt: new Date().toString(),
       });
@@ -116,10 +126,24 @@ export const createProject = (projectData) => async () => {
   }
 };
 
-export const deleteProject = (projectId) => async (dispatch) => {
+export const deleteImageFunction = async (coverImg) => {
+  console.log('nameImgDeleteImage:', coverImg.name);
+  const storageImgRef = ref(storage, `/images/project/${coverImg.name}`);
+
+  deleteObject(storageImgRef)
+    .then(() => {
+      console.log('deletou');
+    })
+    .catch((error) => {
+      console.log('deu erro', error);
+    });
+};
+
+export const deleteProject = (projectId, coverImg) => async (dispatch) => {
   try {
     const projectDocRef = doc(db, 'project', projectId);
     await deleteDoc(projectDocRef);
+    await deleteImageFunction(coverImg);
     dispatch(projectActions.deleteProject(projectId));
     console.log('Projeto excluído com sucesso!');
   } catch (error) {

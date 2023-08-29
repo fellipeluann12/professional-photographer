@@ -87,9 +87,12 @@ export const CardImageContainer = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50%;
-`;
 
-export const CardImage = styled.img`
-  width: 100%;
-  height: 100%;
+  ${(props) =>
+    props.isAdm === true &&
+    css`
+      flex: 1 1 35rem;
+      position: relative;
+      border-radius: 1rem;
+    `};
 `;

@@ -31,10 +31,10 @@ const SAlbumFormulary = styled.form`
 
 export const AlbumFormulary = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
   const project = useSelector((state) => state.project);
   const [projectId, setProjectId] = useState('');
-  console.log(projectId);
+
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -136,6 +136,7 @@ export const AlbumFormulary = () => {
           input={{
             comboBox: 'comboBox',
             name: 'projectId',
+            placeHolder: 'PROJECT SELECT',
             errors: errors,
             register: register,
             options: project,

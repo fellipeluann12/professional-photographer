@@ -135,17 +135,13 @@ export const AlbumManagement = () => {
     setProjectId(selectedProjectId);
     setIsLoading(true);
 
-    try {
-      dispatch(fetchAlbumsByProjectId(selectedProjectId))
-        .then(() => {
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          setIsLoading(false);
-        });
-    } catch (error) {
-      setIsLoading(false);
-    }
+    dispatch(fetchAlbumsByProjectId(selectedProjectId))
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+      });
   };
 
   const handleDelete = (albumId, coverImg) => {
@@ -234,6 +230,7 @@ export const AlbumManagement = () => {
           input={{
             comboBox: 'comboBox',
             name: 'projecId',
+            placeHolder: 'PROJEC SELECT',
             options: project,
             value: projectId,
             onChange: handleProjectChange,

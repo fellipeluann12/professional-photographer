@@ -19,6 +19,27 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 
+export const fetchPhotosByAlbumId =
+  (projectId, albumId) => async (dispatch) => {
+    try {
+      const albumRef = doc(db, 'project', projectId, 'album', albumId);
+      const albumDoc = await getDoc(albumRef);
+
+      if (albumDoc.exists()) {
+        const albumData = albumDoc.data();
+        const photosData = albumData.photos || [];
+
+        // Dispatch an action to set the photos in the store
+        dispatch(albumActions.setPhotos(photosData));
+        console.log('fetchPhotosByAlbumId data:', photosData);
+      } else {
+        console.log('Album not found');
+      }
+    } catch (error) {
+      console.error('Error fetching photos:', error);
+    }
+  };
+
 export const fetchAlbumsByProjectId = (projectIdRef) => async (dispatch) => {
   try {
     const projectRef = doc(db, 'project', projectIdRef);
@@ -127,6 +148,29 @@ export const deleteAlbum =
     }
   };
 
+export const deletePhotoFromAlbum =
+  (projectId, albumId, photoId, photoName) => async (dispatch) => {
+    try {
+      const albumRef = doc(db, 'project', projectId, 'album', albumId);
+      const albumDoc = await getDoc(albumRef);
+      const albumData = albumDoc.data();
+
+      const updatedPhotos = albumData.photos.filter(
+        (photo) => photo.id !== photoId
+      );
+
+      await updateDoc(albumRef, {
+        photos: updatedPhotos,
+      });
+
+      await deleteImageFunction(photoName);
+
+      console.log('Photo deleted successfully!');
+    } catch (error) {
+      console.log('Error deleting photo: ', error);
+    }
+  };
+
 export const fetchAlbumPhotos = (projectId, albumId) => async (dispatch) => {
   try {
     const albumRef = doc(db, 'project', projectId, 'album', albumId);
@@ -141,7 +185,8 @@ export const fetchAlbumPhotos = (projectId, albumId) => async (dispatch) => {
 };
 
 export const addAlbumPhotos =
-  (projectId, albumId, photos) => async (dispatch) => {
+  ({ projectId, albumId }, photos) =>
+  async (dispatch) => {
     try {
       const albumRef = doc(db, 'project', projectId, 'album', albumId);
       const albumCollection = await getDoc(albumRef);
@@ -158,7 +203,7 @@ export const addAlbumPhotos =
 
           return {
             id: uuidv4(),
-            name: photo.name,
+            name: photoName,
             original: downloadUrl,
             thumbnail: downloadUrl,
           };

@@ -91,7 +91,8 @@ const STextArea = styled.textarea`
 `;
 
 const Input = ({ input }) => {
-  const { options, errors, register, value, onChange, name } = input;
+  const { options, errors, register, value, onChange, name, placeHolder } =
+    input;
   const errorMessage = (
     <ErrorMessage
       errors={input.errors || errors}
@@ -124,7 +125,7 @@ const Input = ({ input }) => {
             onChange={onChange}
           >
             <option disabled={true} value="">
-              SELECT AN OPTION
+              {placeHolder}
             </option>
             {options.map((item) => (
               <option key={item.id} value={item.id}>

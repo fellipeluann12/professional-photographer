@@ -6,7 +6,6 @@ import {
   CardDeleteTool,
   CardEditTool,
   CardHeading,
-  CardImage,
   CardImageContainer,
   CardTextBody,
   CardYellowStar,
@@ -43,7 +42,7 @@ const Thumbnail = ({
   const [hovered, setHovered] = useState(false);
 
   const handleDelete = () => {
-    onDelete(id, item.coverImg);
+    onDelete(id, item.coverImg || item.original);
   };
 
   const handleEdit = () => {
@@ -108,7 +107,28 @@ const Thumbnail = ({
   }
 
   if (type === 'photo') {
-    return <CardImage src={item.url} />;
+    return (
+      <CardImageContainer
+        isAdm
+        onMouseEnter={handleHover}
+        onMouseLeave={handleMouseLeave}
+        image={item.original}
+      >
+        {isLoadingSolo[id] ? (
+          <SAdmModal>
+            <Loader />
+          </SAdmModal>
+        ) : (
+          hovered && (
+            <SAdmModal>
+              <CardDeleteTool onClick={handleDelete}>
+                <Delete />
+              </CardDeleteTool>
+            </SAdmModal>
+          )
+        )}
+      </CardImageContainer>
+    );
   }
 
   return (

@@ -182,11 +182,12 @@ export const PhotoManagement = () => {
 
   const renderPhotos = () => {
     if (isLoading) {
-      return (
-        <SFlexContainerCenter>
-          <Loader width={'7rem'} height={'7rem'} />
-        </SFlexContainerCenter>
-      );
+      const loaderCount = 3;
+      const loaders = Array.from({ length: loaderCount }, (_, index) => (
+        <Loader style={{ flex: '1 1 35rem' }} key={index} />
+      ));
+
+      return <SFlexContainer>{loaders}</SFlexContainer>;
     }
 
     if (projectId === '') {

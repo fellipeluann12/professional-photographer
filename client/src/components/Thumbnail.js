@@ -40,9 +40,10 @@ const Thumbnail = ({
   coverImg,
 }) => {
   const [hovered, setHovered] = useState(false);
+  console.log('item inside ', item);
 
   const handleDelete = () => {
-    onDelete(id, item.coverImg || item.original);
+    onDelete(id, item.coverImg || item);
   };
 
   const handleEdit = () => {

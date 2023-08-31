@@ -67,6 +67,7 @@ export const PhotoFormulary = () => {
     const selectedProjectValue = e.target.value;
     console.log('selectedProjectValue', selectedProjectValue);
     setProjectId(selectedProjectValue);
+    setAlbumId('');
     setValue('projectId', selectedProjectValue, { shouldValidate: true });
     dispatch(fetchAlbumsByProjectId(selectedProjectValue));
   };

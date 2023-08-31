@@ -17,6 +17,13 @@ const albumSlice = createSlice({
         albums: state.albums.filter((album) => album.id !== albumId),
       };
     },
+    deletePhoto(state, action) {
+      const photoId = action.payload;
+      return {
+        ...state,
+        photos: state.photos.filter((photo) => photo.id !== photoId),
+      };
+    },
     updateAlbum(state, action) {
       const updatedAlbum = action.payload.data;
       console.log('updatealbum Slice:?', updatedAlbum);

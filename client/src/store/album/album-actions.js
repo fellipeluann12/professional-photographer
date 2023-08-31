@@ -120,9 +120,9 @@ export const createAlbum = (albumData) => async () => {
   }
 };
 
-export const deleteImageFunction = async (coverImg) => {
-  console.log('nameImgDeleteImage:', coverImg.name);
-  const storageImgRef = ref(storage, `/images/album/${coverImg.name}`);
+export const deleteImageFunction = async (coverImg, path) => {
+  console.log('inside deleteimage function coverImg::', coverImg);
+  const storageImgRef = ref(storage, `/images/${path}/${coverImg.name}`);
 
   deleteObject(storageImgRef)
     .then(() => {
@@ -140,7 +140,7 @@ export const deleteAlbum =
       const albumDocRef = doc(projectDocRef, 'album', albumId);
 
       await deleteDoc(albumDocRef);
-      await deleteImageFunction(coverImg);
+      await deleteImageFunction(coverImg, 'album');
 
       dispatch(albumActions.deleteAlbum(albumId));
     } catch (error) {
@@ -163,7 +163,8 @@ export const deletePhotoFromAlbum =
         photos: updatedPhotos,
       });
 
-      await deleteImageFunction(photoName);
+      await deleteImageFunction(photoName, 'photo');
+      dispatch(albumActions.deletePhoto(photoId));
 
       console.log('Photo deleted successfully!');
     } catch (error) {

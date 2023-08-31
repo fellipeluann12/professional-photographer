@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProject } from '../../../store/project/project-actions';
 import {
+  deletePhotoFromAlbum,
   fetchAlbumsByProjectId,
   fetchPhotosByAlbumId,
 } from '../../../store/album/album-actions';
@@ -11,6 +12,8 @@ import Loader from '../../ui/Loader';
 import Thumbnail from '../../Thumbnail';
 import { albumActions } from '../../../store/album/album-slice';
 import PText from '../../PText';
+import ReactPaginate from 'react-paginate';
+import { notifyError, notifySuccess } from '../../../assets/functionsHelper';
 
 const SPhotosManagementContainer = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.secondaryGrey};
@@ -45,17 +48,61 @@ const SFlexContainerCenter = styled.div`
   text-align: center;
 `;
 
+const SPaginationContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 2rem;
+  font-size: 1.8rem;
+  font-weight: 800;
+
+  > ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    padding: 0 1rem;
+
+    > li {
+      display: inline-block;
+      margin: 0 0.5rem;
+      padding: 1rem;
+      cursor: pointer;
+      color: ${({ theme }) => theme.colors.primaryGreen};
+      background: transparent;
+      border-radius: 0.63rem;
+      border: 1px solid ${({ theme }) => theme.colors.primaryGreen};
+
+      > a {
+        padding: 3rem;
+      }
+
+      &.active {
+        color: ${({ theme }) => theme.colors.secondaryGreen};
+        background-color: ${({ theme }) => theme.colors.secondaryBlack};
+      }
+    }
+  }
+`;
+
 export const PhotoManagement = () => {
   const project = useSelector((state) => state.project);
   const album = useSelector((state) => state.album.albums);
   const photo = useSelector((state) => state.album.photos);
+  console.log('album inside management', album.length);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingSolo, setIsLoadingSolo] = useState(false);
   const [projectId, setProjectId] = useState('');
   const [albumId, setAlbumId] = useState('');
+  const [currentPage, setCurrentPage] = useState(0);
 
   const dispatch = useDispatch();
+
+  const perPage = 9;
+  const startIndex = currentPage * perPage;
+  const endIndex = startIndex + perPage;
+  const photosToShow = photo.slice(startIndex, endIndex);
 
   useEffect(() => {
     dispatch(fetchProject());
@@ -64,10 +111,14 @@ export const PhotoManagement = () => {
     };
   }, [dispatch]);
 
+  const handlePageChange = (selectedPage) => {
+    setCurrentPage(selectedPage.selected);
+  };
+
   const handleProjectChange = (e) => {
     const selectedProjectValue = e.target.value;
     setProjectId(selectedProjectValue);
-
+    setAlbumId('');
     dispatch(fetchAlbumsByProjectId(selectedProjectValue));
   };
 
@@ -85,14 +136,109 @@ export const PhotoManagement = () => {
       });
   };
 
-  const handleDelete = (albumId, photoLink) => {
-    console.log('coverIMG Dentro do managemen:', photoLink);
+  const handleDelete = (photoId, photoOriginalUrl) => {
+    console.log('coverIMG Dentro do managemen:', photoOriginalUrl);
     setAlbumId(albumId);
     setIsLoadingSolo((prevState) => ({
       ...prevState,
-      [albumId]: true,
+      [photoId]: true,
     }));
-    console.log(albumId, photoLink);
+
+    dispatch(
+      deletePhotoFromAlbum(projectId, albumId, photoId, photoOriginalUrl)
+    )
+      .then(() => {
+        setIsLoadingSolo((prevState) => ({
+          ...prevState,
+          [photoId]: false,
+        }));
+        notifySuccess('Photo deleted.');
+        if (photosToShow.length === 1) {
+          setCurrentPage((prevPage) => prevPage - 1);
+        }
+      })
+      .catch((error) => {
+        setIsLoadingSolo(false);
+        notifyError(error);
+      });
+  };
+
+  const renderAlbumSelect = () => {
+    if (!projectId || !album.length) return null;
+
+    return (
+      <Input
+        input={{
+          comboBox: 'comboBox',
+          name: 'albumId',
+          placeHolder: 'ALBUM SELECT',
+          options: album,
+          value: albumId,
+          onChange: handleAlbumChange,
+        }}
+      />
+    );
+  };
+
+  const renderPhotos = () => {
+    if (isLoading) {
+      return (
+        <SFlexContainerCenter>
+          <Loader width={'7rem'} height={'7rem'} />
+        </SFlexContainerCenter>
+      );
+    }
+
+    if (projectId === '') {
+      return (
+        <SFlexContainerCenter>
+          <PText fontSize="1.5rem" color="primaryGrey">
+            Please select one project
+          </PText>
+        </SFlexContainerCenter>
+      );
+    }
+
+    if (albumId === '' && album.length !== 0) {
+      return (
+        <SFlexContainerCenter>
+          <PText fontSize="1.5rem" color="primaryGrey">
+            Please select one album
+          </PText>
+        </SFlexContainerCenter>
+      );
+    }
+
+    if (album.length < 1) {
+      return (
+        <SFlexContainerCenter>
+          <PText fontSize="1.5rem" color="primaryGrey">
+            There's no album inside this project
+          </PText>
+        </SFlexContainerCenter>
+      );
+    }
+
+    if (photo.length === 0 && albumId) {
+      return (
+        <SFlexContainerCenter>
+          <PText fontSize="1.5rem" color="primaryGrey">
+            There's no photo inside this album
+          </PText>
+        </SFlexContainerCenter>
+      );
+    }
+
+    return photosToShow.map((photo) => (
+      <Thumbnail
+        item={photo}
+        isLoadingSolo={isLoadingSolo}
+        type="photo"
+        key={photo.id}
+        onDelete={handleDelete}
+        id={photo.id}
+      />
+    ));
   };
 
   return (
@@ -108,55 +254,26 @@ export const PhotoManagement = () => {
             onChange: handleProjectChange,
           }}
         />
-        {projectId && (
-          <Input
-            input={{
-              comboBox: 'comboBox',
-              name: 'albumId',
-              placeHolder: 'ALBUM SELECT',
-              options: album,
-              value: albumId,
-              onChange: handleAlbumChange,
-            }}
-          />
-        )}
+        {renderAlbumSelect()}
       </SComboBoxContainer>
-      <SFlexContainer>
-        {isLoading ? (
-          <SFlexContainerCenter>
-            <Loader width={'7rem'} height={'7rem'} />
-          </SFlexContainerCenter>
-        ) : projectId === '' ? (
-          <SFlexContainerCenter>
-            <PText fontSize="1.5rem" color="primaryGrey">
-              Please select one project
-            </PText>
-          </SFlexContainerCenter>
-        ) : (albumId === '') & (projectId !== '') ? (
-          <SFlexContainerCenter>
-            <PText fontSize="1.5rem" color="primaryGrey">
-              Please select one album
-            </PText>
-          </SFlexContainerCenter>
-        ) : photo.length === 0 && albumId ? (
-          <SFlexContainerCenter>
-            <PText fontSize="1.5rem" color="primaryGrey">
-              There's no photo inside this album
-            </PText>
-          </SFlexContainerCenter>
-        ) : (
-          photo.map((photo) => (
-            <Thumbnail
-              item={photo}
-              isLoadingSolo={isLoadingSolo}
-              type="photo"
-              key={photo.id}
-              onDelete={handleDelete}
-              id={photo.id}
-            />
-          ))
-        )}
-      </SFlexContainer>
+      <SFlexContainer>{renderPhotos()}</SFlexContainer>
+      {!isLoading && albumId && photo.length > 9 && (
+        <SPaginationContainer>
+          <ReactPaginate
+            previousLabel="<"
+            nextLabel=">"
+            breakLabel="..."
+            breakClassName="break-me"
+            pageCount={Math.ceil(photo.length / perPage)}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={handlePageChange}
+            containerClassName={SPaginationContainer}
+            activeClassName="active"
+            forcePage={currentPage}
+          />
+        </SPaginationContainer>
+      )}
     </SPhotosManagementContainer>
   );
 };

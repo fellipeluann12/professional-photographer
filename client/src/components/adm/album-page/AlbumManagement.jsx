@@ -120,19 +120,19 @@ export const AlbumManagement = () => {
   const endIndex = startIndex + perPage;
   const albumsToShow = album.slice(startIndex, endIndex);
 
-  const handlePageChange = (selectedPage) => {
-    setCurrentPage(selectedPage.selected);
-  };
-
   useEffect(() => {
     dispatch(fetchProject());
   }, [dispatch]);
 
+  const handlePageChange = (selectedPage) => {
+    setCurrentPage(selectedPage.selected);
+  };
   console.log('albunstoShow lenght:', albumsToShow.length);
 
   const handleProjectChange = (e) => {
     const selectedProjectId = e.target.value;
     setProjectId(selectedProjectId);
+    setAlbumId('');
     setIsLoading(true);
 
     dispatch(fetchAlbumsByProjectId(selectedProjectId))

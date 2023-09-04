@@ -18,7 +18,7 @@ const SButton = styled.button`
         ? props.theme.colors.primaryGreen
         : props.config === 'close'
         ? props.theme.colors.primaryRed
-        : props.theme.colors.secondaryGreen};
+        : props.theme.colors.primaryGreen};
   border-radius: 0.5rem;
   font-size: 1.6rem;
   padding: 0.7rem 1rem;

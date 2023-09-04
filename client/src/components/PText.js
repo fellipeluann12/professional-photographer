@@ -3,14 +3,13 @@ import styled from 'styled-components';
 import { css } from 'styled-components';
 
 const SPText = styled.p`
-  max-width: ${(props) => (props.maxWidth ? props.maxWidth : 'auto')};
+  max-width: ${(props) => (props.maxWidth ? props.maxWidth : '100%')};
   font-size: ${(props) => (props.fontSize ? props.fontSize : '1.6rem')};
   color: ${(props) => (props.color ? props.theme.colors[props.color] : '')};
   letter-spacing: ${(props) =>
     props.letterSpacing ? props.letterSpacing : ''};
   display: inline-block;
   text-align: ${(props) => (props.textAlign ? props.textAlign : '')};
-  max-width: 100%;
   word-wrap: break-word;
 
   ${(props) =>

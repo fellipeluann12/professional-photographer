@@ -184,7 +184,13 @@ export const PhotoManagement = () => {
     if (isLoading) {
       const loaderCount = 3;
       const loaders = Array.from({ length: loaderCount }, (_, index) => (
-        <Loader style={{ flex: '1 1 35rem' }} key={index} />
+        <Loader
+          photo="true"
+          width="100%"
+          height={200}
+          style={{ flex: '1 1 35rem' }}
+          key={index}
+        />
       ));
 
       return <SFlexContainer>{loaders}</SFlexContainer>;

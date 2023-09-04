@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import Profile from '../Profile';
 
 const SUl = styled.ul`
   display: flex;
@@ -29,7 +30,12 @@ const SLi = styled.li`
   align-items: center;
 
   :not(:last-child) {
-    margin-right: 3rem;
+    &::after {
+      content: ' | ';
+      padding: 0 10px;
+      color: ${({ theme }) => theme.colors.secondaryGrey};
+      line-height: 1.5;
+    }
   }
 `;
 
@@ -52,6 +58,14 @@ export default function NavLinks({ navData }) {
   return (
     <SUl>
       {navData.map((item, index) => {
+        if (item.title === 'Profile') {
+          return (
+            <SLi key={index} style={{ cursor: 'pointer' }}>
+              <Profile />
+            </SLi>
+          );
+        }
+
         return (
           <SLi key={index}>
             <SNLink to={item.path} end>

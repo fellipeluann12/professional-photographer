@@ -127,7 +127,6 @@ export const AlbumManagement = () => {
   const handlePageChange = (selectedPage) => {
     setCurrentPage(selectedPage.selected);
   };
-  console.log('albunstoShow lenght:', albumsToShow.length);
 
   const handleProjectChange = (e) => {
     const selectedProjectId = e.target.value;
@@ -144,30 +143,29 @@ export const AlbumManagement = () => {
       });
   };
 
-  const handleDelete = (albumId, coverImg) => {
-    console.log('coverIMG Dentro do managemen:', coverImg);
-    setAlbumId(albumId);
-    setIsLoadingSolo((prevState) => ({
-      ...prevState,
-      [albumId]: true,
-    }));
-    console.log(projectId, albumId);
+  const handleDelete = async (albumId, coverImg) => {
+    try {
+      setAlbumId(albumId);
+      setIsLoadingSolo((prevState) => ({
+        ...prevState,
+        [albumId]: true,
+      }));
 
-    dispatch(deleteAlbum(projectId, albumId, coverImg))
-      .then(() => {
-        setIsLoadingSolo((prevState) => ({
-          ...prevState,
-          [albumId]: false,
-        }));
-        notifySuccess('Album deleted.');
-        if (albumsToShow.length === 1) {
-          setCurrentPage((prevPage) => prevPage - 1);
-        }
-      })
-      .catch((error) => {
-        setIsLoadingSolo(false);
-        notifyError(error);
-      });
+      await dispatch(deleteAlbum(projectId, albumId, coverImg));
+      setIsLoadingSolo((prevState) => ({
+        ...prevState,
+        [albumId]: false,
+      }));
+
+      notifySuccess('Album deleted.');
+
+      if (albumsToShow.length === 1) {
+        setCurrentPage((prevPage) => prevPage - 1);
+      }
+    } catch (error) {
+      setIsLoadingSolo(false);
+      notifyError(error);
+    }
   };
 
   const handleEdit = (album) => {
@@ -175,50 +173,91 @@ export const AlbumManagement = () => {
     setIsModalOpen(true);
   };
 
-  const handleSave = (id, projectId, data) => {
+  const handleSave = async (id, data) => {
     setIsLoadingModal(true);
-    const { title, description, coverImg } = data;
-    const coverImgFile = coverImg[0];
 
-    const updatedData = {
-      title,
-      description,
-      projectId,
-      coverImg: coverImgFile,
-    };
+    try {
+      const { title, description, coverImg } = data;
+      const coverImgFile = coverImg[0];
 
-    const dispatchAndUpdateAlbum = (coverImg) => {
+      const updatedData = {
+        title,
+        description,
+        coverImg: coverImgFile,
+      };
+
+      const albumResponse = await dispatch(createAlbum(id, updatedData));
+      const { coverImg: updatedCoverImg } = albumResponse;
+
       dispatch(
         albumActions.updateAlbum({
           id,
-          data: { id, ...updatedData, coverImg },
+          data: { id, ...updatedData, coverImg: updatedCoverImg },
         })
       );
-    };
 
-    dispatch(createAlbum({ id, ...updatedData }))
-      .then((response) => {
-        const albumResponse = response;
-        const { coverImg } = albumResponse;
-        console.log('response: ', coverImg);
-        dispatchAndUpdateAlbum(coverImg); // Dispatch the updateAlbum action
-        console.log('ta chegando aq?');
-        notifySuccess('Project updated.');
-        setIsLoadingModal(false);
-        closeModal();
-      })
-      .catch((error) => {
-        console.log('error no consolelog do handlesave', error);
-        setIsLoadingModal(false);
-        notifyError(error);
-      });
+      notifySuccess('Album updated.');
+      setIsLoadingModal(false);
+      closeModal();
+    } catch (error) {
+      setIsLoadingModal(false);
+      notifyError(error);
+    }
   };
 
   const closeModal = () => {
     setIsModalOpen(!isModalOpen);
     setAlbumId(null);
   };
-  console.log('album undefined pq?: ', album);
+
+  const renderAlbumsContent = () => {
+    if (isLoading) {
+      const loaderCount = 3;
+      const loaders = Array.from({ length: loaderCount }, (_, index) => (
+        <Loader
+          album="true"
+          width="100%"
+          height={200}
+          style={{ flex: '1 1 35rem' }}
+          key={index}
+        />
+      ));
+
+      return <SFlexContainer>{loaders}</SFlexContainer>;
+    }
+
+    if (album.length === 0 && projectId) {
+      return (
+        <SFlexContainerCenter>
+          <PText fontSize="1.5rem" color="primaryGrey">
+            There's no albums inside this project
+          </PText>
+        </SFlexContainerCenter>
+      );
+    }
+
+    if (projectId === '') {
+      return (
+        <SFlexContainerCenter>
+          <PText fontSize="1.5rem" color="primaryGrey">
+            Please select one project
+          </PText>
+        </SFlexContainerCenter>
+      );
+    }
+
+    return albumsToShow.map((album) => (
+      <Thumbnail
+        item={album}
+        isLoadingSolo={isLoadingSolo}
+        type="adm"
+        key={album.id}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
+        id={album.id}
+      />
+    ));
+  };
 
   return (
     <SAlbumManagementContainer>
@@ -238,35 +277,7 @@ export const AlbumManagement = () => {
         />
       </SComboBoxContainer>
       <SFlexContainer>
-        {isLoading ? (
-          <SFlexContainerCenter>
-            <Loader width="7rem" height="7rem" />
-          </SFlexContainerCenter>
-        ) : album.length === 0 && projectId ? (
-          <SFlexContainerCenter>
-            <PText fontSize="1.5rem" color="primaryGrey">
-              There's no albums inside this project
-            </PText>
-          </SFlexContainerCenter>
-        ) : projectId === '' ? (
-          <SFlexContainerCenter>
-            <PText fontSize="1.5rem" color="primaryGrey">
-              Please select one project
-            </PText>
-          </SFlexContainerCenter>
-        ) : (
-          albumsToShow.map((album) => (
-            <Thumbnail
-              item={album}
-              isLoadingSolo={isLoadingSolo}
-              type="adm"
-              key={album.id}
-              onDelete={handleDelete}
-              onEdit={handleEdit}
-              id={album.id}
-            />
-          ))
-        )}
+        {renderAlbumsContent()}
         {albumId && (
           <ReactModal
             isOpen={isModalOpen}

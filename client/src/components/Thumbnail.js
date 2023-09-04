@@ -80,7 +80,7 @@ const Thumbnail = ({
       <Card isAdm onMouseEnter={handleHover} onMouseLeave={handleMouseLeave}>
         {isLoadingSolo[id] ? (
           <SAdmModal>
-            <Loader />
+            <Loader circle width="3.28571429rem" height="3.28571429rem" />
           </SAdmModal>
         ) : (
           hovered && (
@@ -117,7 +117,7 @@ const Thumbnail = ({
       >
         {isLoadingSolo[id] ? (
           <SAdmModal>
-            <Loader />
+            <Loader circle width="3.28571429rem" height="3.28571429rem" />
           </SAdmModal>
         ) : (
           hovered && (

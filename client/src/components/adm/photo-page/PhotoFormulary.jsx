@@ -95,6 +95,8 @@ export const PhotoFormulary = () => {
           photosToAdd: '',
         });
         notifySuccess('Photos added.');
+        setProjectId('');
+        setAlbumId('');
         setIsLoading(false);
       })
       .catch((error) => {
@@ -133,21 +135,25 @@ export const PhotoFormulary = () => {
             }}
           />
         )}
-        <Input
-          input={{
-            type: 'file',
-            errors: errors,
-            maxLength: 1,
-            multiple: true,
-            ...register('photosToAdd', {
-              required: 'At least 1 photo is required.',
-              onChange: handleFileSelect,
-            }),
-          }}
-        />
+        {projectId !== '' && albumId !== '' && (
+          <Input
+            input={{
+              type: 'file',
+              errors: errors,
+              maxLength: 1,
+              multiple: true,
+              ...register('photosToAdd', {
+                required: 'At least 1 photo is required.',
+                onChange: handleFileSelect,
+              }),
+            }}
+          />
+        )}
         <Button btnText="UPLOAD" type="submit" config="primary" width="100%" />
       </SPhotoFormulary>
-      {isLoading && <Loader />}
+      {isLoading && (
+        <Loader circle width="3.28571429rem" height="3.28571429rem" />
+      )}
     </SPhotoFormularyContainer>
   );
 };

@@ -194,32 +194,49 @@ export const ProjectManagement = () => {
       });
   };
 
+  const renderProjectsContent = () => {
+    if (isLoading) {
+      const loaderCount = 3;
+      const loaders = Array.from({ length: loaderCount }, (_, index) => (
+        <Loader
+          album="true"
+          width="100%"
+          height={200}
+          style={{ flex: '1 1 35rem' }}
+          key={index}
+        />
+      ));
+
+      return <SFlexContainer>{loaders}</SFlexContainer>;
+    }
+
+    if (project.length === 0) {
+      return (
+        <SFlexContainerCenter>
+          <PText fontSize="3rem" color="primaryGrey">
+            Empty
+          </PText>
+        </SFlexContainerCenter>
+      );
+    }
+
+    return projectsToShow.map((project) => (
+      <Thumbnail
+        item={project}
+        isLoadingSolo={isLoadingSolo}
+        type="adm"
+        key={project.id}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
+        id={project.id}
+      />
+    ));
+  };
+
   return (
     <SProjectManagementContainer>
       <SFlexContainer>
-        {isLoading ? (
-          <SFlexContainerCenter>
-            <Loader width="7rem" height="7rem" />
-          </SFlexContainerCenter>
-        ) : project.length === 0 ? (
-          <SFlexContainerCenter>
-            <PText fontSize="3rem" color="primaryGrey">
-              Empty
-            </PText>
-          </SFlexContainerCenter>
-        ) : (
-          projectsToShow.map((project) => (
-            <Thumbnail
-              item={project}
-              isLoadingSolo={isLoadingSolo}
-              type="adm"
-              key={project.id}
-              onDelete={handleDelete}
-              onEdit={handleEdit}
-              id={project.id}
-            />
-          ))
-        )}
+        {renderProjectsContent()}
         {selectedProject && (
           <ReactModal
             isOpen={isModalOpen}

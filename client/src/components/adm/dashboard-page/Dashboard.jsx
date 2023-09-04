@@ -28,6 +28,10 @@ const Dashboard = () => {
   const location = useLocation();
   const hideTextContainer = location.pathname !== '/dashboard';
 
+  const userStored = user;
+  const userEmail = userStored.email;
+  console.log('???', userEmail);
+
   return (
     <>
       <Nav title="DASHBOARD" navData={navDataAdm} isAdm />
@@ -37,7 +41,7 @@ const Dashboard = () => {
             <STextContainer>
               <SH2>WELCOME BACK,</SH2>
               <PText color="primaryGrey" fontSize="6rem">
-                {user.email}. ola teste
+                {userEmail}
               </PText>
               <SH2>PLEASE SELECT AN OPTION</SH2>
             </STextContainer>

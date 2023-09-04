@@ -21,4 +21,5 @@ export const navDataAdm = [
   { title: 'Projects', path: 'projects' },
   { title: 'Albums', path: 'albums' },
   { title: 'Photos', path: 'photos' },
+  { title: 'Profile' },
 ];

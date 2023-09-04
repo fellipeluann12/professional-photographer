@@ -156,7 +156,9 @@ export const AlbumFormulary = () => {
         />
         <Button btnText="CREATE" type="submit" config="primary" width="100%" />
       </SAlbumFormulary>
-      {isLoading && <Loader />}
+      {isLoading && (
+        <Loader circle width="3.28571429rem" height="3.28571429rem" />
+      )}
     </SAlbumFormularyContainer>
   );
 };

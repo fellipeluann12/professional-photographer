@@ -141,7 +141,9 @@ export const ProjectFormulary = () => {
         />
         <Button btnText="CREATE" type="submit" config="primary" width="100%" />
       </SProjectFormulary>
-      {isLoading && <Loader />}
+      {isLoading && (
+        <Loader circle width="3.28571429rem" height="3.28571429rem" />
+      )}
     </SProjectFormularyContainer>
   );
 };

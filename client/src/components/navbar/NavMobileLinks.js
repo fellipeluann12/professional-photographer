@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { uiActions } from '../../store/ui-slice';
-import { ReactComponent as Caret } from '../../assets/svgs/caret.svg';
+import Profile from '../Profile';
+import { UserAuth } from '../../AuthContext';
 
 const SLi = styled.li`
   display: none;
@@ -50,6 +51,7 @@ const SNLinkSub = styled(NavLink)`
 `;
 
 export default function NavMobileLinks({ item }) {
+  const { logout } = UserAuth();
   const [subnav, setSubnav] = useState(false);
 
   const dispatch = useDispatch();
@@ -61,6 +63,15 @@ export default function NavMobileLinks({ item }) {
     dispatch(uiActions.toggleBurger());
   };
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toggleMobileNavBarHandler();
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
   return (
     <>
       <SLi>
@@ -68,13 +79,13 @@ export default function NavMobileLinks({ item }) {
           to={item.path}
           onClick={item.dropDown ? showSubnav : toggleMobileNavBarHandler}
         >
-          {item.title} {item.dropDown && <Caret />}
+          {item.dropDown ? <Profile /> : item.title}
         </SNLink>
       </SLi>
       {subnav &&
         item.dropDown.map((item, index) => (
           <SLi key={index}>
-            <SNLinkSub to={item.path} onClick={toggleMobileNavBarHandler}>
+            <SNLinkSub to={'#'} onClick={handleLogout}>
               - {item.title}
             </SNLinkSub>
           </SLi>

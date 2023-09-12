@@ -45,7 +45,7 @@ const SLeftSectionNavLink = styled(NavLink)`
   -webkit-text-fill-color: transparent;
 
   @media ${({ theme }) => theme.breakpoints.mdMaxW} {
-    font-size: 3rem;
+    font-size: 4rem;
   }
 `;
 

@@ -33,7 +33,7 @@ const SMain = styled.main`
 function App() {
   return (
     <SApp>
-      <Nav title="FELLIPE" navData={navDataMain} isMain />
+      <Nav title="JOHN DOE" navData={navDataMain} isMain />
       <SMain>
         <AuthContextProvider>
           <ToastContainer

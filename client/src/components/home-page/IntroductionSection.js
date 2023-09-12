@@ -15,7 +15,7 @@ const SH1 = styled.h1`
   ${({ theme }) => theme.gradientGreen.word}
 
   @media ${({ theme }) => theme.breakpoints.smMaxW} {
-    font-size: 1rem;
+    font-size: 3rem;
   }
 `;
 

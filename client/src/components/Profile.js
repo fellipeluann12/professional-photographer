@@ -40,7 +40,7 @@ export default function Profile() {
   console.log('???', userEmail);
 
   return (
-    <SProfileContainer>
+    <SProfileContainer style={{ cursor: 'pointer' }}>
       <SProfileImage image={userImg}></SProfileImage>
       <PText color="primaryGrey" fontSize="1.5rem" maxWidth="10rem">
         {userEmail}

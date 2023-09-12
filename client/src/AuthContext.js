@@ -1,6 +1,8 @@
 import {
+  browserSessionPersistence,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  setPersistence,
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
@@ -17,7 +19,22 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const signIn = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+    try {
+      // Set session persistence to "session" (session will expire when the browser is closed)
+      setPersistence(auth, browserSessionPersistence);
+
+      // Sign in the user
+      const userCredential = signInWithEmailAndPassword(auth, email, password);
+
+      // Set the user in your state
+      setUser(userCredential.user);
+
+      return userCredential;
+    } catch (error) {
+      // Handle sign-in errors
+      console.error('Sign-in error:', error);
+      throw error; // Propagate the error to the caller
+    }
   };
 
   const logout = () => {

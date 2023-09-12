@@ -12,15 +12,24 @@ const SDashboard = styled.div`
 `;
 
 const SH2 = styled.h2`
-  width: 100%;
   font-size: 5rem;
   color: ${({ theme }) => theme.gradientGreen.word};
-  display: inline-block;
   word-wrap: break-word;
+
+  @media ${({ theme }) => theme.breakpoints.mdMaxW} {
+    font-size: 4rem;
+  }
 `;
 
 const STextContainer = styled.div`
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media ${({ theme }) => theme.breakpoints.mdMaxW} {
+    font-size: 4rem;
+  }
 `;
 
 const Dashboard = () => {
@@ -40,10 +49,7 @@ const Dashboard = () => {
           {hideTextContainer ? null : (
             <STextContainer>
               <SH2>WELCOME BACK,</SH2>
-              <PText color="primaryGrey" fontSize="6rem">
-                {userEmail}
-              </PText>
-              <SH2>PLEASE SELECT AN OPTION</SH2>
+              <PText color="primaryGrey">{userEmail}</PText>
             </STextContainer>
           )}
           <Outlet />

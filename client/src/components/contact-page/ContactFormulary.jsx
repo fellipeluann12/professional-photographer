@@ -47,7 +47,6 @@ export default function ContactFormulary() {
         notifySuccess();
       }
     } catch (error) {
-      console.log(error);
       notifyError(error);
     } finally {
       setIsLoading(false);

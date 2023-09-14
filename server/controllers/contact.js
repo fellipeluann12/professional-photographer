@@ -3,7 +3,7 @@ import { USER, PASS } from '../configs.js';
 import Contact from '../models/contact.js';
 
 export const createContact = async (req, res) => {
-  console.log(req.body);
+  req.body;
   if (!req.body) {
     return res.status(400).send({ message: 'Fields cannot be empty' });
   }

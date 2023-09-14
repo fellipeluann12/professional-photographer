@@ -47,8 +47,8 @@ const LoginSection = () => {
     try {
       await signIn(email, password);
       navigate('/dashboard');
-    } catch (e) {
-      console.log(e.message);
+    } catch (error) {
+      throw error;
     }
   };
 

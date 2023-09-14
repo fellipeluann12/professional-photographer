@@ -89,7 +89,6 @@ export const PhotoManagement = () => {
   const project = useSelector((state) => state.project);
   const album = useSelector((state) => state.album.albums);
   const photo = useSelector((state) => state.album.photos);
-  console.log('album inside management', album.length);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingSolo, setIsLoadingSolo] = useState(false);
@@ -137,7 +136,6 @@ export const PhotoManagement = () => {
   };
 
   const handleDelete = (photoId, photoOriginalUrl) => {
-    console.log('coverIMG Dentro do managemen:', photoOriginalUrl);
     setAlbumId(albumId);
     setIsLoadingSolo((prevState) => ({
       ...prevState,

@@ -5,7 +5,6 @@ const projectSlice = createSlice({
   initialState: [],
   reducers: {
     setProject(state, action) {
-      console.log('slice state', action.payload);
       return action.payload || [];
     },
     deleteProject(state, action) {
@@ -14,7 +13,6 @@ const projectSlice = createSlice({
     },
     updateProject(state, action) {
       const updatedProject = action.payload.data;
-      console.log('ta chegando aq?', updatedProject);
       return state.map((project) => {
         if (project.id === updatedProject.id) {
           return {

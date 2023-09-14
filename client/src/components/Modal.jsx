@@ -47,7 +47,6 @@ export const Modal = ({
   handleSave,
   isLoadingModal,
 }) => {
-  console.log('isLoadingModal value:', isLoadingModal);
   const { id, title, description, projectId, featured } = item;
 
   const defaultValues = {

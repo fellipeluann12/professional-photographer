@@ -39,7 +39,6 @@ const Dashboard = () => {
 
   const userStored = user;
   const userEmail = userStored.email;
-  console.log('???', userEmail);
 
   return (
     <>

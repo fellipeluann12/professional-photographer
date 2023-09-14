@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Center from '../Center';
 import Thumbnail from '../Thumbnail';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProject } from '../../store/project/project-actions';
+import Loader from '../ui/Loader';
 
 const SFeatureSection = styled.section`
   padding: 4rem 0rem 4rem;
@@ -26,28 +27,47 @@ const SGridContainer = styled.div`
 `;
 
 export default function FeaturedGaleries() {
-  const dispatch = useDispatch();
   const project = useSelector((state) => state.project);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
     dispatch(fetchProject());
   }, [dispatch]);
-  console.log(
-    'filter:',
-    project.filter((project) => project.featured)
-  );
+
+  const renderFeaturedGaleries = () => {
+    if (isLoading) {
+      const loaderCount = 3;
+      const loaders = Array.from({ length: loaderCount }, (_, index) => (
+        <Loader
+          album="true"
+          width="100%"
+          height={200}
+          style={{ flex: '1 1 35rem' }}
+          key={index}
+        />
+      ));
+
+      return loaders;
+    }
+
+    return project
+      .filter((project) => project.featured)
+      .map((project) => (
+        <Thumbnail item={project} type="featured" key={project.id} />
+      ));
+  };
 
   return (
     <SFeatureSection>
       <Center>
         <SH2>FEATURED GALERIES</SH2>
-        <SGridContainer>
-          {project
-            .filter((project) => project.featured)
-            .map((project) => (
-              <Thumbnail item={project} type="featured" key={project.id} />
-            ))}
-        </SGridContainer>
+        <SGridContainer>{renderFeaturedGaleries()}</SGridContainer>
       </Center>
     </SFeatureSection>
   );

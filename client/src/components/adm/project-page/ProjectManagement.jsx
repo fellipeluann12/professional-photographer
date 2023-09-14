@@ -116,6 +116,7 @@ export const ProjectManagement = () => {
         });
     } catch (error) {
       setIsLoading(false);
+      throw error;
     }
   }, [dispatch]);
 
@@ -177,7 +178,6 @@ export const ProjectManagement = () => {
       .then((response) => {
         const projectResponse = response;
         const { coverImg } = projectResponse;
-        console.log('response: ', projectResponse.coverImg);
         dispatch(
           projectActions.updateProject({
             id,

@@ -61,7 +61,6 @@ export const AlbumFormulary = () => {
   const onSubmit = ({ title, description, projectId, coverImg }) => {
     setIsLoading(true);
     const coverImgFile = coverImg[0];
-    console.log(title, description, projectId, coverImg);
 
     dispatch(
       createAlbum({ title, description, projectId, coverImg: coverImgFile })

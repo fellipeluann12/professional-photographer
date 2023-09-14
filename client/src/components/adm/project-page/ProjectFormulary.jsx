@@ -51,7 +51,6 @@ export const ProjectFormulary = () => {
   const onSubmit = ({ title, description, coverImg, featured }) => {
     setIsLoading(true);
     const coverImgFile = coverImg[0];
-    console.log('formulary sub', coverImgFile);
 
     dispatch(
       createProject({ title, description, coverImg: coverImgFile, featured })

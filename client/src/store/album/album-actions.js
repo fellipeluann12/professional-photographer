@@ -31,12 +31,9 @@ export const fetchPhotosByAlbumId =
 
         // Dispatch an action to set the photos in the store
         dispatch(albumActions.setPhotos(photosData));
-        console.log('fetchPhotosByAlbumId data:', photosData);
-      } else {
-        console.log('Album not found');
       }
     } catch (error) {
-      console.error('Error fetching photos:', error);
+      throw error;
     }
   };
 
@@ -52,9 +49,8 @@ export const fetchAlbumsByProjectId = (projectIdRef) => async (dispatch) => {
       ...doc.data(),
     }));
     dispatch(albumActions.setAlbums(data));
-    console.log('fetchAlbums data:', data);
   } catch (error) {
-    console.error('Error fetching albums:', error);
+    throw error;
   }
 };
 
@@ -94,8 +90,6 @@ export const createAlbum = (albumData) => async () => {
       }
       await updateDoc(albumDocRef, updateData);
 
-      console.log('Album updated successfully');
-
       const updatedAlbumDoc = await getDoc(albumDocRef);
       const updatedAlbumData = { id, ...updatedAlbumDoc.data() };
 
@@ -108,28 +102,25 @@ export const createAlbum = (albumData) => async () => {
         createdAt: new Date().toString(),
       });
 
-      console.log('Album created with ID: ', newAlbum.id);
-
       const newAlbumDoc = await getDoc(doc(albumCollection, newAlbum.id));
       const newAlbumData = { id: newAlbum.id, ...newAlbumDoc.data() };
 
       return newAlbumData;
     }
   } catch (error) {
-    console.log('Error creating album: ', error);
+    throw error;
   }
 };
 
 export const deleteImageFunction = async (coverImg, path) => {
-  console.log('inside deleteimage function coverImg::', coverImg);
   const storageImgRef = ref(storage, `/images/${path}/${coverImg.name}`);
 
   deleteObject(storageImgRef)
     .then(() => {
-      console.log('deletou');
+      ('deletou');
     })
     .catch((error) => {
-      console.log('deu erro', error);
+      throw error;
     });
 };
 
@@ -144,7 +135,7 @@ export const deleteAlbum =
 
       dispatch(albumActions.deleteAlbum(albumId));
     } catch (error) {
-      console.log('Error deleting album: ', error);
+      throw error;
     }
   };
 
@@ -165,10 +156,8 @@ export const deletePhotoFromAlbum =
 
       await deleteImageFunction(photoName, 'photo');
       dispatch(albumActions.deletePhoto(photoId));
-
-      console.log('Photo deleted successfully!');
     } catch (error) {
-      console.log('Error deleting photo: ', error);
+      throw error;
     }
   };
 
@@ -179,9 +168,8 @@ export const fetchAlbumPhotos = (projectId, albumId) => async (dispatch) => {
     const albumData = albumDoc.data();
 
     dispatch(albumActions.setPhotos(albumData.photos));
-    console.log('Album photos fetched successfully');
   } catch (error) {
-    console.error('Error fetching album photos:', error);
+    throw error;
   }
 };
 
@@ -213,9 +201,7 @@ export const addAlbumPhotos =
 
       const newPhotos = [...albumData.photos, ...photoData];
       await updateDoc(albumRef, { photos: newPhotos });
-
-      console.log('Fotos adicionadas com sucesso.');
     } catch (error) {
-      console.error('Error adding photos:', error);
+      throw error;
     }
   };

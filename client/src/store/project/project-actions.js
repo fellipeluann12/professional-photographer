@@ -51,7 +51,6 @@ export const fetchProject = () => async (dispatch) => {
     const data = [...featuredData, ...otherData];
 
     dispatch(projectActions.setProject(data));
-    console.log('fetchProject data:', data);
     return data;
   } catch (error) {
     console.error('Error fetching projects:', error);
@@ -60,7 +59,6 @@ export const fetchProject = () => async (dispatch) => {
 
 export const createProject = (projectData) => async () => {
   const { id, title, description, coverImg, featured } = projectData;
-  console.log('img true?', coverImg);
 
   try {
     let imageInfo = null;
@@ -97,9 +95,6 @@ export const createProject = (projectData) => async () => {
 
       await updateDoc(projectDocRef, updateData);
 
-      console.log('Projeto atualizado com sucesso!');
-
-      // Fetch the updated project document to retrieve the complete project object
       const updatedProjectDoc = await getDoc(projectDocRef);
       const updatedProjectData = { id, ...updatedProjectDoc.data() };
 
@@ -113,30 +108,24 @@ export const createProject = (projectData) => async () => {
         createdAt: new Date().toString(),
       });
 
-      console.log('Projeto criado com ID: ', newProject.id);
-
       const newProjectDoc = await getDoc(doc(projectCollection, newProject.id));
       const newProjectData = { id: newProject.id, ...newProjectDoc.data() };
 
       return newProjectData;
     }
   } catch (error) {
-    console.log('Erro ao criar/atualizar projeto: ', error);
     throw error;
   }
 };
 
 export const deleteImageFunction = async (coverImg) => {
-  console.log('nameImgDeleteImage:', coverImg.name);
   const storageImgRef = ref(storage, `/images/project/${coverImg.name}`);
 
   deleteObject(storageImgRef)
     .then(() => {
-      console.log('deletou');
+      ('deletou');
     })
-    .catch((error) => {
-      console.log('deu erro', error);
-    });
+    .catch((error) => {});
 };
 
 export const deleteProject = (projectId, coverImg) => async (dispatch) => {
@@ -145,8 +134,5 @@ export const deleteProject = (projectId, coverImg) => async (dispatch) => {
     await deleteDoc(projectDocRef);
     await deleteImageFunction(coverImg);
     dispatch(projectActions.deleteProject(projectId));
-    console.log('Projeto excluído com sucesso!');
-  } catch (error) {
-    console.log('Erro ao excluir projeto: ', error);
-  }
+  } catch (error) {}
 };

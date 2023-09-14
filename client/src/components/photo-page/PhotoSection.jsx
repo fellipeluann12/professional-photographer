@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Center from '../Center';
 import { useParams } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchAlbumPhotos } from '../../store/album/album-actions';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import ImageGallery from 'react-image-gallery';
+import Loader from '../ui/Loader';
 
 const SPhotoSection = styled.div`
   padding: 7rem 0rem;
@@ -29,22 +30,51 @@ const SGridContainer = styled.div`
 `;
 
 const PhotoSection = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const { projectIdRef, albumIdRef } = useParams();
-  console.log('projectId first, albumId second', projectIdRef, albumIdRef);
-  const dispatch = useDispatch();
   const photos = useSelector((state) => state.album.photos);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(fetchAlbumPhotos(projectIdRef, albumIdRef));
+    setIsLoading(true);
+
+    try {
+      dispatch(fetchAlbumPhotos(projectIdRef, albumIdRef))
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          throw error;
+        });
+    } catch (error) {}
   }, [dispatch, projectIdRef, albumIdRef]);
+
+  const renderPhotos = () => {
+    if (isLoading) {
+      const loaderCount = 1;
+      const loaders = Array.from({ length: loaderCount }, (_, index) => (
+        <Loader
+          album="true"
+          width="100%"
+          height={200}
+          style={{ flex: '1 1 35rem' }}
+          key={index}
+        />
+      ));
+
+      return loaders;
+    }
+
+    return <ImageGallery items={photos} />;
+  };
 
   return (
     <SPhotoSection>
       <Center>
         <SH2>PHOTOS</SH2>
-        <SGridContainer>
-          <ImageGallery items={photos} />
-        </SGridContainer>
+        <SGridContainer>{renderPhotos()}</SGridContainer>
       </Center>
     </SPhotoSection>
   );

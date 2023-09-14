@@ -65,7 +65,6 @@ export const PhotoFormulary = () => {
 
   const handleProjectChange = (e) => {
     const selectedProjectValue = e.target.value;
-    console.log('selectedProjectValue', selectedProjectValue);
     setProjectId(selectedProjectValue);
     setAlbumId('');
     setValue('projectId', selectedProjectValue, { shouldValidate: true });
@@ -101,7 +100,6 @@ export const PhotoFormulary = () => {
       })
       .catch((error) => {
         notifyError(error);
-        console.log(error);
         setIsLoading(false);
       });
   };

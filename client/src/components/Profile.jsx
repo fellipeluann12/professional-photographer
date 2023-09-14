@@ -37,7 +37,6 @@ export default function Profile() {
 
   const userStored = user;
   const userEmail = userStored.email;
-  console.log('???', userEmail);
 
   return (
     <SProfileContainer style={{ cursor: 'pointer' }}>

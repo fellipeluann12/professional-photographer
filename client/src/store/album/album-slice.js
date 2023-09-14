@@ -26,7 +26,6 @@ const albumSlice = createSlice({
     },
     updateAlbum(state, action) {
       const updatedAlbum = action.payload.data;
-      console.log('updatealbum Slice:?', updatedAlbum);
       return {
         ...state,
         albums: state.albums.map((album) => {

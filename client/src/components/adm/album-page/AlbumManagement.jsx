@@ -151,7 +151,7 @@ export const AlbumManagement = () => {
         [albumId]: true,
       }));
 
-      await dispatch(deleteAlbum(projectId, albumId, coverImg));
+      dispatch(deleteAlbum(projectId, albumId, coverImg));
       setIsLoadingSolo((prevState) => ({
         ...prevState,
         [albumId]: false,

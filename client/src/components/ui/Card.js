@@ -45,14 +45,14 @@ export const CardYellowStar = styled.svg`
 `;
 
 export const CardEditTool = styled.div`
-  height: 4.5rem;
-  width: 4rem;
+  height: 3rem;
+  width: 3rem;
   cursor: pointer;
 `;
 
 export const CardDeleteTool = styled.div`
-  height: 4.5rem;
-  width: 4rem;
+  height: 3rem;
+  width: 3rem;
   cursor: pointer;
 `;
 

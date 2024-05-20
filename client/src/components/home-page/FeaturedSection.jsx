@@ -5,6 +5,7 @@ import Thumbnail from '../Thumbnail';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProject } from '../../store/project/project-actions';
 import Loader from '../ui/Loader';
+import PText from '../PText';
 
 const SFeatureSection = styled.section`
   padding: 4rem 0rem 4rem;
@@ -56,11 +57,19 @@ export default function FeaturedGaleries() {
       return loaders;
     }
 
-    return project
-      .filter((project) => project.featured)
-      .map((project) => (
-        <Thumbnail item={project} type="featured" key={project.id} />
-      ));
+    const featuredProjects = project.filter((project) => project.featured);
+
+    if (featuredProjects.length === 0) {
+      return (
+        <PText fontSize="2rem" color="primaryGrey">
+          Empty
+        </PText>
+      );
+    }
+
+    return featuredProjects.map((project) => (
+      <Thumbnail item={project} type="featured" key={project.id} />
+    ));
   };
 
   return (

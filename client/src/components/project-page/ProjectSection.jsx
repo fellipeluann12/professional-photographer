@@ -5,6 +5,7 @@ import { fetchProject } from '../../store/project/project-actions';
 import Thumbnail from '../Thumbnail';
 import Center from '../Center';
 import Loader from '../ui/Loader';
+import PText from '../PText';
 
 const SProjectSection = styled.div`
   padding: 7rem 0rem;
@@ -59,6 +60,14 @@ const ProjectSection = () => {
           key={index}
         />
       ));
+
+      if (project.length === 0) {
+        return (
+          <PText fontSize="2rem" color="primaryGrey">
+            Empty
+          </PText>
+        );
+      }
 
       return loaders;
     }

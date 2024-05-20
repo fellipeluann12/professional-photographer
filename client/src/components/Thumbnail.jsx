@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import PText from './PText';
 import {
@@ -17,11 +17,9 @@ import styled from 'styled-components';
 import Loader from './ui/Loader';
 
 const SAdmModal = styled.div`
-  position: absolute;
-  border-radius: 1rem;
   background-color: black;
   opacity: 0.9;
-  height: 100%;
+  height: 5rem;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -30,17 +28,7 @@ const SAdmModal = styled.div`
   gap: 3rem;
 `;
 
-const Thumbnail = ({
-  item,
-  type,
-  onDelete,
-  id,
-  isLoadingSolo,
-  onEdit,
-  coverImg,
-}) => {
-  const [hovered, setHovered] = useState(false);
-
+const Thumbnail = ({ item, type, onDelete, id, isLoadingSolo, onEdit }) => {
   const handleDelete = () => {
     onDelete(id, item.coverImg || item);
   };
@@ -49,20 +37,10 @@ const Thumbnail = ({
     onEdit(item);
   };
 
-  const handleHover = () => {
-    setHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setHovered(false);
-  };
-
   let toUrl = '';
 
   switch (type) {
     case 'project':
-      toUrl = `${item.id}`;
-      break;
     case 'album':
       toUrl = `${item.id}`;
       break;
@@ -74,77 +52,70 @@ const Thumbnail = ({
       break;
   }
 
-  if (type === 'adm') {
-    return (
-      <Card isAdm onMouseEnter={handleHover} onMouseLeave={handleMouseLeave}>
-        {isLoadingSolo[id] ? (
-          <SAdmModal>
-            <Loader circle width="3.28571429rem" height="3.28571429rem" />
-          </SAdmModal>
-        ) : (
-          hovered && (
-            <SAdmModal>
-              <CardEditTool>
-                <Edit onClick={handleEdit} />
-              </CardEditTool>
-              <CardDeleteTool onClick={handleDelete}>
-                <Delete />
-              </CardDeleteTool>
-            </SAdmModal>
-          )
-        )}
+  const renderActions = () => {
+    if (isLoadingSolo[id]) {
+      return (
+        <SAdmModal>
+          <Loader circle width="3.28571429rem" height="3.28571429rem" />
+        </SAdmModal>
+      );
+    } else {
+      return (
+        <SAdmModal>
+          <CardEditTool>
+            <Edit onClick={handleEdit} />
+          </CardEditTool>
+          <CardDeleteTool onClick={handleDelete}>
+            <Delete />
+          </CardDeleteTool>
+        </SAdmModal>
+      );
+    }
+  };
 
-        <CardYellowStar>{item.featured && <YellowStar />}</CardYellowStar>
-        <CardTextBody>
-          <CardHeading>{item.title}</CardHeading>
-          <PText color="primaryGrey" textAlign="justify">
-            {item.description}
-          </PText>
-        </CardTextBody>
-        <CardImageContainer image={item.coverImg.url}></CardImageContainer>
-      </Card>
-    );
-  }
+  const renderThumbnail = () => {
+    switch (type) {
+      case 'adm':
+        return (
+          <Card isAdm>
+            {renderActions()}
+            <CardYellowStar>{item.featured && <YellowStar />}</CardYellowStar>
+            <CardTextBody>
+              <CardHeading>{item.title}</CardHeading>
+              <PText color="primaryGrey" textAlign="justify">
+                {item.description}
+              </PText>
+            </CardTextBody>
+            <CardImageContainer image={item.coverImg.url}></CardImageContainer>
+          </Card>
+        );
+      case 'photo':
+        return (
+          <CardImageContainer isAdm image={item.original}>
+            {renderActions()}
+          </CardImageContainer>
+        );
+      default:
+        return (
+          <NavLink to={toUrl}>
+            <Card featured>
+              <CardYellowStar>{item.featured && <YellowStar />}</CardYellowStar>
+              <CardTextBody>
+                <CardHeading>{item.title}</CardHeading>
+                <PText color="primaryGrey" textAlign="justify">
+                  {item.description}
+                </PText>
+              </CardTextBody>
+              <CardImageContainer
+                image={item.coverImg.url}
+              ></CardImageContainer>
+            </Card>
+          </NavLink>
+        );
+    }
+  };
 
-  if (type === 'photo') {
-    return (
-      <CardImageContainer
-        isAdm
-        onMouseEnter={handleHover}
-        onMouseLeave={handleMouseLeave}
-        image={item.original}
-      >
-        {isLoadingSolo[id] ? (
-          <SAdmModal>
-            <Loader circle width="3.28571429rem" height="3.28571429rem" />
-          </SAdmModal>
-        ) : (
-          hovered && (
-            <SAdmModal>
-              <CardDeleteTool onClick={handleDelete}>
-                <Delete />
-              </CardDeleteTool>
-            </SAdmModal>
-          )
-        )}
-      </CardImageContainer>
-    );
-  }
-
-  return (
-    <NavLink to={toUrl}>
-      <Card featured>
-        <CardYellowStar>{item.featured && <YellowStar />}</CardYellowStar>
-        <CardTextBody>
-          <CardHeading>{item.title}</CardHeading>
-          <PText color="primaryGrey" textAlign="justify">
-            {item.description}
-          </PText>
-        </CardTextBody>
-        <CardImageContainer image={item.coverImg.url}></CardImageContainer>
-      </Card>
-    </NavLink>
-  );
+  return renderThumbnail();
 };
 
 export default Thumbnail;

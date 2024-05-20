@@ -7,6 +7,7 @@ import { fetchAlbumPhotos } from '../../store/album/album-actions';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import ImageGallery from 'react-image-gallery';
 import Loader from '../ui/Loader';
+import PText from '../PText';
 
 const SPhotoSection = styled.div`
   padding: 7rem 0rem;
@@ -65,6 +66,14 @@ const PhotoSection = () => {
       ));
 
       return loaders;
+    }
+
+    if (photos.length === 0) {
+      return (
+        <PText fontSize="2rem" color="primaryGrey">
+          Empty
+        </PText>
+      );
     }
 
     return <ImageGallery items={photos} />;

@@ -44,7 +44,7 @@ export default function ContactFormulary() {
       });
       if (response.ok) {
         reset({ name: '', email: '', message: '' });
-        notifySuccess();
+        notifySuccess('');
       }
     } catch (error) {
       notifyError(error);

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchAlbumsByProjectId } from '../../store/album/album-actions';
 import Loader from '../ui/Loader';
+import PText from '../PText';
 
 const SAlbumSection = styled.div`
   padding: 7rem 0rem;
@@ -62,6 +63,14 @@ const AlbumSection = () => {
       ));
 
       return loaders;
+    }
+
+    if (album.length === 0) {
+      return (
+        <PText fontSize="2rem" color="primaryGrey">
+          Empty
+        </PText>
+      );
     }
 
     return album.map((album) => {
